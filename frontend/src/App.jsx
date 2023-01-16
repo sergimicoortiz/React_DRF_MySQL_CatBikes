@@ -3,8 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loading from './components/Loading/Loading';
 // import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
-import './App.css';
-import 'react-toastify/dist/ReactToastify.css';
+import './App.scss';
 
 function App() {
 
