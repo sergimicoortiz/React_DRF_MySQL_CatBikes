@@ -1,12 +1,12 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from .models import Bike
 from .serializers import BikeSerializer
 
 
-class BikeView(APIView):
+class BikeView(viewsets.GenericViewSet):
 
     def get(self, request, pk=None):
         print("dentro del get")
