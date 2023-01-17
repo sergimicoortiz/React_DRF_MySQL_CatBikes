@@ -5,9 +5,11 @@ from django.utils.text import slugify
 from src.app.core.utils import generate_random_string
 
 from .models import Station
+from .models import Bike
 
 
 @receiver(pre_save, sender=Station)
+@receiver(pre_save, sender=Bike)
 def add_slug_to_station_if_not_exists(sender, instance, *args, **kwargs):
     MAXIMUM_SLUG_LENGTH = 255
     if instance and not instance.slug:

@@ -40,10 +40,10 @@ class StationView(viewsets.GenericViewSet):
 
 class BikeView(viewsets.GenericViewSet):
 
-    def get(self, request, pk=None):
+    def get(self, request, slug=None):
         print("dentro del get")
-        if pk:
-            show_bikes = get_object_or_404(Bike.objects.all(), pk=pk)
+        if slug:
+            show_bikes = get_object_or_404(Bike.objects.all(), slug=slug)
             serializer = BikeSerializer(show_bikes)
             return Response(serializer.data)
         bikes = Bike.objects.all()
@@ -57,15 +57,15 @@ class BikeView(viewsets.GenericViewSet):
             serializer.save()
         return Response(serializer.data)
 
-    def put(self, request, pk):
-        saved_bike = get_object_or_404(Bike.objects.all(), pk=pk)
+    def put(self, request, slug):
+        saved_bike = get_object_or_404(Bike.objects.all(), slug=slug)
         data = request.data.get('bike')
         serializer = BikeSerializer(instance=saved_bike, data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
 
-    def delete(self, request, pk):
-        search_bike = get_object_or_404(Bike.objects.all(), pk=pk)
+    def delete(self, request, slug):
+        search_bike = get_object_or_404(Bike.objects.all(), slug=slug)
         search_bike.delete()
         return Response("Deleted")
