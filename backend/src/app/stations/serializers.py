@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Station
 from .models import Bike
 
+
 class StationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Station
@@ -16,9 +17,17 @@ class StationSerializer(serializers.ModelSerializer):
             "image": instance.image,
             "address": instance.address
         }
- 
+
+
 class BikeSerializer(serializers.ModelSerializer):
- 
+
     class Meta:
         model = Bike
-        fields = ['id','status']
+        fields = ['id', 'slug', 'status']
+        
+    def to_Bike(instance):
+        return {
+            "id": instance.id,
+            "slug": instance.slug,
+            "status": instance.status,
+        }
