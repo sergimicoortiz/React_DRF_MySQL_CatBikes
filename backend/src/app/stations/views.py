@@ -27,10 +27,11 @@ class StationView(viewsets.GenericViewSet):
 
         if (request.data.get('slot')):
             slots = request.data.get('slot')
-            slot_data = {'station_id': serializer.data['id'], 'bike_id': None}
-            print(slot_data)
+            slot_context = {'station_id': serializer.data['id']}
+            slot_data = {'status': 'empty'}
             for i in range(slots['cantidad']):
-                serializer_slot = SlotSerializer(data=slots, context=slot_data)
+                serializer_slot = SlotSerializer(
+                    data=slot_data, context=slot_context)
                 if (serializer_slot.is_valid(raise_exception=True)):
                     serializer_slot.save()
         return Response(serializer.data)
@@ -71,9 +72,24 @@ class BikeView(viewsets.GenericViewSet):
     def put(self, request, slug):
         saved_bike = get_object_or_404(Bike.objects.all(), slug=slug)
         data = request.data.get('bike')
-        serializer = BikeSerializer(instance=saved_bike, data=data)
+        serializer = BikeSerializer(
+            instance=saved_bike, data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
+
+        if (request.data.get('slot')):
+            slot = request.data.get('slot')
+            if slot['id'] is 0:
+                print('a')
+            else:
+                slot_context = {'bike_id': saved_bike.id}
+                saved_slot = get_object_or_404(
+                    Slot.objects.all(), pk=slot['id'])
+                serializer_slot = SlotSerializer(
+                    instance=saved_slot, data=slot, context=slot_context, partial=True)
+                if (serializer_slot.is_valid(raise_exception=True)):
+                    serializer_slot.save()
+
         return Response(serializer.data)
 
     def delete(self, request, slug):
@@ -83,11 +99,22 @@ class BikeView(viewsets.GenericViewSet):
 
 
 class SlotView(viewsets.GenericViewSet):
-    def get(self, request, pk=None):
-        if pk:
-            slot = get_object_or_404(Slot.objects.all(), pk=pk)
+    def get(self, request, id=None):
+        if id:
+            slot = get_object_or_404(Slot.objects.all(), pk=id)
             serializer_one = SlotSerializer(slot)
-            return Response({'data': serializer_one.data})
+            return Response(serializer_one.data)
         slots = Slot.objects.all()
         serializer = SlotSerializer(slots, many=True)
         return Response(serializer.data)
+
+    def detach_bike(self, request, id):
+        print(id)
+        slot = request.data.get('slot')
+        saved_slot = get_object_or_404(Slot.objects.all(), pk=id)
+        slot_context = {'bike_id': 0}
+        serializer_slot = SlotSerializer(
+            instance=saved_slot, data=slot, context=slot_context, partial=True)
+        if (serializer_slot.is_valid(raise_exception=True)):
+            serializer_slot.save()
+        return Response(serializer_slot.data)

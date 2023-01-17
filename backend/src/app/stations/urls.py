@@ -19,4 +19,5 @@ urlpatterns = [
     # Slots
     path('slot', SlotView.as_view({"get": "get"})),
     path('slots/<int:id>', SlotView.as_view({"get": "get"})),
+    path('detach_bike/<int:id>', SlotView.as_view({"put": "detach_bike"})),
 ]

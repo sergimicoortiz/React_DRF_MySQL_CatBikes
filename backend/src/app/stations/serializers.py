@@ -51,7 +51,6 @@ class SlotSerializer(serializers.ModelSerializer):
 
     def create(self, validate_data):
         station_id = self.context['station_id']
-        bike_id = self.context['bike_id']
         station = Station.objects.get(pk=station_id)
 
         if station is None:
@@ -61,7 +60,25 @@ class SlotSerializer(serializers.ModelSerializer):
 
         slot = Slot.objects.create(
             station_id=station_id,
-            bike_id=bike_id,
+            bike_id=None,
             **validate_data
         )
         return slot
+
+    def update(self, instance, validate_data):
+        instance.status = validate_data.get('status', instance.status)
+        bike_id = self.context['bike_id']
+        print(bike_id)
+        if bike_id is not 0 and not None:
+            bike = Bike.objects.get(pk=bike_id)
+            if bike is None:
+                raise serializers.ValidationError(
+                    'Bike is not find'
+                )
+            instance.bike_id = bike_id
+
+        if bike_id is 0:
+            instance.bike_id = None
+
+        instance.save()
+        return instance
