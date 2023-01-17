@@ -23,11 +23,12 @@ class BikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bike
-        fields = ['id', 'slug', 'status']
-        
+        fields = ['id', 'slug', 'name', 'status']
+
     def to_Bike(instance):
         return {
             "id": instance.id,
             "slug": instance.slug,
+            "name": instance.name,
             "status": instance.status,
         }

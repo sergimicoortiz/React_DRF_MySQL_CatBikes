@@ -16,6 +16,7 @@ class Station(models.Model):
         
 class Bike(models.Model):
     slug = models.SlugField(max_length=100, unique=True, editable=False)
+    name = models.CharField(max_length=100)
     status = models.CharField(max_length=200)
 
     def __str__(self):
