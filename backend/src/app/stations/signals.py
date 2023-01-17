@@ -8,9 +8,8 @@ from .models import Station
 
 
 @receiver(pre_save, sender=Station)
-def add_slug_to_Station_if_not_exists(sender, instance, *args, **kwargs):
+def add_slug_to_station_if_not_exists(sender, instance, *args, **kwargs):
     MAXIMUM_SLUG_LENGTH = 255
-
     if instance and not instance.slug:
         slug = slugify(instance.name)
         unique = generate_random_string()
