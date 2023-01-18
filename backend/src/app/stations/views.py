@@ -29,7 +29,7 @@ class StationView(viewsets.GenericViewSet):
             slots = request.data.get('slot')
             slot_context = {'station_id': serializer.data['id']}
             slot_data = {'status': 'empty'}
-            for i in range(slots['cantidad']):
+            for i in range(slots['quantity']):
                 serializer_slot = SlotSerializer(
                     data=slot_data, context=slot_context)
                 if (serializer_slot.is_valid(raise_exception=True)):
@@ -79,9 +79,7 @@ class BikeView(viewsets.GenericViewSet):
 
         if (request.data.get('slot')):
             slot = request.data.get('slot')
-            if slot['id'] is 0:
-                print('a')
-            else:
+            if slot['id'] is not None:
                 slot_context = {'bike_id': saved_bike.id}
                 saved_slot = get_object_or_404(
                     Slot.objects.all(), pk=slot['id'])
@@ -109,7 +107,6 @@ class SlotView(viewsets.GenericViewSet):
         return Response(serializer.data)
 
     def detach_bike(self, request, id):
-        print(id)
         slot = request.data.get('slot')
         saved_slot = get_object_or_404(Slot.objects.all(), pk=id)
         slot_context = {'bike_id': 0}

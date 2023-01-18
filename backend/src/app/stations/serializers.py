@@ -68,8 +68,11 @@ class SlotSerializer(serializers.ModelSerializer):
     def update(self, instance, validate_data):
         instance.status = validate_data.get('status', instance.status)
         bike_id = self.context['bike_id']
-        print(bike_id)
-        if bike_id is not 0 and not None:
+        if instance.bike_id is not None:
+            raise serializers.ValidationError(
+                'Slot is in use'
+            )
+        if bike_id != 0 and not None:
             bike = Bike.objects.get(pk=bike_id)
             if bike is None:
                 raise serializers.ValidationError(
@@ -77,7 +80,7 @@ class SlotSerializer(serializers.ModelSerializer):
                 )
             instance.bike_id = bike_id
 
-        if bike_id is 0:
+        if bike_id == 0:
             instance.bike_id = None
 
         instance.save()
