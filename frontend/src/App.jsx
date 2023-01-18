@@ -35,7 +35,7 @@ function App() {
             {/* DASHBOARD STATIONS */}
             <Route path="/dashboard/stations" element={<StationList />} />
             <Route path="/dashboard/stations/create" element={<StationsCreate />} />
-            <Route path="/dashboard/stations/update/:id" element={<StationsUpdate />} />
+            <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
