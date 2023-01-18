@@ -8,6 +8,7 @@ import './App.scss';
 function App() {
 
   const Home = React.lazy(() => import('./pages/Home/Home'));
+  const BikesList = React.lazy(() => import('./pages/Dashboard/Bikes/BikesList'));
   // const NotFound = React.lazy(() => import('./components/error_404'));
   // const ArticleList = React.lazy(() => import('./components/Article/ArticleList'));
   // const ArticleCreate = React.lazy(() => import('./components/Article/ArticleCreate'));
@@ -33,7 +34,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            {/* <Route path="*" element={<NotFound />} /> */}
+            {/* Dashboard Bikes */}
+            <Route path="/dashboard/bikes" element={<BikesList />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
