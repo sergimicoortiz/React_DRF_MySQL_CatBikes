@@ -8,10 +8,9 @@ import './App.scss';
 function App() {
 
   const Home = React.lazy(() => import('./pages/Home/Home'));
-  // const NotFound = React.lazy(() => import('./components/error_404'));
-  // const ArticleList = React.lazy(() => import('./components/Article/ArticleList'));
-  // const ArticleCreate = React.lazy(() => import('./components/Article/ArticleCreate'));
-  // const ArticleUpdate = React.lazy(() => import('./components/Article/ArticleUpdate'));
+  const StationList = React.lazy(() => import('./pages/Dashboard/Stations/StationsList'));
+  const StationsCreate = React.lazy(() => import('./pages/Dashboard/Stations/StationsCreate'));
+  const StationsUpdate = React.lazy(() => import('./pages/Dashboard/Stations/StationsUpdate'));
 
   return (
     <div>
@@ -33,7 +32,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            {/* <Route path="*" element={<NotFound />} /> */}
+            {/* DASHBOARD STATIONS */}
+            <Route path="/dashboard/stations" element={<StationList />} />
+            <Route path="/dashboard/stations/create" element={<StationsCreate />} />
+            <Route path="/dashboard/stations/update/:id" element={<StationsUpdate />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
