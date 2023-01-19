@@ -61,8 +61,8 @@ const StationsList = () => {
         <div>
             <h1>Stations List</h1>
             <button onClick={() => redirects.create()}>CREATE</button>
-            <button onClick={() => redirects.update(selectedRows[0].slug)} disabled={selectedRows.length != 1}>UPDATE</button>
-            <button onClick={() => deleteStations()} disabled={selectedRows.length == 0}>DELETE</button>
+            <button onClick={() => redirects.update(selectedRows[0].slug)} disabled={selectedRows.length !== 1}>UPDATE</button>
+            <button onClick={() => deleteStations()} disabled={selectedRows.length === 0}>DELETE</button>
             <DataTable
                 columns={columns}
                 data={stations}

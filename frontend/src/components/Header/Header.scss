@@ -1,5 +1,5 @@
+// https://codepen.io/themustafaomar/pen/VKbQye
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
-
 $font-family: 'Roboto', sans-serif;
 $font-size-base: 0.925rem;
 $base-color: #66f;
@@ -154,10 +154,10 @@ $navbar-dropdown-separator-color: $border-color;
         flex-basis: auto;
         flex-grow: 1;
 
-        @media (max-width: 768px) {
-            display: none;
-            text-align: center;
-        }
+        // @media (max-width: 768px) {
+        //     display: none;
+        //     text-align: center;
+        // }
 
         &.active {
             display: flex !important;

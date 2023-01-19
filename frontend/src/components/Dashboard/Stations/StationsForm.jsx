@@ -41,7 +41,7 @@ const StationForm = ({ SendData, station = {
     const buttonContent = station.slug !== '' ? 'Update' : 'Create';
 
     return (
-        <div>
+        <div className="formStations">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label>Name: </label>
                 <input
@@ -52,7 +52,7 @@ const StationForm = ({ SendData, station = {
 
                 <label>Status: </label>
                 <select name="status" {...register('status')} defaultValue="">
-                    <option value="" disabled>SELECT ONE OPTION</option>
+                    <option value="" disabled>Select</option>
                     <option value="empty">Empty</option>
                     <option value="full">In use</option>
                     <option value="inactive">Inactive</option>

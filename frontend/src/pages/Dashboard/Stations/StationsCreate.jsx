@@ -6,8 +6,8 @@ import { useStations } from "../../../hooks/useStations";
 const StationsCreate = () => {
     const { useCreateStation } = useStations();
     return (
-        <div>
-            <p>STATION CREATE</p>
+        <div className="stationCreate">
+            <h1>STATION CREATE</h1>
             <StationForm SendData={(data) => useCreateStation(data)} />
         </div>
     )
