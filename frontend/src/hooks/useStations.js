@@ -1,28 +1,23 @@
-import { useState, useEffect, useCallback } from "react"
+import { useCallback, useContext } from "react"
 import StationService from '../services/Dashboard/StationService';
 import { useNavigate } from "react-router-dom";
+import StationContext from "../context/StationsContext";
 import { toast } from "react-toastify";
 
 export function useStations() {
     const navigate = useNavigate();
-    const [stations, setStations] = useState([]);
+    const { stations, setStations } = useContext(StationContext);
 
-    useEffect(function () {
-        StationService.GetStations()
-            .then(res => setStations(res.data))
+
+    const useDeleteStation = (slug) => {
+        StationService.DeleteStation(slug)
+            .then(res => {
+                if (res.status === 200) {
+                    toast.success(`Station ${slug} deleted`);
+                };
+            })
             .catch(e => console.error(e));
-    }, []);
-
-    // const useDeleteArticle = (slug) => {
-    //     ArticleService.DeleteArticle(slug)
-    //         .then(res => {
-    //             if (res.status === 200) {
-    //                 setArticles(articles.filter(item => item.slug !== slug));
-    //                 toast.success('Article deleted');
-    //             };
-    //         })
-    //         .catch(e => console.error(e));
-    // }
+    }
 
     // const useOneArticle = useCallback((slug) => {
     //     console.log('a');
@@ -53,5 +48,5 @@ export function useStations() {
     //         .catch(e => console.error(e));
     // }, []);
 
-    return { stations };
+    return { stations, setStations, useDeleteStation };
 }

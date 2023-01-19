@@ -4,7 +4,7 @@ import { useStations } from "../../../hooks/useStations";
 import DataTable from 'react-data-table-component';
 
 const StationsList = () => {
-    const { stations } = useStations();
+    const { stations, setStations, useDeleteStation } = useStations();
 
     const columns = [
         {
@@ -36,7 +36,8 @@ const StationsList = () => {
         },
     ];
 
-    const [selectedRows, setSelectedRows] = useState(false);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
 
     const handleChange = ({ selectedRows }) => {
         setSelectedRows(selectedRows);
@@ -46,16 +47,26 @@ const StationsList = () => {
         console.log(selectedRows);
     }
 
+    const deleteStations = () => {
+        const slugsSelected = selectedRows.map(row => row.slug)
+        selectedRows.forEach(row => useDeleteStation(row.slug));
+        setToggleCleared(!toggleCleared);
+        setSelectedRows([]);
+        setStations(stations.filter(item => !slugsSelected.includes(item.slug)));
+    }
+
     return (
         <div>
             <h1>Stations List</h1>
-            <button onClick={logSelected}>TEST</button>
+            <button onClick={() => logSelected()}>TEST</button>
+            <button onClick={() => deleteStations()} disabled={selectedRows.length == 0}>DELETE</button>
             <DataTable
                 columns={columns}
                 data={stations}
                 pagination
                 selectableRows
                 onSelectedRowsChange={handleChange}
+                clearSelectedRows={toggleCleared}
             />
         </div>
     )
