@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loading from './components/Loading/Loading';
-// import Header from './components/Header';
+import Header from './components/Header/Header';
 import { ToastContainer } from 'react-toastify';
 import { StationContext } from './context/StationsContext';
 import './App.scss';
@@ -18,7 +18,7 @@ function App() {
       <Suspense fallback={<Loading />}>
         <BrowserRouter>
           <StationContext>
-            {/* <Header /> */}
+            <Header />
             <ToastContainer
               position="top-right"
               autoClose={2500}
