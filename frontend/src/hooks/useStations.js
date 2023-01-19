@@ -30,9 +30,25 @@ export function useStations() {
             .then(res => {
                 if (res.status === 200) {
                     toast.success(`Station ${slug} deleted`);
+                    setStations(stations.filter(item => item.slug !== slug));
                 };
             })
             .catch(e => console.error(e));
+    }
+
+    const useDeleteStationMultiple = async (slugs) => {
+        let slugs_ok = [];
+        for (let i = 0; i < slugs.length; i++) {
+            try {
+                await StationService.DeleteStation(slugs[i]);
+                slugs_ok.push(slugs[i]);
+                toast.success(`Station ${slugs[i]} deleted`);
+            } catch (error) {
+                toast.error(`Station ${slugs[i]} deleted`);
+                console.error(error);
+            }
+        }
+        setStations(stations.filter(item => !slugs_ok.includes(item.slug)));
     }
 
     const useCreateStation = useCallback(data => {
@@ -64,5 +80,5 @@ export function useStations() {
             .catch(e => console.error(e));
     }, []);
 
-    return { stations, setStations, oneStation, setOneStation, useDeleteStation, useCreateStation, useUpdateStation, useOneStation };
+    return { stations, setStations, oneStation, setOneStation, useDeleteStation, useCreateStation, useUpdateStation, useOneStation, useDeleteStationMultiple };
 }

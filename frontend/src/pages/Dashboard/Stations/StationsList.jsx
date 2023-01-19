@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const StationsList = () => {
     const navigate = useNavigate();
-    const { stations, setStations, useDeleteStation } = useStations();
+    const { stations, setStations, useDeleteStationMultiple } = useStations();
 
     const columns = [
         {
@@ -46,11 +46,9 @@ const StationsList = () => {
     };
 
     const deleteStations = () => {
-        const slugsSelected = selectedRows.map(row => row.slug)
-        selectedRows.forEach(row => useDeleteStation(row.slug));
+        useDeleteStationMultiple(selectedRows.map(row => row.slug));
         setToggleCleared(!toggleCleared);
         setSelectedRows([]);
-        setStations(stations.filter(item => !slugsSelected.includes(item.slug)));
     }
 
 
