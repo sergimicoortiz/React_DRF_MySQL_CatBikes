@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import('./StationsList.scss');
 import { useStations } from "../../../hooks/useStations";
 import DataTable from 'react-data-table-component';
+import { useNavigate } from "react-router-dom";
 
 const StationsList = () => {
+    const navigate = useNavigate();
     const { stations, setStations, useDeleteStation } = useStations();
 
     const columns = [
@@ -43,10 +45,6 @@ const StationsList = () => {
         setSelectedRows(selectedRows);
     };
 
-    const logSelected = () => {
-        console.log(selectedRows);
-    }
-
     const deleteStations = () => {
         const slugsSelected = selectedRows.map(row => row.slug)
         selectedRows.forEach(row => useDeleteStation(row.slug));
@@ -55,10 +53,17 @@ const StationsList = () => {
         setStations(stations.filter(item => !slugsSelected.includes(item.slug)));
     }
 
+
+    const redirects = {
+        create: () => navigate('/dashboard/stations/create'),
+        update: (slug) => navigate('/dashboard/stations/update/' + slug),
+    }
+
     return (
         <div>
             <h1>Stations List</h1>
-            <button onClick={() => logSelected()}>TEST</button>
+            <button onClick={() => redirects.create()}>CREATE</button>
+            <button onClick={() => redirects.update(selectedRows[0].slug)} disabled={selectedRows.length != 1}>UPDATE</button>
             <button onClick={() => deleteStations()} disabled={selectedRows.length == 0}>DELETE</button>
             <DataTable
                 columns={columns}

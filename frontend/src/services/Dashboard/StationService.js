@@ -7,7 +7,7 @@ const StationService = {
     },
 
     CreateStations(data) {
-        return Api().post('station', data);
+        return Api().post('station', { 'station': data });
     },
 
     GetStation(slug) {
@@ -19,7 +19,7 @@ const StationService = {
     },
 
     UpdateStation(slug, data) {
-        return Api().put(`station/${slug}`, data);
+        return Api().put(`station/${slug}`, { 'station': data });
     },
 
 }
