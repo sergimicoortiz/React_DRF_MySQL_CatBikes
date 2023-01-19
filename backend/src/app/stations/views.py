@@ -41,7 +41,6 @@ class StationView(viewsets.GenericViewSet):
 class BikeView(viewsets.GenericViewSet):
 
     def get(self, request, slug=None):
-        print("dentro del get")
         if slug:
             show_bikes = get_object_or_404(Bike.objects.all(), slug=slug)
             serializer = BikeSerializer(show_bikes)

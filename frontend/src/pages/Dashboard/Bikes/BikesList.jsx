@@ -1,13 +1,15 @@
 import React from "react";
-
 import { useBikes } from "../../../hooks/useBikes";
 
 import DataTable from 'react-data-table-component';
-
+import { useNavigate } from "react-router-dom";
 
 const BikesList = () => {
-    const { bikes } = useBikes();
+    const { bikes, setBikes, deleteBike } = useBikes();
     const [selectedRows, setSelectedRows] = React.useState(false);
+    const [toggledClearRows, setToggleClearRows] = React.useState(false);
+
+    const navigate = useNavigate();
 
     const columns = [
         {
@@ -30,21 +32,37 @@ const BikesList = () => {
     const handleChange = ({ selectedRows }) => {
         setSelectedRows(selectedRows);
     };
-    console.log(selectedRows)
 
-
+    const removeSelectedBikes = () => {
+        console.log(selectedRows)
+        if (selectedRows.length > 0) {
+            deleteBike(selectedRows)
+        }
+        setToggleClearRows(!toggledClearRows);
+        setSelectedRows([])
+    };
 
     return (
-        <DataTable
-            columns={columns}
-            data={bikes}
-            pagination
-            selectableRows
-            onSelectedRowsChange={handleChange}
+        <div>
+            <div>
+                <button onClick={() => {
+                    navigate('/dashboard/bikes/create')
+                }}>Create</button>
+                <button onClick={() => {
+                    removeSelectedBikes()
+                }}>Delete</button>
+            </div>
+            <DataTable
+                columns={columns}
+                data={bikes}
+                pagination
+                selectableRows
+                onSelectedRowsChange={handleChange}
+                clearSelectedRows={toggledClearRows}
 
-        />
+            />
+        </div>
     );
-
 }
 
 export default BikesList;

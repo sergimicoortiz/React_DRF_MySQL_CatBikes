@@ -4,15 +4,13 @@ import Loading from './components/Loading/Loading';
 // import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
 import './App.scss';
+import { BikesContextProvider } from "./context/BikesContext";
 
 function App() {
 
   const Home = React.lazy(() => import('./pages/Home/Home'));
   const BikesList = React.lazy(() => import('./pages/Dashboard/Bikes/BikesList'));
-  // const NotFound = React.lazy(() => import('./components/error_404'));
-  // const ArticleList = React.lazy(() => import('./components/Article/ArticleList'));
-  // const ArticleCreate = React.lazy(() => import('./components/Article/ArticleCreate'));
-  // const ArticleUpdate = React.lazy(() => import('./components/Article/ArticleUpdate'));
+  const BikesCreate = React.lazy(() => import('./pages/Dashboard/Bikes/BikesCreate'));
 
   return (
     <div>
@@ -31,12 +29,15 @@ function App() {
             pauseOnHover
             theme="light"
           />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            {/* Dashboard Bikes */}
-            <Route path="/dashboard/bikes" element={<BikesList />} />
-          </Routes>
+          <BikesContextProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              {/* Dashboard Bikes */}
+              <Route path="/dashboard/bikes" element={<BikesList />} />
+              <Route path="/dashboard/bikes/create" element={<BikesCreate />} />
+            </Routes>
+          </BikesContextProvider>
         </BrowserRouter>
       </Suspense>
     </div>
