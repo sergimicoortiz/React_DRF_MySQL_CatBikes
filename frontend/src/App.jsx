@@ -9,6 +9,7 @@ import './App.scss';
 function App() {
 
   const Home = React.lazy(() => import('./pages/Home/Home'));
+  const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'));
   const StationList = React.lazy(() => import('./pages/Dashboard/Stations/StationsList'));
   const StationsCreate = React.lazy(() => import('./pages/Dashboard/Stations/StationsCreate'));
   const StationsUpdate = React.lazy(() => import('./pages/Dashboard/Stations/StationsUpdate'));
@@ -34,6 +35,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               {/* DASHBOARD STATIONS */}
               <Route path="/dashboard/stations" element={<StationList />} />
               <Route path="/dashboard/stations/create" element={<StationsCreate />} />
