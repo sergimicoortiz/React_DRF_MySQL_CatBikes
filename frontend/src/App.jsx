@@ -2,12 +2,14 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loading from './components/Loading/Loading';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import { StationContext } from './context/StationsContext';
 import './App.scss';
 
 function App() {
 
+  const NotFound = React.lazy(() => import('./pages/NotFound/NotFound'));
   const Home = React.lazy(() => import('./pages/Home/Home'));
   const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'));
   const StationList = React.lazy(() => import('./pages/Dashboard/Stations/StationsList'));
@@ -33,6 +35,7 @@ function App() {
               theme="light"
             />
             <Routes>
+              <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
@@ -41,6 +44,7 @@ function App() {
               <Route path="/dashboard/stations/create" element={<StationsCreate />} />
               <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
             </Routes>
+            <Footer />
           </StationContext>
         </BrowserRouter>
       </Suspense>
