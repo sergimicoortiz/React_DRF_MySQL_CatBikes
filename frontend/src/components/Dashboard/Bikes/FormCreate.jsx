@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
+import './BikesForm.scss';
+
 export default function FormCreate({ createBike }) {
 
     const validationSchema = Yup.object().shape({
@@ -12,7 +14,7 @@ export default function FormCreate({ createBike }) {
             .max(20, 'name must not exceed 20 characters'),
         status: Yup.string()
             .required('status is required')
-            .min(6, 'status must be at least 6 characters')
+            .min(5, 'status must be at least 6 characters')
             .max(20, 'status must not exceed 20 characters'),
     });
 
@@ -24,14 +26,21 @@ export default function FormCreate({ createBike }) {
     }
 
     return (
-        <form onSubmit={handleSubmit(getForm)}>
-            <input name="name" type="text" placeholder='name' {...register("name")} className={`form-control ${errors.name ? 'is-invalid' : ''}`} />
-            <div className="invalid-feedback">{errors.name?.message}</div>
-            <input name="status" type="text" placeholder='status' {...register("status")} className={`form-control ${errors.status ? 'is-invalid' : ''}`} />
-            <div className="invalid-feedback">{errors.status?.message}</div>
-            <button>
-                Send
-            </button>
-        </form>
+        <div className="formStations">
+            <form onSubmit={handleSubmit(getForm)}>
+                <input name="name" type="text" placeholder='Name' {...register("name")} className={`form-control ${errors.name ? 'is-invalid' : ''}`} />
+                <div className="invalid-feedback">{errors.name?.message}</div>
+                <select name="status" {...register('status')} defaultValue="">
+                    <option value="" disabled>Select</option>
+                    <option value="empty">Empty</option>
+                    <option value="full">In use</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <div className="invalid-feedback">{errors.status?.message}</div>
+                <button>
+                    Send
+                </button>
+            </form>
+        </div>
     )
 }
