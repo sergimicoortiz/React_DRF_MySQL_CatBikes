@@ -1,10 +1,11 @@
 import React from 'react';
 import './Home.scss';
+import CaruselStations from '../../components/Carusel/CaruselStations';
 
 const Home = () => {
     return (
         <div>
-            <p>HOME</p>
+            <CaruselStations />
         </div>
     )
 }
