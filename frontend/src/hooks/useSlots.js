@@ -17,12 +17,11 @@ export function useSlots() {
             })
     }, []);
 
-    const returnBike = (slug) => {
-        console.log(slug, "slug")
-        // returnBike.returnBike(slug)
-        //     .then(data => {
-        //         console.log(data)
-        //     })
+    const returnBike = (slug, id) => {
+        SlotService.returnBikeBackend(slug, id)
+            .then(data => {
+                console.log(data)
+            })
     }
 
     const saveBike = (slug) => {

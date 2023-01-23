@@ -8,15 +8,15 @@ const getOne = (id) => {
   return Api().get("/slot/" + id);
 };
 
-const returnBike = (slug) => {
-  return Api().get("/bikes/" + slug);
+const returnBikeBackend = (slug, id) => {
+  return Api().put("/bikes/" + slug, { 'bike': {}, 'slot': { 'id': id } });
 };
 
 
 const SlotService = {
   getAll,
   getOne,
-  returnBike
+  returnBikeBackend
 };
 
 export default SlotService;

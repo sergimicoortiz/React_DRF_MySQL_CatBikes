@@ -27,7 +27,7 @@ const SlotsList = () => {
         <div>
             <SlotsDropdown bikes={bikes} key={bikes.slug} saveBike={saveBike}></SlotsDropdown>
             <button className="custom-btn btn-13 center" onClick={() => {
-                saveSlot.bike ? returnBike(saveSlot.bike) : toast.error("Select any bike pls")
+                saveSlot.bike ? returnBike(saveSlot.bike, id) : toast.error("Select any bike pls")
             }}>Dejar bici</button>
         </div>
 
