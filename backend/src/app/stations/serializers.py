@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Station
 from .models import Bike
+from .models import Slot
 
 
 class StationSerializer(serializers.ModelSerializer):
@@ -32,3 +33,55 @@ class BikeSerializer(serializers.ModelSerializer):
             "name": instance.name,
             "status": instance.status,
         }
+
+
+class SlotSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Slot
+        fields = ['id', 'station_id', 'bike_id', 'status']
+
+    def to_Slot(instance):
+        return {
+            "id": instance.id,
+            "station_id": instance.station_id,
+            "bike_id": instance.bike_id,
+            "status": instance.status,
+        }
+
+    def create(self, validate_data):
+        station_id = self.context['station_id']
+        station = Station.objects.get(pk=station_id)
+
+        if station is None:
+            raise serializers.ValidationError(
+                'Station is not find'
+            )
+
+        slot = Slot.objects.create(
+            station_id=station_id,
+            bike_id=None,
+            **validate_data
+        )
+        return slot
+
+    def update(self, instance, validate_data):
+        instance.status = validate_data.get('status', instance.status)
+        bike_id = self.context['bike_id']
+        if instance.bike_id is not None:
+            raise serializers.ValidationError(
+                'Slot is in use'
+            )
+        if bike_id != 0 and not None:
+            bike = Bike.objects.get(pk=bike_id)
+            if bike is None:
+                raise serializers.ValidationError(
+                    'Bike is not find'
+                )
+            instance.bike_id = bike_id
+
+        if bike_id == 0:
+            instance.bike_id = None
+
+        instance.save()
+        return instance
