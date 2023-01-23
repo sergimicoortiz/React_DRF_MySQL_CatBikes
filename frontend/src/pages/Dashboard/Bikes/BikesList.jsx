@@ -48,13 +48,13 @@ const BikesList = () => {
             <div>
                 <button className="custom-btn btn-3" onClick={() => {
                     navigate('/dashboard/bikes/create')
-                }}>Create</button>
+                }}><span>CREATE</span></button>
                 <button className="custom-btn btn-13" onClick={() => {
                     navigate('/dashboard/bikes/update/' + selectedRows[0].slug)
-                }} disabled={selectedRows == 0}>Update</button>
+                }} disabled={selectedRows == 0}><span>UPDATE</span></button>
                 <button className="custom-btn btn-5" onClick={() => {
                     removeSelectedBikes()
-                }}>Delete</button>
+                }}><span>DELETE</span></button>
             </div>
             <DataTable
                 columns={columns}

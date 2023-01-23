@@ -104,4 +104,4 @@ class SlotView(viewsets.GenericViewSet):
         slot_context = {'bike_id': 0}
         serializer_slot = SlotSerializer.update(
             instance=saved_slot, context=slot_context)
-        return Response(serializer_slot.data)
+        return Response(SlotSerializer.to_Slot(serializer_slot))

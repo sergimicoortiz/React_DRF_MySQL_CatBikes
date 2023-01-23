@@ -68,7 +68,7 @@ class SlotSerializer(serializers.ModelSerializer):
 
     def update(context, instance):
         bike_id = context['bike_id']
-        if instance.bike_id is not None:
+        if bike_id != 0 and instance.bike_id is not None:
             raise serializers.ValidationError(
                 'Slot is in use'
             )

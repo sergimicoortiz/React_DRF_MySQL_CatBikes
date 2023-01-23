@@ -24,6 +24,7 @@ function App() {
   const StationsUpdate = React.lazy(() => import('./pages/Dashboard/Stations/StationsUpdate'));
 
   const SlotsList = React.lazy(() => import('./pages/Dashboard/Slots/SlotsList'));
+  const SlotsDetails = React.lazy(() => import('./pages/Dashboard/Slots/SlotsDetails'));
 
 
 
@@ -62,6 +63,7 @@ function App() {
                   <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
                   {/* Dashboard Slots */}
                   <Route path="/dashboard/slots" element={<SlotsList />} />
+                  <Route path="/dashboard/slots/:id" element={<SlotsDetails />} />
                 </Routes>
                 <Footer />
               </SlotsContextProvider>

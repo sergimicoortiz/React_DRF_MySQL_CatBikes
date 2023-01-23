@@ -6,8 +6,8 @@ const StationService = {
         return Api().get('station');
     },
 
-    CreateStations(data) {
-        return Api().post('station', { 'station': data });
+    CreateStations(data, slot_quantity = 0) {
+        return Api().post('station', { 'station': data, 'slot': { 'quantity': slot_quantity } });
     },
 
     GetStation(slug) {
