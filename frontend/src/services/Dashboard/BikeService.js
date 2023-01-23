@@ -5,12 +5,15 @@ const getAll = () => {
 };
 
 const getOne = (slug) => {
-  return Api().get("/bikes", slug);
+  return Api().get("/bikes/" + slug);
 };
 
 const createBike = (data) => {
-  console.log(data)
   return Api().post("/bikes", data);
+};
+
+const updateBike = (data) => {
+  return Api().put("/bikes/" + data.bike.slug, data);
 };
 
 const deleteBike = (data) => {
@@ -21,7 +24,8 @@ const BikeService = {
   getAll,
   getOne,
   createBike,
-  deleteBike
+  deleteBike,
+  updateBike
 };
 
 export default BikeService;

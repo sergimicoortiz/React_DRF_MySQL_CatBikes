@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useCallback, useState } from 'react'
 import BikeService from '../services/Dashboard/BikeService';
 import BikesContext from '../context/BikesContext'
 import { toast } from 'react-toastify'
@@ -6,7 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 export function useBikes() {
     const { bikes, setBikes } = useContext(BikesContext);
+    const [oneBike, setOneBike] = useState({});
     const navigate = useNavigate();
+
+    const getOneBike = useCallback((slug) => {
+        BikeService.getOne(slug).
+            then(({ data }) => {
+                setOneBike(data)
+            })
+    }, []);
 
     const createBike = ((data) => {
         BikeService.createBike(data)
@@ -35,10 +43,23 @@ export function useBikes() {
         setBikes(bikes.filter(item => !save.includes(item.slug)))
     })
 
-    return { bikes, setBikes, createBike, deleteBike }
-}
-export function useBike() {
+    const updateBikes = ((data) => {
+        BikeService.updateBike(data)
+            .then((dataThen) => {
+                if (dataThen.status == 200) {
+                    let get_Old_Bike = [...bikes];
+                    const remove_old = get_Old_Bike.findIndex(item => item.slug === data.bike.slug);
+                    if (remove_old !== -1) {
+                        get_Old_Bike[remove_old] = data.bike;
+                        setBikes(get_Old_Bike);
+                    }
+                    navigate('/dashboard/bikes')
+                    toast.success("Created successfully")
+                } else {
+                    toast.error("Something failed")
+                }
+            })
+    })
 
-    const { bike, setBike } = useContext(BikesContext);
-
+    return { bikes, setBikes, createBike, deleteBike, getOneBike, oneBike, setOneBike, updateBikes }
 }

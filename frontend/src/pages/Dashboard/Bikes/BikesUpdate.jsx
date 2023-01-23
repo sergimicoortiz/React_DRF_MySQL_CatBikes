@@ -6,15 +6,14 @@ import FormUpdate from "../../../components/Dashboard/Bikes/FormUpdate";
 
 const BikesList = () => {
     const { slug } = useParams();
-    const { bikes, updateBikes } = useBikes();
+    const { updateBikes, getOneBike, oneBike } = useBikes(slug);
 
-    const getData = bikes.filter(item => {
-        return item.slug == slug
-    })
-    console.log(getData[0].id)
+    useEffect(function () {
+        getOneBike(slug);
+    }, [])
 
     return (
-        <FormUpdate updateBikes={getData[0]}></FormUpdate>
+        < FormUpdate oneBike={oneBike} key={oneBike.slug} updateBikes={updateBikes}></FormUpdate >
     );
 }
 

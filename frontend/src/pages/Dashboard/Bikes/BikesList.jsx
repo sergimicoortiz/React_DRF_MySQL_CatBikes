@@ -34,7 +34,6 @@ const BikesList = () => {
     };
 
     const removeSelectedBikes = () => {
-        console.log(selectedRows)
         if (selectedRows.length > 0) {
             deleteBike(selectedRows)
         }

@@ -3,8 +3,7 @@ import { set, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-export default function FormCreate({ updateBikes }) {
-    console.log(updateBikes)
+export default function FormCreate({ oneBike, updateBikes }) {
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
@@ -22,9 +21,10 @@ export default function FormCreate({ updateBikes }) {
     });
 
     useEffect(function () {
-        setValue("name", updateBikes.name)
-        setValue("status", updateBikes.status)
-    }, [updateBikes])
+        setValue("slug", oneBike.slug)
+        setValue("name", oneBike.name)
+        setValue("status", oneBike.status)
+    }, [oneBike])
 
 
     const getForm = (data) => {
