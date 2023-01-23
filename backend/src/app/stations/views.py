@@ -14,7 +14,7 @@ class StationView(viewsets.GenericViewSet):
         if slug:
             station = get_object_or_404(Station.objects.all(), slug=slug)
             serializer_one = StationSerializer(station)
-            return Response({'data': serializer_one.data})
+            return Response(serializer_one.data)
         stations = Station.objects.all()
         serializer = StationSerializer(stations, many=True)
         return Response(serializer.data)
