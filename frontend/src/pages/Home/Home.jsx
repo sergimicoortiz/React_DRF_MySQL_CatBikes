@@ -1,10 +1,12 @@
+import React from 'react';
 import './Home.scss';
 
-export default function Home() {
-
+const Home = () => {
     return (
-        <div className='test'>
+        <div>
             <p>HOME</p>
         </div>
     )
 }
+
+export default Home;

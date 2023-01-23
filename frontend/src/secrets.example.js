@@ -1,5 +1,5 @@
 const secrets = {
-    URL_DRF: "http://localhost:8888/api/"
+    URL_DRF: "http://localhost:8000/api/"
 }
 
 export default secrets;
