@@ -49,6 +49,9 @@ const BikesList = () => {
                     navigate('/dashboard/bikes/create')
                 }}>Create</button>
                 <button onClick={() => {
+                    navigate('/dashboard/bikes/update/' + selectedRows[0].slug)
+                }} disabled={selectedRows == 0}>Update</button>
+                <button onClick={() => {
                     removeSelectedBikes()
                 }}>Delete</button>
             </div>

@@ -4,6 +4,10 @@ const getAll = () => {
   return Api().get("/bikes");
 };
 
+const getOne = (slug) => {
+  return Api().get("/bikes", slug);
+};
+
 const createBike = (data) => {
   console.log(data)
   return Api().post("/bikes", data);
@@ -15,6 +19,7 @@ const deleteBike = (data) => {
 
 const BikeService = {
   getAll,
+  getOne,
   createBike,
   deleteBike
 };

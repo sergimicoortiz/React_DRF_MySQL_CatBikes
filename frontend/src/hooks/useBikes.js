@@ -8,14 +8,6 @@ export function useBikes() {
     const { bikes, setBikes } = useContext(BikesContext);
     const navigate = useNavigate();
 
-    useEffect(function () {
-        console.log("asd")
-        BikeService.getAll()
-            .then(({ data }) => {
-                setBikes(data)
-            })
-    }, [setBikes])
-
     const createBike = ((data) => {
         BikeService.createBike(data)
             .then((dataThen) => {
@@ -43,20 +35,10 @@ export function useBikes() {
         setBikes(bikes.filter(item => !save.includes(item.slug)))
     })
 
-
-
-
-
-
-
-    //     await BikeService.deleteBike(data)
-    //         .then((dataThen) => {
-    //             console.log(dataThen)
-    //             if (dataThen.status == 200) {
-    //                 setBikes(bikes.filter(item_filter => item_filter.slug !== data.slug))
-    //             }
-    //         })
-    // console.log(bikes)
-
     return { bikes, setBikes, createBike, deleteBike }
+}
+export function useBike() {
+
+    const { bike, setBike } = useContext(BikesContext);
+
 }

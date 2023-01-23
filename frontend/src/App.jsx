@@ -11,6 +11,7 @@ function App() {
   const Home = React.lazy(() => import('./pages/Home/Home'));
   const BikesList = React.lazy(() => import('./pages/Dashboard/Bikes/BikesList'));
   const BikesCreate = React.lazy(() => import('./pages/Dashboard/Bikes/BikesCreate'));
+  const BikesUpdate = React.lazy(() => import('./pages/Dashboard/Bikes/BikesUpdate'));
 
   return (
     <div>
@@ -36,6 +37,7 @@ function App() {
               {/* Dashboard Bikes */}
               <Route path="/dashboard/bikes" element={<BikesList />} />
               <Route path="/dashboard/bikes/create" element={<BikesCreate />} />
+              <Route path="/dashboard/bikes/update/:slug" element={<BikesUpdate />} />
             </Routes>
           </BikesContextProvider>
         </BrowserRouter>
