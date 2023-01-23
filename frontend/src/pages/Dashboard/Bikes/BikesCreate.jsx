@@ -10,7 +10,6 @@ const BikesList = () => {
 
     return (
         <div>
-            Create
             <FormCreate createBike={createBike}></FormCreate>
         </div>
     );

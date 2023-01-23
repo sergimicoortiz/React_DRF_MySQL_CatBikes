@@ -4,6 +4,8 @@ import { useBikes } from "../../../hooks/useBikes";
 import DataTable from 'react-data-table-component';
 import { useNavigate } from "react-router-dom";
 
+import '../Dashboard.scss'
+
 const BikesList = () => {
     const { bikes, setBikes, deleteBike } = useBikes();
     const [selectedRows, setSelectedRows] = React.useState(false);
@@ -44,13 +46,13 @@ const BikesList = () => {
     return (
         <div>
             <div>
-                <button onClick={() => {
+                <button className="custom-btn btn-3" onClick={() => {
                     navigate('/dashboard/bikes/create')
                 }}>Create</button>
-                <button onClick={() => {
+                <button className="custom-btn btn-13" onClick={() => {
                     navigate('/dashboard/bikes/update/' + selectedRows[0].slug)
                 }} disabled={selectedRows == 0}>Update</button>
-                <button onClick={() => {
+                <button className="custom-btn btn-5" onClick={() => {
                     removeSelectedBikes()
                 }}>Delete</button>
             </div>
