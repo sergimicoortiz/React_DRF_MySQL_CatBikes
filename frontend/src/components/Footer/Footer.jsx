@@ -18,7 +18,7 @@ const Footer = () => {
                 <p>Copyright <span id="year">2023</span></p>
 
                 <div className="footer-menu">
-                    <ul class="f-menu">
+                    <ul className="f-menu">
                         <li><a href="https://github.com/sergimicoortiz">Sergi Micó Ortiz</a></li>
                         <li><a href="https://github.com/JuanLuisLopez-code">Juan Luis Lopez</a></li>
                     </ul>
