@@ -24,16 +24,11 @@ class StationView(viewsets.GenericViewSet):
         serializer = StationSerializer(data=station)
         if (serializer.is_valid(raise_exception=True)):
             serializer.save()
-
         if (request.data.get('slot')):
             slots = request.data.get('slot')
             slot_context = {'station_id': serializer.data['id']}
-            slot_data = {'status': 'empty'}
             for i in range(slots['quantity']):
-                serializer_slot = SlotSerializer(
-                    data=slot_data, context=slot_context)
-                if (serializer_slot.is_valid(raise_exception=True)):
-                    serializer_slot.save()
+                SlotSerializer.create(context=slot_context)
         return Response(serializer.data)
 
     def delete(self, request, slug):
@@ -77,16 +72,14 @@ class BikeView(viewsets.GenericViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
-        if (request.data.get('slot')):
-            slot = request.data.get('slot')
+        slot = request.data.get('slot')
+        if (slot):
             if slot['id'] is not None:
                 slot_context = {'bike_id': saved_bike.id}
                 saved_slot = get_object_or_404(
                     Slot.objects.all(), pk=slot['id'])
-                serializer_slot = SlotSerializer(
-                    instance=saved_slot, data=slot, context=slot_context, partial=True)
-                if (serializer_slot.is_valid(raise_exception=True)):
-                    serializer_slot.save()
+                SlotSerializer.update(
+                    instance=saved_slot, context=slot_context)
 
         return Response(serializer.data)
 
@@ -107,11 +100,8 @@ class SlotView(viewsets.GenericViewSet):
         return Response(serializer.data)
 
     def detach_bike(self, request, id):
-        slot = request.data.get('slot')
         saved_slot = get_object_or_404(Slot.objects.all(), pk=id)
         slot_context = {'bike_id': 0}
-        serializer_slot = SlotSerializer(
-            instance=saved_slot, data=slot, context=slot_context, partial=True)
-        if (serializer_slot.is_valid(raise_exception=True)):
-            serializer_slot.save()
+        serializer_slot = SlotSerializer.update(
+            instance=saved_slot, context=slot_context)
         return Response(serializer_slot.data)

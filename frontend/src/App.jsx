@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { StationContext } from './context/StationsContext';
 import './App.scss';
 import { BikesContextProvider } from "./context/BikesContext";
+import { SlotsContextProvider } from "./context/SlotsContext";
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
   const StationsCreate = React.lazy(() => import('./pages/Dashboard/Stations/StationsCreate'));
   const StationsUpdate = React.lazy(() => import('./pages/Dashboard/Stations/StationsUpdate'));
 
+  const SlotsList = React.lazy(() => import('./pages/Dashboard/Slots/SlotsList'));
+
+
 
   return (
     <div>
@@ -29,34 +33,38 @@ function App() {
         <BrowserRouter>
           <StationContext>
             <BikesContextProvider>
-              <Header />
-              <ToastContainer
-                position="top-right"
-                autoClose={2500}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss={false}
-                draggable
-                pauseOnHover
-                theme="light"
-              />
-              <Routes>
-                <Route path="*" element={<NotFound />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                {/* Dashboard Bikes */}
-                <Route path="/dashboard/bikes" element={<BikesList />} />
-                <Route path="/dashboard/bikes/create" element={<BikesCreate />} />
-                <Route path="/dashboard/bikes/update/:slug" element={<BikesUpdate />} />
-                {/* DASHBOARD STATIONS */}
-                <Route path="/dashboard/stations" element={<StationList />} />
-                <Route path="/dashboard/stations/create" element={<StationsCreate />} />
-                <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
-              </Routes>
-              <Footer />
+              <SlotsContextProvider>
+                <Header />
+                <ToastContainer
+                  position="top-right"
+                  autoClose={2500}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss={false}
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+                <Routes>
+                  <Route path="*" element={<NotFound />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  {/* Dashboard Bikes */}
+                  <Route path="/dashboard/bikes" element={<BikesList />} />
+                  <Route path="/dashboard/bikes/create" element={<BikesCreate />} />
+                  <Route path="/dashboard/bikes/update/:slug" element={<BikesUpdate />} />
+                  {/* DASHBOARD STATIONS */}
+                  <Route path="/dashboard/stations" element={<StationList />} />
+                  <Route path="/dashboard/stations/create" element={<StationsCreate />} />
+                  <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
+                  {/* Dashboard Slots */}
+                  <Route path="/dashboard/slots" element={<SlotsList />} />
+                </Routes>
+                <Footer />
+              </SlotsContextProvider>
             </BikesContextProvider>
           </StationContext>
         </BrowserRouter>
