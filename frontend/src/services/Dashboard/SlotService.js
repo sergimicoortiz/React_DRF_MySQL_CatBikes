@@ -12,11 +12,16 @@ const returnBikeBackend = (slug, id) => {
   return Api().put("/bikes/" + slug, { 'bike': {}, 'slot': { 'id': id } });
 };
 
+const rentBikeBackend = (id) => {
+  return Api().put("/slot/detach_bike/" + id);
+};
+
 
 const SlotService = {
   getAll,
   getOne,
-  returnBikeBackend
+  returnBikeBackend,
+  rentBikeBackend
 };
 
 export default SlotService;

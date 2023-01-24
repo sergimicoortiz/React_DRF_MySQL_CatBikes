@@ -9,7 +9,7 @@ import '../Dashboard.scss'
 
 const SlotsList = () => {
     const { id } = useParams();
-    const { getOneSlot, oneSlot, returnBike, saveBike, saveSlot } = useSlots(id);
+    const { getOneSlot, oneSlot, returnBike, saveBike, saveSlot, rentBikeBackend } = useSlots(id);
     const { bikes } = useBikes();
 
     useEffect(function () {
@@ -20,7 +20,8 @@ const SlotsList = () => {
         ?
         <div>
             <button className="custom-btn btn-13 center" onClick={() => {
-            }}>Alquilar bici</button>
+                rentBikeBackend(id)
+            }}>Rent Bike</button>
         </div>
 
         :
@@ -28,7 +29,7 @@ const SlotsList = () => {
             <SlotsDropdown bikes={bikes} key={bikes.slug} saveBike={saveBike}></SlotsDropdown>
             <button className="custom-btn btn-13 center" onClick={() => {
                 saveSlot.bike ? returnBike(saveSlot.bike, id) : toast.error("Select any bike pls")
-            }}>Dejar bici</button>
+            }}>Keep in Slot</button>
         </div>
 
     return (

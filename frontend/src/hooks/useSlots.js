@@ -3,6 +3,7 @@ import SlotService from '../services/Dashboard/SlotService';
 import SlotsContext from '../context/SlotsContext'
 import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";
+import BikeService from '../services/Dashboard/BikeService';
 
 export function useSlots() {
     const { slots, setSlots } = useContext(SlotsContext);
@@ -25,11 +26,18 @@ export function useSlots() {
     }
 
     const saveBike = (slug) => {
-        if (slug){
+        if (slug) {
             setSaveSlot(slug)
         }
     }
 
+    const rentBikeBackend = (id) => {
+        SlotService.rentBikeBackend(id)
+        .then(data=>{
+            console.log(data)
+        })
+    }
 
-    return { slots, setSlots, getOneSlot, oneSlot, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot }
+
+    return { slots, setSlots, getOneSlot, oneSlot, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot, rentBikeBackend }
 }
