@@ -1,14 +1,11 @@
-@import 'pure-react-carousel/dist/react-carousel.es.css';
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/scrollbar';
 
 .carusel_item {
     img {
-        width: 100%;
-        height: 100%;
+        width: 50%;
+        height: 50%;
     }
-}
-
-.carusel{
-    width: 50%;
-    height: auto;
-    margin: auto;
 }

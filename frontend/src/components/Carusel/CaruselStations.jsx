@@ -1,39 +1,33 @@
 import React from "react";
-import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
 import CaruselItem from "./caruselItem";
 import './CaruselStations.scss';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 
 
 const CaruselStations = () => {
 
     const data = [
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg' },
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg' },
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg' },
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg' },
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg' },
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg', slug: 's' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg', slug: 's' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg', slug: 's' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg', slug: 's' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg', slug: 's' },
     ]
 
     const carusel_items = data.map((item, index) =>
-        <Slide index={index} key={index}><CaruselItem data={item}/></Slide>)
-
+        <SwiperSlide key={index}><CaruselItem data={item} /></SwiperSlide>)
     return (
         <div>
-            <CarouselProvider
-                className="carusel"
-                naturalSlideWidth={100}
-                naturalSlideHeight={125}
-                touchEnabled={true}
-                infinite={true}
-                interval={200}
-                dragEnabled={true}
-                totalSlides={3}>
-                <Slider>
-                    {carusel_items}
-                </Slider>
-            </CarouselProvider>
+            <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={50}
+                navigation
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}>
+                {carusel_items}
+            </Swiper>
         </div>
     )
 }
