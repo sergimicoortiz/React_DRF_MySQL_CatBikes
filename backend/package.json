@@ -7,7 +7,8 @@
     "dev": "pipenv run python ./manage.py runserver 0.0.0.0:8000",
     "mm": "pipenv run python ./manage.py makemigrations",
     "m": "pipenv run python ./manage.py migrate",
-    "admin": "pipenv run python ./manage.py createsuperuser"
+    "admin": "pipenv run python ./manage.py createsuperuser",
+    "d": "pipenv run python ./filler.py"
   },
   "keywords": [],
   "author": "",
