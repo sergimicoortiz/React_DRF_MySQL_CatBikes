@@ -14,7 +14,7 @@ export default function FormCreate({ oneBike, updateBikes }) {
             .max(20, 'name must not exceed 20 characters'),
         status: Yup.string()
             .required('status is required')
-            .min(6, 'status must be at least 6 characters')
+            .min(3, 'status must be at least 6 characters')
             .max(20, 'status must not exceed 20 characters'),
     });
 

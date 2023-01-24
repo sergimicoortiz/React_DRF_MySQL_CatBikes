@@ -101,7 +101,19 @@ class SlotView(viewsets.GenericViewSet):
 
     def detach_bike(self, request, id):
         saved_slot = get_object_or_404(Slot.objects.all(), pk=id)
+
+        saved_bike_id = SlotSerializer.to_Slot(saved_slot)
+
+        saved_bike = get_object_or_404(
+            Bike.objects.all(), pk=saved_bike_id['bike_id'])
+        data = {'status': 'used'}
+        serializer = BikeSerializer(
+            instance=saved_bike, data=data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
         slot_context = {'bike_id': 0}
         serializer_slot = SlotSerializer.update(
             instance=saved_slot, context=slot_context)
+
         return Response(SlotSerializer.to_Slot(serializer_slot))

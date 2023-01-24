@@ -9,7 +9,7 @@ const getOne = (id) => {
 };
 
 const returnBikeBackend = (slug, id) => {
-  return Api().put("/bikes/" + slug, { 'bike': {}, 'slot': { 'id': id } });
+  return Api().put("/bikes/" + slug, { 'bike': { status: 'unused' }, 'slot': { 'id': id } });
 };
 
 const rentBikeBackend = (id) => {
