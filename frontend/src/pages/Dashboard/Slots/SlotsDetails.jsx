@@ -15,7 +15,6 @@ const SlotsList = () => {
     useEffect(function () {
         getOneSlot(id);
     }, [])
-    console.log(saveSlot.bike)
     const buttons = oneSlot.status == "used"
         ?
         <div>

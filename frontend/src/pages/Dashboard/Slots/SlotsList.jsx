@@ -10,8 +10,6 @@ const SlotsList = () => {
     // Cambiar
     const { slots, setSlots } = useSlots();
 
-    console.log(slots)
-
     const [selectedRows, setSelectedRows] = React.useState(false);
     const [toggledClearRows, setToggleClearRows] = React.useState(false);
 
@@ -47,8 +45,8 @@ const SlotsList = () => {
     return (
         <div>
             <button className="custom-btn btn-13" onClick={() => {
-                    navigate('/dashboard/slots/' + selectedRows[0].id)
-                }} disabled={selectedRows == 0}>Details</button>
+                navigate('/dashboard/slots/' + selectedRows[0].id)
+            }} disabled={selectedRows == 0}>Details</button>
             <DataTable
                 columns={columns}
                 data={slots}
