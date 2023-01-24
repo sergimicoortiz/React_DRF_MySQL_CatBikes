@@ -3,7 +3,7 @@ import { set, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import './BikesForm.scss';
-    
+
 
 export default function FormCreate({ oneBike, updateBikes }) {
 
@@ -14,7 +14,7 @@ export default function FormCreate({ oneBike, updateBikes }) {
             .max(20, 'name must not exceed 20 characters'),
         status: Yup.string()
             .required('status is required')
-            .min(6, 'status must be at least 6 characters')
+            .min(3, 'status must be at least 6 characters')
             .max(20, 'status must not exceed 20 characters'),
     });
 
@@ -40,9 +40,8 @@ export default function FormCreate({ oneBike, updateBikes }) {
                 <div className="invalid-feedback">{errors.name?.message}</div>
                 <select name="status" {...register('status')} defaultValue="">
                     <option value="" disabled>Select</option>
-                    <option value="empty">Empty</option>
-                    <option value="full">In use</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="used">Used</option>
+                    <option value="unused">Unused</option>
                 </select>
                 <div className="invalid-feedback">{errors.status?.message}</div>
                 <button>

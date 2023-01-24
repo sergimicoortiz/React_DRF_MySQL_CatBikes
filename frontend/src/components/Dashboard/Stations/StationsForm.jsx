@@ -12,7 +12,7 @@ const StationForm = ({ SendData, station = {
     const validators = Yup.object().shape({
         name: Yup.string().required('Name is required').min(3).max(15),
         status: Yup.string().required('Status is required'),
-        image: Yup.string().url().required('Image is required').min(3).max(50),
+        image: Yup.string().url().required('Image is required').min(3).max(100),
         address: Yup.string().required('Address is required').min(3).max(50),
     });
 

@@ -14,7 +14,7 @@ export default function FormCreate({ createBike }) {
             .max(20, 'name must not exceed 20 characters'),
         status: Yup.string()
             .required('status is required')
-            .min(5, 'status must be at least 6 characters')
+            .min(4, 'status must be at least 6 characters')
             .max(20, 'status must not exceed 20 characters'),
     });
 
@@ -32,9 +32,8 @@ export default function FormCreate({ createBike }) {
                 <div className="invalid-feedback">{errors.name?.message}</div>
                 <select name="status" {...register('status')} defaultValue="">
                     <option value="" disabled>Select</option>
-                    <option value="empty">Empty</option>
-                    <option value="full">In use</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="used">Used</option>
+                    <option value="unused">Unused</option>
                 </select>
                 <div className="invalid-feedback">{errors.status?.message}</div>
                 <button>
