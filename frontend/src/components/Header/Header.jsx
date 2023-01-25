@@ -11,6 +11,7 @@ const Header = () => {
     const redirects = {
         home: () => navigate('/home'),
         dashboard: () => navigate('/dashboard'),
+        stations: () => navigate('/stations'),
     }
 
     useEffect(() => {
@@ -37,6 +38,7 @@ const Header = () => {
                     <ul className="navbar-nav">
                         <li className={path === 'home' ? 'active' : ''}><a onClick={() => redirects.home()}>Home</a></li>
                         <li className={path === 'dashboard' ? 'active' : ''}><a onClick={() => redirects.dashboard()}>Dashboard</a></li>
+                        <li className={path === 'stations' ? 'active' : ''}><a onClick={() => redirects.stations()}>Stations</a></li>
                     </ul>
                 </div>
             </div>

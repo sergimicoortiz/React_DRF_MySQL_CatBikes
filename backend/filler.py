@@ -28,7 +28,7 @@ def create_stations(n, n_slot):
     for i in range(n):
         station = {
             'name': fake.name(),
-            'status': 'full',
+            'status': 'active',
             'image': cats_img[randint(0, cats_img_cant)],
             'address': fake.address()
         }

@@ -95,7 +95,11 @@ class SlotView(viewsets.GenericViewSet):
             slot = get_object_or_404(Slot.objects.all(), pk=id)
             serializer_one = SlotSerializer(slot)
             return Response(serializer_one.data)
-        slots = Slot.objects.all()
+        if request.GET.get('station_id') is not None:
+            slots = Slot.objects.filter(
+                station_id=request.GET.get('station_id'))
+        else:
+            slots = Slot.objects.all()
         serializer = SlotSerializer(slots, many=True)
         return Response(serializer.data)
 

@@ -4,7 +4,6 @@ import { useBikes } from './useBikes';
 import SlotsContext from '../context/SlotsContext'
 import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";
-import { all } from 'axios';
 
 export function useSlots() {
     const { slots, setSlots } = useContext(SlotsContext);

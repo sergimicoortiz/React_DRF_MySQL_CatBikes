@@ -1,7 +1,7 @@
 import Api from "./Api";
 
-const getAll = () => {
-  return Api().get("/slot");
+const getAll = (params = null) => {
+  return Api().get("/slot", { params: params });
 };
 
 const getOne = (id) => {

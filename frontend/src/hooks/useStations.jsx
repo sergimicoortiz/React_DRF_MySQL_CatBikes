@@ -1,14 +1,33 @@
-import { useCallback, useContext, useState } from "react"
+import { useCallback, useContext, useState, useEffect } from "react"
 import StationService from '../services/StationService';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import StationContext from "../context/StationsContext";
+import SlotService from "../services/SlotService";
+import { useSlots } from "./useSlots";
 import { toast } from "react-toastify";
 
 export function useStations() {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { stations, setStations } = useContext(StationContext);
     const [oneStation, setOneStation] = useState({});
+    const [slotStation, setSlotStation] = useState([]);
+    const { useSlotStation } = useSlots();
 
+    useEffect(() => {
+        const page = pathname.split('/')[1];
+        if (oneStation.id && page !== 'dashboard') {
+            const params = { 'station_id': oneStation.id };
+            SlotService.getAll(params)
+                .then(({ data, status }) => {
+                    if (status === 200) {
+                        console.log(data);
+                        setSlotStation(data);
+                    }
+                })
+                .catch(e => console.error(e));
+        }
+    }, [oneStation]);
 
     const useOneStation = useCallback((slug) => {
         const station_tmp = stations.filter(item => item.slug === slug);
@@ -80,5 +99,5 @@ export function useStations() {
             .catch(e => console.error(e));
     }, []);
 
-    return { stations, setStations, oneStation, setOneStation, useDeleteStation, useCreateStation, useUpdateStation, useOneStation, useDeleteStationMultiple };
+    return { slotStation, setSlotStation, stations, setStations, oneStation, setOneStation, useDeleteStation, useCreateStation, useUpdateStation, useOneStation, useDeleteStationMultiple };
 }

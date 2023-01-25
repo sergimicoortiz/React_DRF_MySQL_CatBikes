@@ -53,8 +53,8 @@ const StationForm = ({ SendData, station = {
                 <label>Status: </label>
                 <select name="status" {...register('status')} defaultValue="">
                     <option value="" disabled>Select</option>
-                    <option value="empty">Empty</option>
-                    <option value="full">In use</option>
+                    <option value="active">Active</option>
+                    <option value="manteinance">Manteinance</option>
                     <option value="inactive">Inactive</option>
                 </select>
                 <div className="error">{errors.status?.message}</div>
