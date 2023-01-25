@@ -34,6 +34,7 @@ export default function FormCreate({ createBike }) {
                     <option value="" disabled>Select</option>
                     <option value="used">Used</option>
                     <option value="unused">Unused</option>
+                    <option value="manteinance">Manteinance</option>
                 </select>
                 <div className="invalid-feedback">{errors.status?.message}</div>
                 <button>

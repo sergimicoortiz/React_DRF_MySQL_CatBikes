@@ -6,14 +6,13 @@ import { useSlots } from '../../hooks/useSlots';
 
 const StationDetails = () => {
     const { slug } = useParams();
-    const { oneStation, useOneStation } = useStations();
-    const { slotStation } = useSlots();
+    const { oneStation, useOneStation, slotStation } = useStations();
 
     useEffect(function () {
         useOneStation(slug);
     }, [])
 
-    // console.log(slotStation)
+    console.log(slotStation)
 
     const SlotCard = slotStation.map(item =>
         <div className="card" key={item.id} style={{ backgroundImage: `url(${"https://www.shutterstock.com/image-vector/colorful-simple-flat-pixel-art-260nw-2025138827.jpg"})` }}>
@@ -24,16 +23,16 @@ const StationDetails = () => {
     )
 
     return (
-        // <div className="stationsClientCard">
-        //     <main className="page-content">
-        //         {SlotCard}
-        //     </main>
-        // </div>
-        <div>
-            <p>{JSON.stringify(oneStation)}</p>
-            <p>{JSON.stringify(slotStation)}</p>
-            <p>StationDetails</p>
+        <div className="stationsClientCard">
+            <main className="page-content">
+                {SlotCard}
+            </main>
         </div>
+        // <div>
+        //     <p>{JSON.stringify(oneStation)}</p>
+        //     <p>{JSON.stringify(slotStation)}</p>
+        //     <p>StationDetails</p>
+        // </div>
     )
 }
 
