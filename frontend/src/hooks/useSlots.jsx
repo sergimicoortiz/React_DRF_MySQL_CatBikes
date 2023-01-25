@@ -4,7 +4,6 @@ import { useBikes } from './useBikes';
 import SlotsContext from '../context/SlotsContext'
 import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";
-import { all } from 'axios';
 
 export function useSlots() {
     const { slots, setSlots } = useContext(SlotsContext);
@@ -19,6 +18,14 @@ export function useSlots() {
                 setOneSlot(data)
             })
     }, []);
+
+    const useSlotStation = useCallback(id => {
+        console.log(id);
+    }, []);
+
+    // const useSlotStation = id => {
+    //     console.log(id);
+    // }
 
     const returnBike = (slug, id) => {
         SlotService.returnBikeBackend(slug, id)
@@ -84,5 +91,5 @@ export function useSlots() {
     }
 
 
-    return { slots, setSlots, getOneSlot, oneSlot, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot, rentBikeBackend }
+    return { slots, setSlots, getOneSlot, oneSlot, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot, rentBikeBackend, useSlotStation }
 }

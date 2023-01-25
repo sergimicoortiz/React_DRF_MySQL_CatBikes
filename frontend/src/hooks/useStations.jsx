@@ -2,15 +2,17 @@ import { useCallback, useContext, useState } from "react"
 import StationService from '../services/StationService';
 import { useNavigate } from "react-router-dom";
 import StationContext from "../context/StationsContext";
+import { useSlots } from "./useSlots";
 import { toast } from "react-toastify";
 
 export function useStations() {
     const navigate = useNavigate();
     const { stations, setStations } = useContext(StationContext);
     const [oneStation, setOneStation] = useState({});
+    const { useSlotStation } = useSlots();
 
 
-    const useOneStation = useCallback((slug) => {
+    const useOneStation = useCallback((slug, include_slots = false) => {
         const station_tmp = stations.filter(item => item.slug === slug);
         if (station_tmp.length === 1) {
             setOneStation(station_tmp[0]);
@@ -18,6 +20,7 @@ export function useStations() {
             StationService.GetStation(slug).
                 then(({ data, status }) => {
                     if (status === 200) {
+                        // useSlotStation(data.id);
                         setOneStation(data);
                     }
                 })

@@ -8,9 +8,13 @@ const CaruselItem = ({ data = {
 } }) => {
     const navigate = useNavigate();
 
+    const redirects = {
+        details: slug => navigate('/stations/' + slug)
+    }
+
     return (
         <div className="carusel_item">
-            <img src={data.img} onClick={() => console.log(data.slug)} />
+            <img src={data.img} onClick={() => redirects.details(data.slug)} />
         </div>
     )
 }

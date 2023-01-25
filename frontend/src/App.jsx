@@ -15,17 +15,23 @@ function App() {
   const Home = React.lazy(() => import('./pages/Home/Home'));
   const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'));
 
+  //Bikes Dashboard
   const BikesList = React.lazy(() => import('./pages/Dashboard/Bikes/BikesList'));
   const BikesCreate = React.lazy(() => import('./pages/Dashboard/Bikes/BikesCreate'));
   const BikesUpdate = React.lazy(() => import('./pages/Dashboard/Bikes/BikesUpdate'));
 
+  //Station Dashboard
   const StationList = React.lazy(() => import('./pages/Dashboard/Stations/StationsList'));
   const StationsCreate = React.lazy(() => import('./pages/Dashboard/Stations/StationsCreate'));
   const StationsUpdate = React.lazy(() => import('./pages/Dashboard/Stations/StationsUpdate'));
 
+  //SLot Dashboard
   const SlotsList = React.lazy(() => import('./pages/Dashboard/Slots/SlotsList'));
   const SlotsDetails = React.lazy(() => import('./pages/Dashboard/Slots/SlotsDetails'));
 
+  //Station Client
+  const StationsClientList = React.lazy(() => import('./pages/StationsClient/StationsClientList'));
+  const StationDetails = React.lazy(() => import('./pages/StationDetails/StationDetails'));
 
 
   return (
@@ -64,6 +70,10 @@ function App() {
                   {/* Dashboard Slots */}
                   <Route path="/dashboard/slots" element={<SlotsList />} />
                   <Route path="/dashboard/slots/:id" element={<SlotsDetails />} />
+                  {/* Stations Client */}
+                  <Route path="/stations" element={<StationsClientList />} />
+                  <Route path="/stations/:slug" element={<StationDetails />} />
+
                 </Routes>
                 <Footer />
               </SlotsContextProvider>
