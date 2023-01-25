@@ -1,5 +1,5 @@
 import { useContext, useEffect, useCallback, useState } from 'react'
-import BikeService from '../services/Dashboard/BikeService';
+import BikeService from '../services/BikeService';
 import BikesContext from '../context/BikesContext'
 import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useState } from "react"
-import StationService from '../services/Dashboard/StationService';
+import StationService from '../services/StationService';
 import { useNavigate } from "react-router-dom";
 import StationContext from "../context/StationsContext";
 import { toast } from "react-toastify";

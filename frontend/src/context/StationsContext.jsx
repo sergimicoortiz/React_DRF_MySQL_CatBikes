@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import StationService from '../services/Dashboard/StationService';
+import StationService from '../services/StationService';
 
 const Context = React.createContext({})
 

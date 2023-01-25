@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SlotService from '../services/Dashboard/SlotService'
+import SlotService from '../services/SlotService'
 
 const Context = React.createContext({})
 

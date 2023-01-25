@@ -1,4 +1,4 @@
-import Api from "../Api";
+import Api from "./Api";
 
 const getAll = () => {
   return Api().get("/slot");

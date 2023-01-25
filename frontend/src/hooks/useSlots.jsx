@@ -1,5 +1,5 @@
 import { useContext, useEffect, useCallback, useState } from 'react'
-import SlotService from '../services/Dashboard/SlotService';
+import SlotService from '../services/SlotService';
 import { useBikes } from './useBikes';
 import SlotsContext from '../context/SlotsContext'
 import { toast } from 'react-toastify'
