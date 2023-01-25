@@ -3,6 +3,9 @@ import '../StationsClient/StationsClientList.scss';
 import { useParams } from "react-router-dom";
 import { useStations } from "../../hooks/useStations";
 import { useSlots } from '../../hooks/useSlots';
+import goodImage from '../../img/SlotEmpty.png';
+import usedImage from '../../img/SlotUsed.png';
+import maintenanceImage from '../../img/SlotMaintenance.png';
 
 const StationDetails = () => {
     const { slug } = useParams();
@@ -12,14 +15,14 @@ const StationDetails = () => {
         useOneStation(slug);
     }, [])
 
-    console.log(slotStation)
-
-    const SlotCard = slotStation.map(item =>
-        <div className="card" key={item.id} style={{ backgroundImage: `url(${"https://www.shutterstock.com/image-vector/colorful-simple-flat-pixel-art-260nw-2025138827.jpg"})` }}>
+    const SlotCard = slotStation.map(item => {
+        const img = item.status === 'used' ? goodImage : item.status === 'unused' ? usedImage : maintenanceImage;
+        return (<div className="card" key={item.id} style={{ backgroundImage: `url(${img})` }}>
             <div className="content">
                 <p className="copy">Status: {item.status}</p>
             </div>
-        </div>
+        </div>)
+    }
     )
 
     return (
@@ -28,11 +31,6 @@ const StationDetails = () => {
                 {SlotCard}
             </main>
         </div>
-        // <div>
-        //     <p>{JSON.stringify(oneStation)}</p>
-        //     <p>{JSON.stringify(slotStation)}</p>
-        //     <p>StationDetails</p>
-        // </div>
     )
 }
 

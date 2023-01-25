@@ -9,14 +9,19 @@ class StationSerializer(serializers.ModelSerializer):
         model = Station
         fields = ['id', 'slug', 'name', 'status', 'image', 'address']
 
-    def to_Station(instance):
+    def to_representation(self, instance):
+        total_slots = len(Slot.objects.filter(station_id=instance.id))
+        total_bikes = len(Slot.objects.filter(
+            station_id=instance.id, status='used'))
         return {
             "id": instance.id,
             "slug": instance.slug,
             "name": instance.name,
             "status": instance.status,
             "image": instance.image,
-            "address": instance.address
+            "address": instance.address,
+            "total_slots": total_slots,
+            "total_bikes": total_bikes
         }
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useStations } from "../../hooks/useStations";
 import { Navigate, useNavigate } from "react-router-dom";
-import './StationsClientList.scss'
+import './StationsClientList.scss';
 
 const StationsClientList = () => {
     const { stations } = useStations();
@@ -13,6 +13,8 @@ const StationsClientList = () => {
                 <h2 className="title">{item.name}</h2>
                 <p className="copy">Address: {item.address}</p>
                 <p className="copy">Status: {item.status}</p>
+                <span className="copy">Total Slots: {item.total_slots}</span>
+                <span className="copy">Bikes for Rent: {item.total_bikes}</span>
                 <button className="btn" onClick={() => {
                     navigate('/stations/' + item.slug)
                 }

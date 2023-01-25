@@ -141,14 +141,14 @@
     }
 
     .title {
-        font-size: 1.3rem;
+        font-size: 1rem;
         font-weight: bold;
         line-height: 1.2;
     }
 
     .copy {
         font-family: var(--font-serif);
-        font-size: 1.125rem;
+        font-size: 1rem;
         font-style: italic;
         line-height: 1.35;
     }
@@ -156,7 +156,7 @@
     .btn {
         cursor: pointer;
         margin-top: 1.5rem;
-        padding: 0.75rem 1.5rem;
+        padding: 0.60rem 1.2rem;
         font-size: 0.65rem;
         font-weight: bold;
         letter-spacing: 0.025rem;
@@ -166,7 +166,7 @@
         border: none;
 
         &:hover {
-            background-color: lighten(black, 5%);
+            background-color: lighten(green, 5%);
         }
 
         &:focus {
