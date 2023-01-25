@@ -6,8 +6,6 @@ import './StationsClientList.scss'
 const StationsClientList = () => {
     const { stations } = useStations();
     const navigate = useNavigate();
-    console.log(stations)
-    let color = "red"
 
     const StationCard = stations.map(item =>
         <div className="card" key={item.id} style={{ backgroundImage: `url(${item.image})` }}>
@@ -22,8 +20,6 @@ const StationsClientList = () => {
             </div>
         </div>
     )
-
-    console.log(StationCard)
 
     return (
         <div className="stationsClientCard">

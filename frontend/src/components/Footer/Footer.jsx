@@ -20,7 +20,7 @@ const Footer = () => {
                 <div className="footer-menu">
                     <ul className="f-menu">
                         <li><a href="https://github.com/sergimicoortiz">Sergi Micó Ortiz</a></li>
-                        <li><a href="https://github.com/JuanLuisLopez-code">Juan Luis Lopez</a></li>
+                        <li><a href="https://github.com/JuanLuisLopez-code">Juan Luis López</a></li>
                     </ul>
 
                 </div>

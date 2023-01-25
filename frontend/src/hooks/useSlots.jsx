@@ -9,6 +9,7 @@ export function useSlots() {
     const { slots, setSlots } = useContext(SlotsContext);
     const [oneSlot, setOneSlot] = useState({});
     const [saveSlot, setSaveSlot] = useState({});
+    const [slotStation, setSlotStation] = useState([]);
     const navigate = useNavigate();
     const { bikes, setBikes } = useBikes({})
 
@@ -20,12 +21,10 @@ export function useSlots() {
     }, []);
 
     const useSlotStation = useCallback(id => {
-        console.log(id);
+        if (id) {
+           console.log('a');
+        }
     }, []);
-
-    // const useSlotStation = id => {
-    //     console.log(id);
-    // }
 
     const returnBike = (slug, id) => {
         SlotService.returnBikeBackend(slug, id)
@@ -91,5 +90,5 @@ export function useSlots() {
     }
 
 
-    return { slots, setSlots, getOneSlot, oneSlot, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot, rentBikeBackend, useSlotStation }
+    return { slots, setSlots, getOneSlot, oneSlot, slotStation, setSlotStation, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot, rentBikeBackend, useSlotStation }
 }
