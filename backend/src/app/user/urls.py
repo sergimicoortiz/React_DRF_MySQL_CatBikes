@@ -4,6 +4,6 @@ from .views import UserView
 
 urlpatterns = [
     # Users
-    path('login', UserView.as_view({'post': 'login'})),
     path('register', UserView.as_view({'post': 'register'})),
+    path('login', UserView.as_view({'post': 'login'})),
 ]
