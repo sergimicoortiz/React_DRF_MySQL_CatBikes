@@ -14,6 +14,7 @@ export function useBikes() {
             then(({ data }) => {
                 setOneBike(data)
             })
+            .catch(e => console.error(e));
     }, []);
 
     const createBike = ((data) => {
@@ -23,10 +24,13 @@ export function useBikes() {
                     setBikes([...bikes, dataThen.data])
                     navigate('/dashboard/bikes')
                     toast.success("Created successfully")
-                } else {
-                    toast.error("Something failed")
                 }
             })
+            .catch(e => {
+                console.error(e);
+                toast.error('Create bike error');
+                navigate('/home');
+            });
     })
 
     const deleteBike = (async (data) => {
@@ -37,7 +41,7 @@ export function useBikes() {
                 save.push(data[i].slug)
                 toast.success("Removed")
             } catch (error) {
-                toast.error("Falloo")
+                toast.error('Delete error')
             }
         }
         setBikes(bikes.filter(item => !save.includes(item.slug)))
@@ -54,11 +58,14 @@ export function useBikes() {
                         setBikes(get_Old_Bike);
                     }
                     navigate('/dashboard/bikes')
-                    toast.success("Created successfully")
-                } else {
-                    toast.error("Something failed")
+                    toast.success("Updated successfully")
                 }
             })
+            .catch(e => {
+                console.error(e);
+                toast.error('Update bike error');
+                navigate('/home');
+            });
     })
 
     return { bikes, setBikes, createBike, deleteBike, getOneBike, oneBike, setOneBike, updateBikes }

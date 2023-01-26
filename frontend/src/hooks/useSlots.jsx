@@ -4,6 +4,7 @@ import { useBikes } from './useBikes';
 import SlotsContext from '../context/SlotsContext';
 import StationContext from '../context/StationsContext';
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'
 
 export function useSlots() {
     const { slots, setSlots } = useContext(SlotsContext);
@@ -18,6 +19,7 @@ export function useSlots() {
             then(({ data }) => {
                 setOneSlot(data)
             })
+            .catch(e => console.error(e));
     }, []);
 
     const returnBike = (slug, id) => {
@@ -56,6 +58,12 @@ export function useSlots() {
                     navigate('/dashboard/slots')
                 }
             })
+            .catch(e => {
+                console.error(e);
+                toast.error('returnBike error');
+                navigate('/home');
+            });
+
     }
 
     const saveBike = (slug) => {
@@ -99,6 +107,11 @@ export function useSlots() {
                     navigate('/dashboard/slots')
                 }
             })
+            .catch(e => {
+                console.error(e);
+                toast.error('rentBikeBackend error');
+                navigate('/home');
+            });
     }
 
 
