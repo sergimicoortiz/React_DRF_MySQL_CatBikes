@@ -16,12 +16,16 @@ const rentBikeBackend = (id) => {
   return Api().put("/slot/detach_bike/" + id);
 };
 
+const updateStatus = (id, status) => {
+  return Api().put('/slot/status/' + id, { 'slot': { 'status': status } });
+}
 
 const SlotService = {
   getAll,
   getOne,
   returnBikeBackend,
-  rentBikeBackend
+  rentBikeBackend,
+  updateStatus
 };
 
 export default SlotService;

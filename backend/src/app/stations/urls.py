@@ -19,5 +19,7 @@ urlpatterns = [
     # Slots
     path('slot', SlotView.as_view({"get": "get"})),
     path('slot/<int:id>', SlotView.as_view({"get": "get"})),
-    path('slot/detach_bike/<int:id>', SlotView.as_view({"put": "detach_bike"})),
+    path('slot/status/<int:id>', SlotView.as_view({"put": "put_status_only"})),
+    path('slot/detach_bike/<int:id>',
+         SlotView.as_view({"put": "detach_bike"})),
 ]
