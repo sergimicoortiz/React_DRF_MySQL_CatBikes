@@ -33,6 +33,9 @@ function App() {
   const StationsClientList = React.lazy(() => import('./pages/StationsClient/StationsClientList'));
   const StationDetails = React.lazy(() => import('./pages/StationDetails/StationDetails'));
 
+  //Login/Register
+  const Login = React.lazy(() => import('./pages/Login/Login'));
+  const Register = React.lazy(() => import('./pages/Login/Register'));
 
   return (
     <div>
@@ -73,6 +76,9 @@ function App() {
                   {/* Stations Client */}
                   <Route path="/stations" element={<StationsClientList />} />
                   <Route path="/stations/:slug" element={<StationDetails />} />
+                  {/* Login/Register */}
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
 
                 </Routes>
                 <Footer />

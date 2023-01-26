@@ -12,6 +12,7 @@ const Header = () => {
         home: () => navigate('/home'),
         dashboard: () => navigate('/dashboard'),
         stations: () => navigate('/stations'),
+        login: () => navigate('/login'),
     }
 
     useEffect(() => {
@@ -24,11 +25,6 @@ const Header = () => {
             <div className="container">
 
                 <div className="navbar-header">
-                    {/* <button className="navbar-toggler" data-toggle="open-navbar1">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button> */}
                     <a onClick={() => redirects.home()}>
                         <h4>Cat<span>Bikes</span></h4>
                     </a>
@@ -39,6 +35,7 @@ const Header = () => {
                         <li className={path === 'home' ? 'active' : ''}><a onClick={() => redirects.home()}>Home</a></li>
                         <li className={path === 'dashboard' ? 'active' : ''}><a onClick={() => redirects.dashboard()}>Dashboard</a></li>
                         <li className={path === 'stations' ? 'active' : ''}><a onClick={() => redirects.stations()}>Stations</a></li>
+                        <li className={path === 'login' ? 'active' : path === 'register' ? 'active' : ''}><a onClick={() => redirects.login()}>Login</a></li>
                     </ul>
                 </div>
             </div>
