@@ -25,11 +25,6 @@ const Header = () => {
             <div className="container">
 
                 <div className="navbar-header">
-                    {/* <button className="navbar-toggler" data-toggle="open-navbar1">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button> */}
                     <a onClick={() => redirects.home()}>
                         <h4>Cat<span>Bikes</span></h4>
                     </a>
