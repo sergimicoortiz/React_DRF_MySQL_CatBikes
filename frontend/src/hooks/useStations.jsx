@@ -21,7 +21,6 @@ export function useStations() {
             SlotService.getAll(params)
                 .then(({ data, status }) => {
                     if (status === 200) {
-                        console.log(data);
                         setSlotStation(data);
                     }
                 })

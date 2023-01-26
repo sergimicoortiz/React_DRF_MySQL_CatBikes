@@ -15,15 +15,20 @@ const StationDetails = () => {
         useOneStation(slug);
     }, [])
 
-    const SlotCard = slotStation.map(item => {
-        const img = item.status === 'used' ? goodImage : item.status === 'unused' ? usedImage : maintenanceImage;
-        return (<div className="card" key={item.id} style={{ backgroundImage: `url(${img})` }}>
-            <div className="content">
-                <p className="copy">Status: {item.status}</p>
-            </div>
-        </div>)
+    let SlotCard = null;
+    if (oneStation.id) {
+        SlotCard = slotStation.map(item => {
+            const img = item.status === 'used' ? goodImage : item.status === 'unused' ? usedImage : maintenanceImage;
+            return (<div className="card" key={item.id} style={{ backgroundImage: `url(${img})` }}>
+                <div className="content">
+                    <p className="copy">Status: {item.status}</p>
+                </div>
+            </div>)
+        }
+        )
+    } else {
+        SlotCard = <p>No slots available</p>
     }
-    )
 
     return (
         <div className="stationsClientCard">
