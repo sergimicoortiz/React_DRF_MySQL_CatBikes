@@ -3,7 +3,6 @@ import StationService from '../services/StationService';
 import { useNavigate, useLocation } from "react-router-dom";
 import StationContext from "../context/StationsContext";
 import SlotService from "../services/SlotService";
-import { useSlots } from "./useSlots";
 import { toast } from "react-toastify";
 
 export function useStations() {
@@ -12,7 +11,6 @@ export function useStations() {
     const { stations, setStations } = useContext(StationContext);
     const [oneStation, setOneStation] = useState({});
     const [slotStation, setSlotStation] = useState([]);
-    const { useSlotStation } = useSlots();
 
     useEffect(() => {
         const page = pathname.split('/')[1];
@@ -78,7 +76,11 @@ export function useStations() {
                     setStations([...stations, data]);
                 }
             })
-            .catch(e => console.error(e));
+            .catch(e => {
+                console.error(e);
+                toast.error('Create station error');
+                navigate('/home');
+            });
     }, []);
 
     const useUpdateStation = useCallback((slug, data) => {
@@ -95,7 +97,11 @@ export function useStations() {
                     navigate('/dashboard/stations');
                 }
             })
-            .catch(e => console.error(e));
+            .catch(e => {
+                console.error(e);
+                toast.error('Update station error');
+                navigate('/home');
+            });
     }, []);
 
     return { slotStation, setSlotStation, stations, setStations, oneStation, setOneStation, useDeleteStation, useCreateStation, useUpdateStation, useOneStation, useDeleteStationMultiple };

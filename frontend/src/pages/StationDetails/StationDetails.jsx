@@ -16,7 +16,7 @@ const StationDetails = () => {
     }, [])
 
     let SlotCard = null;
-    if (oneStation.id) {
+    if (slotStation.length > 0) {
         SlotCard = slotStation.map(item => {
             const img = item.status === 'used' ? goodImage : item.status === 'unused' ? usedImage : maintenanceImage;
             return (<div className="card" key={item.id} style={{ backgroundImage: `url(${img})` }}>
