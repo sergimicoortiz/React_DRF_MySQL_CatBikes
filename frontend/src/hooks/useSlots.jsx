@@ -1,16 +1,17 @@
-import { useContext, useEffect, useCallback, useState } from 'react'
+import { useContext, useCallback, useState } from 'react'
 import SlotService from '../services/SlotService';
 import { useBikes } from './useBikes';
-import SlotsContext from '../context/SlotsContext'
-import { toast } from 'react-toastify'
+import SlotsContext from '../context/SlotsContext';
+import StationContext from '../context/StationsContext';
 import { useNavigate } from "react-router-dom";
 
 export function useSlots() {
     const { slots, setSlots } = useContext(SlotsContext);
+    const { stations, setStations } = useContext(StationContext);
     const [oneSlot, setOneSlot] = useState({});
     const [saveSlot, setSaveSlot] = useState({});
+    const { bikes, setBikes } = useBikes();
     const navigate = useNavigate();
-    const { bikes, setBikes } = useBikes({})
 
     const getOneSlot = useCallback((id) => {
         SlotService.getOne(id).
@@ -25,6 +26,15 @@ export function useSlots() {
                 if (data.status == 200) {
                     let get_Old_Slots = [...slots];
                     const remove_old = get_Old_Slots.findIndex(item => item.id === Number(id));
+
+                    //station
+                    let new_station = stations.filter(item => item.id == get_Old_Slots[remove_old].station_id)[0];
+                    new_station.total_bikes++;
+                    setStations([
+                        ...stations.filter(item => item.id != get_Old_Slots[remove_old].station_id),
+                        new_station
+                    ]);
+
                     let save_old = get_Old_Slots[remove_old];
                     save_old.bike_id = data.data.id;
                     save_old.status = 'used';
@@ -76,6 +86,15 @@ export function useSlots() {
                             get_Old_Bikes[remove_old_bike] = save_old_bike;
                             setBikes(get_Old_Bikes);
                         }
+
+                        //station
+                        let new_station = stations.filter(item => item.id == get_Old_Slots[remove_old].station_id)[0];
+                        new_station.total_bikes--;
+                        setStations([
+                            ...stations.filter(item => item.id != get_Old_Slots[remove_old].station_id),
+                            new_station
+                        ]);
+
                     }
                     navigate('/dashboard/slots')
                 }
