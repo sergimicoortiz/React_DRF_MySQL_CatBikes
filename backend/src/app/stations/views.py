@@ -121,3 +121,13 @@ class SlotView(viewsets.GenericViewSet):
             instance=saved_slot, context=slot_context)
 
         return Response(SlotSerializer.to_Slot(serializer_slot))
+
+    def put_status_only(self, request, id):
+        saved_slot = get_object_or_404(Slot.objects.all(), pk=id)
+        slot_data = request.data.get('slot')
+        slot_context = {'bike_id': 0, 'status': slot_data['status']}
+        serializer_slot = SlotSerializer.update(
+            instance=saved_slot, context=slot_context)
+
+        # return Response(SlotSerializer.to_Slot(saved_slot))
+        return Response(SlotSerializer.to_Slot(serializer_slot))

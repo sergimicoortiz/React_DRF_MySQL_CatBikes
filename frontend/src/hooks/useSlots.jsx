@@ -22,6 +22,10 @@ export function useSlots() {
             .catch(e => console.error(e));
     }, []);
 
+    const useSlotManteinance = useCallback((id, put_in_manteinance) => {
+        console.log(id, put_in_manteinance, 'useSlotManteinance');
+    });
+
     const returnBike = (slug, id) => {
         SlotService.returnBikeBackend(slug, id)
             .then(data => {
@@ -115,5 +119,17 @@ export function useSlots() {
     }
 
 
-    return { slots, setSlots, getOneSlot, oneSlot, setOneSlot, returnBike, saveBike, saveSlot, setSaveSlot, rentBikeBackend }
+    return {
+        slots,
+        setSlots,
+        getOneSlot,
+        oneSlot,
+        setOneSlot,
+        returnBike,
+        saveBike,
+        saveSlot,
+        setSaveSlot,
+        rentBikeBackend,
+        useSlotManteinance
+    }
 }
