@@ -46,7 +46,7 @@ const SlotsList = () => {
         <div>
             <button className="custom-btn btn-13" onClick={() => {
                 navigate('/dashboard/slots/' + selectedRows[0].id)
-            }} disabled={selectedRows == 0}>Details</button>
+            }} disabled={selectedRows.length != 1}>Details</button>
             <DataTable
                 columns={columns}
                 data={slots}

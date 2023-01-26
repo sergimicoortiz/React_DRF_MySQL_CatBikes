@@ -23,7 +23,20 @@ export function useSlots() {
     }, []);
 
     const useSlotManteinance = useCallback((id, put_in_manteinance) => {
-        console.log(id, put_in_manteinance, 'useSlotManteinance');
+        const status = put_in_manteinance ? 'manteinance' : 'unused';
+        SlotService.updateStatus(id, status)
+            .then(({ data, status }) => {
+                if (status === 200) {
+                    const old_slots = slots.filter(item => item.id !== data.id);
+                    setSlots([...old_slots, data]);
+                    navigate('/dashboard/slots');
+                }
+            })
+            .catch(e => {
+                console.error(e);
+                toast.error('useSlotManteinance error');
+                navigate('/home');
+            });
     });
 
     const returnBike = (slug, id) => {

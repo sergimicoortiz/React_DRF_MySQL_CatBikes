@@ -75,7 +75,7 @@ class BikeView(viewsets.GenericViewSet):
         slot = request.data.get('slot')
         if (slot):
             if slot['id'] is not None:
-                slot_context = {'bike_id': saved_bike.id}
+                slot_context = {'bike_id': saved_bike.id, 'status': 'used'}
                 saved_slot = get_object_or_404(
                     Slot.objects.all(), pk=slot['id'])
                 SlotSerializer.update(
@@ -116,7 +116,7 @@ class SlotView(viewsets.GenericViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
-        slot_context = {'bike_id': 0}
+        slot_context = {'bike_id': 0, 'status': 'unused'}
         serializer_slot = SlotSerializer.update(
             instance=saved_slot, context=slot_context)
 

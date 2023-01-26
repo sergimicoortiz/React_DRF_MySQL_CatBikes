@@ -40,7 +40,7 @@ const SlotsList = () => {
             break;
         case 'manteinance':
             buttons = <div>
-                <button className="custom-btn btn-3 center">The slot is operative</button>
+                <button className="custom-btn btn-3 center" onClick={() => useSlotManteinance(id, false)}><span>The slot is operative</span></button>
             </div>
             break;
 
