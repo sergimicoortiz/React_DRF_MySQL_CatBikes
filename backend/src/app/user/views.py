@@ -29,6 +29,17 @@ class UserView(viewsets.GenericViewSet):
         return Response(serializer)
 
     def login(self, request):
-        print("login")
-        users = userSerializer(User.objects.all(), many=True)
-        return Response(users.data)
+        data = request.data['user']
+
+        if data['password'] is None:
+            raise NotFound("Password is required!")
+
+        if data['username'] is None:
+            raise NotFound("Username is required!")
+
+        serializer_context = {
+            'username': data['username'],
+            'password': data['password']
+        }
+        serializer = userSerializer.login(serializer_context)
+        return Response(serializer)
