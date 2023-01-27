@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-from .models import User
+from .models import User, UserManager
 
 
 class userSerializer(serializers.ModelSerializer):
@@ -41,22 +41,18 @@ class userSerializer(serializers.ModelSerializer):
         password = context['password']
         username = context['username']
 
-        try:
-            user = User.objects.get(username=username)
-            user = User.objects.get(email=email)
+        username_exist = len(User.objects.filter(username=username))
+        email_exist = len(User.objects.filter(email=email))
+        if (email_exist > 0 or username_exist > 0):
             raise serializers.ValidationError(
-                'User with this username already exists.'
+                'Useror Email with this username already exists.'
             )
 
-        except User.DoesNotExist:
-
-            user = User.objects.create(
-                email=email,
-                password=password,
-                username=username,
-                types='client'
-            )
-
+        user = User.objects.create_user(
+            email=email,
+            username=username,
+            password=password
+        )
         return {
             'user': {
                 'username': user.username,

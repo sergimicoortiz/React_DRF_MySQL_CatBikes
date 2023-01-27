@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'src.app.stations',
+    'src.app.user',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,11 @@ CORS_ALLOWED_ORIGINS = [
     'http://0.0.0.0:3000',
     'http://localhost:3000',
 ]
+
+AUTH_USER_MODEL = 'user.User'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'manfy.apps.users.backends.JWTAuthentication',
+#     )
+# }

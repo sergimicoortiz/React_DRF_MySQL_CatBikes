@@ -1,8 +1,19 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.conf import settings
 import jwt
 from datetime import datetime, timedelta
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, username, email, password):
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username,
+        )
+        user.set_password(password)
+        user.save()
+        return user
 
 
 class User(AbstractBaseUser):
@@ -15,7 +26,9 @@ class User(AbstractBaseUser):
                              null=False, default='client')
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['username', 'email', 'types']
+    REQUIRED_FIELDS = ['email', 'types']
+
+    objects = UserManager()
 
     @property
     def token(self):
