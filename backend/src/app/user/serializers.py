@@ -59,46 +59,46 @@ class userSerializer(serializers.ModelSerializer):
                 'email': user.email,
                 'types': user.types
             },
-            # 'token': user.token,
+            'token': user.token,
         }
 
-    # def login(data,context):
-    #     email = data.get('email', None)
-    #     password = context['password']
-    #     if email is None:
-    #         raise serializers.ValidationError(
-    #             'An email address is required to log in.'
-    #         )
+    def login(context):
+        username = context['username']
+        password = context['password']
+        if email is None:
+            raise serializers.ValidationError(
+                'An email address is required to log in.'
+            )
 
-    #     if password is None:
-    #         raise serializers.ValidationError(
-    #             'A password is required to log in.'
-    #         )
+        if password is None:
+            raise serializers.ValidationError(
+                'A password is required to log in.'
+            )
 
-    #     user = User.objects.get(email=email)
+        user = User.objects.get(email=email)
 
-    #     if user is None:
-    #         raise serializers.ValidationError(
-    #             'User with this email and password was not found.'
+        if user is None:
+            raise serializers.ValidationError(
+                'User with this email and password was not found.'
 
-    #         )
+            )
 
-    #     if not user.is_active:
-    #         raise serializers.ValidationError(
-    #             'This user has been deactivated.'
-    #         )
+        if not user.is_active:
+            raise serializers.ValidationError(
+                'This user has been deactivated.'
+            )
 
-    #     return {
-    #         'user': {
-    #             'email': user.email,
-    #             'first_name': user.first_name,
-    #             'last_name': user.last_name,
-    #             'full_name': user.fullname,
-    #             'n_incidents': user.n_incidents,
-    #             'n_coupons': user.n_coupons,
-    #             'is_active': user.is_active,
-    #             'role':user.role,
-    #             'types':user.types
-    #         },
-    #         'token': user.token
-    #     }
+        return {
+            'user': {
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'full_name': user.fullname,
+                'n_incidents': user.n_incidents,
+                'n_coupons': user.n_coupons,
+                'is_active': user.is_active,
+                'role':user.role,
+                'types':user.types
+            },
+            'token': user.token
+        }

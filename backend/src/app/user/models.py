@@ -38,7 +38,7 @@ class User(AbstractBaseUser):
         dt = datetime.now() + timedelta(minutes=60)
 
         token = jwt.encode({
-            'email': self.email,
+            'username': self.username,
             'exp': int(dt.strftime('%s'))
         }, settings.SECRET_KEY, algorithm='HS256')
 
