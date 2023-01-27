@@ -1,6 +1,5 @@
-from django.contrib.auth import authenticate
 from rest_framework import serializers
-from .models import User, UserManager
+from .models import User
 
 
 class userSerializer(serializers.ModelSerializer):
@@ -8,32 +7,21 @@ class userSerializer(serializers.ModelSerializer):
         model = User
         fields = ('password', 'email', 'username', 'types')
 
-    # def to_user(instance):
-    #     return {
-    #         'uuid': instance.uuid,
+    def getUser(context):
+        username = context['username']
+        if username is None:
+            raise serializers.ValidationError(
+                'username is not find'
+            )
+        user = User.objects.get(username=username)
 
-    #     }
-
-    # def getUser(context):
-    #     user = context['user']
-    #     if user is None:
-    #         raise serializers.ValidationError(
-    #             'User is not find'
-    #         )
-    #     user = User.objects.get(email=user)
-
-    #     if not user.is_active:
-    #         raise serializers.ValidationError(
-    #             'This user has been deactivated.'
-    #         )
-    #     return {
-    #         'user': {
-    #             'username': user.username,
-    #             'email': user.email,
-    #             'types':user.types
-    #         },
-    #         'token': user.token,
-    #     }
+        return {
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'types': user.types
+            },
+        }
 
     def register(context):
 

@@ -4,6 +4,8 @@ from rest_framework import viewsets
 from rest_framework.exceptions import NotFound
 from .models import User
 from .serializers import userSerializer
+from rest_framework.permissions import (
+    AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser,)
 
 
 class UserView(viewsets.GenericViewSet):
@@ -42,4 +44,28 @@ class UserView(viewsets.GenericViewSet):
             'password': data['password']
         }
         serializer = userSerializer.login(serializer_context)
+        return Response(serializer)
+
+
+# def logout(self, request):
+#     try:
+#         request.user.auth_token.delete()
+#     except (AttributeError, ObjectDoesNotExist):
+#         pass
+
+#     logout(request)
+
+#     return Response({"success": _("Successfully logged out.")},
+#                     status=status.HTTP_200_OK)
+
+
+class UserInfoViews(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def getUser(self, request):
+        username = request.user
+        serializer_context = {
+            'username': username
+        }
+        serializer = userSerializer.getUser(context = serializer_context)
         return Response(serializer)
