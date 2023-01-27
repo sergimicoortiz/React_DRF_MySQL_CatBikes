@@ -47,19 +47,7 @@ class UserView(viewsets.GenericViewSet):
         return Response(serializer)
 
 
-# def logout(self, request):
-#     try:
-#         request.user.auth_token.delete()
-#     except (AttributeError, ObjectDoesNotExist):
-#         pass
-
-#     logout(request)
-
-#     return Response({"success": _("Successfully logged out.")},
-#                     status=status.HTTP_200_OK)
-
-
-class UserInfoViews(viewsets.GenericViewSet):
+class UserAuthenticatedView(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
     def getUser(self, request):
@@ -67,5 +55,13 @@ class UserInfoViews(viewsets.GenericViewSet):
         serializer_context = {
             'username': username
         }
-        serializer = userSerializer.getUser(context = serializer_context)
+        serializer = userSerializer.getUser(context=serializer_context)
         return Response(serializer)
+
+    # def logout(self, request):
+    #     try:
+    #         request.user.auth_token.delete()
+    #         return Response({"status": 'success'})
+    #     except:
+    #         print('ERROR LOGOUT')
+    #         return Response({"status": 'error'})
