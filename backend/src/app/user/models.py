@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin
+)
 from django.conf import settings
 import jwt
 from datetime import datetime, timedelta
@@ -15,18 +17,20 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, email, password, types):
+    def create_superuser(self, username, email, password):
         user = self.model(
             email=self.normalize_email(email),
             username=username,
-            types=types,
+            types='admin'
         )
+        user.is_staff = True
+        user.is_superuser = True
         user.set_password(password)
         user.save()
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     uuid = models.CharField('uuid', max_length=36,
                             unique=True, editable=False, null=False)
     username = models.CharField(
@@ -34,9 +38,10 @@ class User(AbstractBaseUser):
     email = models.EmailField('email', unique=True)
     types = models.CharField('types', max_length=10,
                              null=False, default='client')
+    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'types']
+    REQUIRED_FIELDS = ['email']
 
     objects = UserManager()
 
