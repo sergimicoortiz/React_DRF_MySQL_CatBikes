@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import './LoginRegister.scss';
+import { useUser } from "../../hooks/useUser";
 
 const Login = () => {
 
@@ -21,15 +22,13 @@ const Login = () => {
         resolver: yupResolver(validators)
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
-    }
+    const { useLogin } = useUser();
 
     return (
         <div className="login-page">
             <h1>LOGIN</h1>
             <div className="form">
-                <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+                <form className="login-form" onSubmit={handleSubmit(useLogin)}>
                     <input type="text" placeholder="Username" name="username" {...register('username')} />
                     <div className="error">{errors.username?.message}</div>
                     <input type="password" placeholder="Password" name="password" {...register('password')} />

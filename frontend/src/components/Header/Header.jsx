@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import './Header.scss';
 import { useNavigate, useLocation } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 
 const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [path, setPath] = useState('');
+    const { user, isAuth, isAdmin } = useContext(UserContext)
 
 
     const redirects = {
@@ -29,7 +31,9 @@ const Header = () => {
                         <h4>Cat<span>Bikes</span></h4>
                     </a>
                 </div>
-
+                <div>
+                    {JSON.stringify(user)}
+                </div>
                 <div className="navbar-menu" id="open-navbar1">
                     <ul className="navbar-nav">
                         <li className={path === 'home' ? 'active' : ''}><a onClick={() => redirects.home()}>Home</a></li>
