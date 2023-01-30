@@ -47,7 +47,17 @@ export function useUser() {
                 console.error(e);
                 toast.error('Username or email is used');
             });
-    }, [])
+    }, []);
 
-    return { user, setUser, useRegister, useLogin }
+    const useLogout = useCallback(() => {
+        JwtService.destroyToken();
+        setToken(false);
+        setIsAuth(false);
+        setIsAdmin(false);
+        setUser({});
+        toast.success('Logout successfully');
+        navigate('/');
+    }, []);
+
+    return { user, setUser, useRegister, useLogin, useLogout }
 }

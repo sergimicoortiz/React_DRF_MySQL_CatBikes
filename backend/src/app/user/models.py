@@ -15,6 +15,16 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+    def create_superuser(self, username, email, password, types):
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username,
+            types=types,
+        )
+        user.set_password(password)
+        user.save()
+        return user
+
 
 class User(AbstractBaseUser):
     uuid = models.CharField('uuid', max_length=36,
