@@ -4,8 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import './LoginRegister.scss';
+import { useUser } from "../../hooks/useUser";
 
 const Register = () => {
+    const { useRegister } = useUser();
 
     const navigate = useNavigate();
     const passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
@@ -26,7 +28,8 @@ const Register = () => {
 
     const onSubmit = (data) => {
         delete (data['passwordConfirmation']);
-        console.log(data);
+        useRegister(data)
+        // console.log(data);
     }
 
     return (

@@ -8,6 +8,12 @@ import { StationContext } from './context/StationsContext';
 import './App.scss';
 import { BikesContextProvider } from "./context/BikesContext";
 import { SlotsContextProvider } from "./context/SlotsContext";
+import { UserContextProvider } from './context/UserContext';
+
+//Guards
+import AdminGuard from './services/guards/AdminGuard';
+import { NoAuthGuard } from './services/guards/AuthGuard';
+import { AuthGuard } from './services/guards/AuthGuard';
 
 function App() {
 
@@ -41,50 +47,59 @@ function App() {
     <div>
       <Suspense fallback={<Loading />}>
         <BrowserRouter>
-          <StationContext>
-            <BikesContextProvider>
-              <SlotsContextProvider>
-                <Header />
-                <ToastContainer
-                  position="top-right"
-                  autoClose={2500}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss={false}
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
-                <Routes>
-                  <Route path="*" element={<NotFound />} />
-                  <Route path="/" element={<Home />} />
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  {/* Dashboard Bikes */}
-                  <Route path="/dashboard/bikes" element={<BikesList />} />
-                  <Route path="/dashboard/bikes/create" element={<BikesCreate />} />
-                  <Route path="/dashboard/bikes/update/:slug" element={<BikesUpdate />} />
-                  {/* DASHBOARD STATIONS */}
-                  <Route path="/dashboard/stations" element={<StationList />} />
-                  <Route path="/dashboard/stations/create" element={<StationsCreate />} />
-                  <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
-                  {/* Dashboard Slots */}
-                  <Route path="/dashboard/slots" element={<SlotsList />} />
-                  <Route path="/dashboard/slots/:id" element={<SlotsDetails />} />
-                  {/* Stations Client */}
-                  <Route path="/stations" element={<StationsClientList />} />
-                  <Route path="/stations/:slug" element={<StationDetails />} />
-                  {/* Login/Register */}
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
+          <UserContextProvider>
+            <StationContext>
+              <BikesContextProvider>
+                <SlotsContextProvider>
+                  <Header />
+                  <ToastContainer
+                    position="top-right"
+                    autoClose={2500}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                  />
+                  <Routes>
+                    <Route path="*" element={<NotFound />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
 
-                </Routes>
-                <Footer />
-              </SlotsContextProvider>
-            </BikesContextProvider>
-          </StationContext>
+                    <Route element={<AdminGuard />}>
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      {/* Dashboard Bikes */}
+                      <Route path="/dashboard/bikes" element={<BikesList />} />
+                      <Route path="/dashboard/bikes/create" element={<BikesCreate />} />
+                      <Route path="/dashboard/bikes/update/:slug" element={<BikesUpdate />} />
+                      {/* DASHBOARD STATIONS */}
+                      <Route path="/dashboard/stations" element={<StationList />} />
+                      <Route path="/dashboard/stations/create" element={<StationsCreate />} />
+                      <Route path="/dashboard/stations/update/:slug" element={<StationsUpdate />} />
+                      {/* Dashboard Slots */}
+                      <Route path="/dashboard/slots" element={<SlotsList />} />
+                      <Route path="/dashboard/slots/:id" element={<SlotsDetails />} />
+                    </Route>
+                    {/* Stations Client */}
+                    <Route path="/stations" element={<StationsClientList />} />
+                    <Route path="/stations/:slug" element={<StationDetails />} />
+                    {/* Login/Register */}
+                    <Route element={<NoAuthGuard />}>
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                    </Route>
+                    {/* Rent bikes */}
+                    <Route element={<AuthGuard />}>
+                    </Route>
+                  </Routes>
+                  <Footer />
+                </SlotsContextProvider>
+              </BikesContextProvider>
+            </StationContext>
+          </UserContextProvider>
         </BrowserRouter>
       </Suspense>
     </div>
