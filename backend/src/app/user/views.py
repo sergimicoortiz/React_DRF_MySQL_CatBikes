@@ -10,6 +10,7 @@ from rest_framework.permissions import (
 
 class UserView(viewsets.GenericViewSet):
     permission_classes = [AllowAny]
+
     def register(self, request):
         data = request.data['user']
 
@@ -45,6 +46,16 @@ class UserView(viewsets.GenericViewSet):
             'password': data['password']
         }
         serializer = userSerializer.login(serializer_context)
+        return Response(serializer)
+
+    def refreshToken(self, request):
+        username = request.data.get('username')
+
+        serializer_context = {
+            'username': username
+        }
+
+        serializer = userSerializer.refreshToken(serializer_context)
         return Response(serializer)
 
 

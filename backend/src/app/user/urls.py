@@ -6,6 +6,7 @@ urlpatterns = [
     # Users
     path('register', UserView.as_view({'post': 'register'})),
     path('login', UserView.as_view({'post': 'login'})),
+    path('refreshToken', UserView.as_view({'post': 'refreshToken'})),
     path('user', UserAuthenticatedView.as_view({'get': 'getUser'})),
     # path('logout', UserAuthenticatedView.as_view({'get': 'logout'})),
 ]

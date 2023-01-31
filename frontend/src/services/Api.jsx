@@ -1,13 +1,11 @@
-import { useContext } from "react"
 import axios from 'axios';
 import secrets from '../secrets';
 import jwt_decode from "jwt-decode";
 import JwtService from '../services/JwtService';
-// import UserContext from "../context/UserContext";
-// const { token } = useContext(UserContext)
+import dayjs from "dayjs";
 
 
-export default () => {
+const useAxios = () => {
     let api = null;
     if (JwtService.getToken()) {
         api = axios.create({
@@ -17,10 +15,28 @@ export default () => {
                 "Authorization": `Bearer ${JwtService.getToken()}`
             }
         });
-        // api.interceptors.request.use(async req => {
-            // console.log(JwtService.getToken())
-            // const user = jwt_decode(JwtService.getToken().access);
-        // })
+
+        let token = JwtService.getToken();
+
+        api.interceptors.request.use(async req => {
+
+            const user = jwt_decode(token);
+            const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
+
+            if (!isExpired) return req;
+
+            const response = await axios.post(`${secrets.URL_DRF}refreshToken`, {
+                refresh: token,
+                username: user.username
+            });
+
+            JwtService.saveToken(response.data.token)
+
+            console.log(JwtService.getToken())
+
+
+            return req;
+        })
     } else {
         api = axios.create({
             baseURL: secrets.URL_DRF,
@@ -32,3 +48,4 @@ export default () => {
 
     return api;
 }
+export default useAxios;
