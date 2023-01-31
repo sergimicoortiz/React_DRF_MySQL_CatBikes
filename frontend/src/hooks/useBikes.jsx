@@ -47,14 +47,14 @@ export function useBikes() {
         setBikes(bikes.filter(item => !save.includes(item.slug)))
     })
 
-    const updateBikes = ((data) => {
-        BikeService.updateBike(data)
+    const updateBikes = ((data, slug) => {
+        BikeService.updateBike(data, slug)
             .then((dataThen) => {
-                if (dataThen.status == 200) {
+                if (dataThen.status === 200) {
                     let get_Old_Bike = [...bikes];
-                    const remove_old = get_Old_Bike.findIndex(item => item.slug === data.bike.slug);
+                    const remove_old = get_Old_Bike.findIndex(item => item.slug === slug);
                     if (remove_old !== -1) {
-                        get_Old_Bike[remove_old] = data.bike;
+                        get_Old_Bike[remove_old] = dataThen.data;
                         setBikes(get_Old_Bike);
                     }
                     navigate('/dashboard/bikes')
