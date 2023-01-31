@@ -9,6 +9,7 @@ from rest_framework.permissions import (
 
 
 class UserView(viewsets.GenericViewSet):
+    permission_classes = [AllowAny]
     def register(self, request):
         data = request.data['user']
 

@@ -10,10 +10,11 @@ const StationForm = ({ SendData, station = {
 } }) => {
 
     const validators = Yup.object().shape({
-        name: Yup.string().required('Name is required').min(3).max(15),
+        name: Yup.string().required('Name is required').min(3).max(50),
         status: Yup.string().required('Status is required'),
         image: Yup.string().url().required('Image is required').min(3).max(100),
         address: Yup.string().required('Address is required').min(3).max(50),
+        slot_quantity: Yup.number().min(1),
     });
 
     const {
@@ -33,6 +34,20 @@ const StationForm = ({ SendData, station = {
             setValue('address', station.address);
         }
     }, [station]);
+
+    const slot_quantity_form = station.status == '' ?
+        <div>
+
+            <label>Slot quantity: </label>
+            <input
+                name="slot_quantity"
+                min="0"
+                type="number"
+                {...register('slot_quantity')} />
+            <div className="error">{errors.slot_quantity?.message}</div>
+        </div>
+        : '';
+
 
     const onSubmit = data => {
         SendData(data);
@@ -72,7 +87,7 @@ const StationForm = ({ SendData, station = {
                     type="text"
                     {...register('address')} />
                 <div className="error">{errors.address?.message}</div>
-
+                {slot_quantity_form}
                 <button type="submit">{buttonContent}</button>
             </form>
         </div>

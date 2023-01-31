@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import StationContext from "../context/StationsContext";
 import SlotService from "../services/SlotService";
 import { toast } from "react-toastify";
+import { useSlots } from './useSlots';
 
 export function useStations() {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ export function useStations() {
     const { stations, setStations } = useContext(StationContext);
     const [oneStation, setOneStation] = useState({});
     const [slotStation, setSlotStation] = useState([]);
+    const { slots, setSlots } = useSlots();
 
     useEffect(() => {
         const page = pathname.split('/')[1];
@@ -41,17 +43,6 @@ export function useStations() {
         }
     }, []);
 
-    const useDeleteStation = (slug) => {
-        StationService.DeleteStation(slug)
-            .then(res => {
-                if (res.status === 200) {
-                    toast.success(`Station ${slug} deleted`);
-                    setStations(stations.filter(item => item.slug !== slug));
-                };
-            })
-            .catch(e => console.error(e));
-    }
-
     const useDeleteStationMultiple = async (slugs) => {
         let slugs_ok = [];
         for (let i = 0; i < slugs.length; i++) {
@@ -64,11 +55,14 @@ export function useStations() {
                 console.error(error);
             }
         }
+        setSlots(slots.filter(slot => !slugs_ok.includes(slot.station_id)));
         setStations(stations.filter(item => !slugs_ok.includes(item.slug)));
     }
 
     const useCreateStation = useCallback(data => {
-        StationService.CreateStations(data)
+        const slot_quantity = data.slot_quantity;
+        delete (data.slot_quantity);
+        StationService.CreateStations(data, slot_quantity)
             .then(({ data, status }) => {
                 if (status === 200) {
                     toast.success('Station created');
@@ -104,5 +98,5 @@ export function useStations() {
             });
     }, []);
 
-    return { slotStation, setSlotStation, stations, setStations, oneStation, setOneStation, useDeleteStation, useCreateStation, useUpdateStation, useOneStation, useDeleteStationMultiple };
+    return { slotStation, setSlotStation, stations, setStations, oneStation, setOneStation, useCreateStation, useUpdateStation, useOneStation, useDeleteStationMultiple };
 }

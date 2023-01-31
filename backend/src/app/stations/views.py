@@ -29,6 +29,9 @@ class StationView(viewsets.GenericViewSet):
             slot_context = {'station_id': serializer.data['id']}
             for i in range(slots['quantity']):
                 SlotSerializer.create(context=slot_context)
+            slots = Slot.objects.filter(
+                station_id=serializer.data.id)
+            print(slots)
         return Response(serializer.data)
 
     def delete(self, request, slug):
@@ -128,6 +131,4 @@ class SlotView(viewsets.GenericViewSet):
         slot_context = {'bike_id': 0, 'status': slot_data['status']}
         serializer_slot = SlotSerializer.update(
             instance=saved_slot, context=slot_context)
-
-        # return Response(SlotSerializer.to_Slot(saved_slot))
         return Response(SlotSerializer.to_Slot(serializer_slot))

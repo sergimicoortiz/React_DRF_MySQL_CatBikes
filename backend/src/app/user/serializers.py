@@ -33,7 +33,7 @@ class userSerializer(serializers.ModelSerializer):
         email_exist = len(User.objects.filter(email=email))
         if (email_exist > 0 or username_exist > 0):
             raise serializers.ValidationError(
-                'Useror Email with this username already exists.'
+                'User or Email with this username already exists.'
             )
 
         user = User.objects.create_user(

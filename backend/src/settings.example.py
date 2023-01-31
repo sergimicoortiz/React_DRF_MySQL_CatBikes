@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pepito'
+SECRET_KEY = 'django-insecure-wc)*!&lr3om&nlht^iz3%8&-91@9k(qtlioou99g$ya3=)1u4z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -144,3 +144,6 @@ REST_FRAMEWORK = {
         'src.app.user.backends.JWTAuthentication',
     )
 }
+
+#Jwt token expiration time in minutes
+JWT_EXP_TIME = 60
