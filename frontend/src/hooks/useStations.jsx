@@ -70,7 +70,9 @@ export function useStations() {
                 if (status === 200) {
                     toast.success('Station created');
                     navigate('/dashboard/stations');
-                    setStations([...stations, data]);
+                    data.station.total_slots = data.slots.length;
+                    setStations([...stations, data.station]);
+                    setSlots([...slots, ...data.slots]);
                 }
             })
             .catch(e => {

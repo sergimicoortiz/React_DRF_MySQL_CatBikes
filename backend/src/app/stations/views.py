@@ -30,9 +30,8 @@ class StationView(viewsets.GenericViewSet):
             for i in range(slots['quantity']):
                 SlotSerializer.create(context=slot_context)
             slots = Slot.objects.filter(
-                station_id=serializer.data.id)
-            print(slots)
-        return Response(serializer.data)
+                station_id=serializer.data['id'])
+        return Response({'station': serializer.data, 'slots': SlotSerializer(slots, many=True).data})
 
     def delete(self, request, slug):
         station = get_object_or_404(Station.objects.all(), slug=slug)
