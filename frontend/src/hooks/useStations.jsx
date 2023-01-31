@@ -14,6 +14,7 @@ export function useStations() {
     const [slotStation, setSlotStation] = useState([]);
     const { slots, setSlots } = useSlots();
 
+    //save the slots of an specific station.
     useEffect(() => {
         const page = pathname.split('/')[1];
         if (oneStation.id && page !== 'dashboard') {
@@ -27,6 +28,7 @@ export function useStations() {
                 .catch(e => console.error(e));
         }
     }, [oneStation]);
+
 
     const useOneStation = useCallback((slug) => {
         const station_tmp = stations.filter(item => item.slug === slug);
@@ -55,8 +57,9 @@ export function useStations() {
                 console.error(error);
             }
         }
-        setSlots(slots.filter(slot => !slugs_ok.includes(slot.station_id)));
         setStations(stations.filter(item => !slugs_ok.includes(item.slug)));
+        const ids_ok = stations.filter(item => !slugs_ok.includes(item.slug)).map(item => item.id);
+        setSlots(slots.filter(slot => ids_ok.includes(slot.station_id)));
     }
 
     const useCreateStation = useCallback(data => {
