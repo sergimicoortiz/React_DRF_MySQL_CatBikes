@@ -5,11 +5,12 @@ from rest_framework.exceptions import NotFound
 from .models import User
 from .serializers import userSerializer
 from rest_framework.permissions import (
-    AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser,)
+    AllowAny, IsAuthenticated)
 
 
 class UserView(viewsets.GenericViewSet):
     permission_classes = [AllowAny]
+
     def register(self, request):
         data = request.data['user']
 

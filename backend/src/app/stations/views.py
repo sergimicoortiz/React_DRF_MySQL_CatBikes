@@ -7,9 +7,20 @@ from .models import Bike
 from .serializers import BikeSerializer
 from .models import Slot
 from .serializers import SlotSerializer
+from rest_framework.permissions import (
+    AllowAny)
+from src.app.core.permissions import IsAdmin
 
 
 class StationView(viewsets.GenericViewSet):
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsAdmin]
+        return super(StationView, self).get_permissions()
+
     def get(self, request, slug=None):
         if slug:
             station = get_object_or_404(Station.objects.all(), slug=slug)
@@ -49,6 +60,13 @@ class StationView(viewsets.GenericViewSet):
 
 
 class BikeView(viewsets.GenericViewSet):
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsAdmin]
+        return super(BikeView, self).get_permissions()
 
     def get(self, request, slug=None):
         if slug:
@@ -92,6 +110,14 @@ class BikeView(viewsets.GenericViewSet):
 
 
 class SlotView(viewsets.GenericViewSet):
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsAdmin]
+        return super(SlotView, self).get_permissions()
+
     def get(self, request, id=None):
         if id:
             slot = get_object_or_404(Slot.objects.all(), pk=id)
