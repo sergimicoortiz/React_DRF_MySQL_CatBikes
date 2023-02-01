@@ -28,10 +28,10 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
     def _authenticate_credentials(self, request, token):
 
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
-        except:
-            msg = 'Invalid authentication. Could not decode token.'
+        token = len(Blacklist.objects.filter(token=token))
+        if (token > 0):
+            msg = 'Token in Blacklist'
             raise exceptions.AuthenticationFailed(msg)
 
-        return (user, token)
+
+        return None
