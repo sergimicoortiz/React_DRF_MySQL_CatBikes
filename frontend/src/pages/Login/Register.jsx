@@ -29,7 +29,6 @@ const Register = () => {
     const onSubmit = (data) => {
         delete (data['passwordConfirmation']);
         useRegister(data)
-        // console.log(data);
     }
 
     return (

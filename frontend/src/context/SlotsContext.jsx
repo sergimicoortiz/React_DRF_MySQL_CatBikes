@@ -7,7 +7,6 @@ export function SlotsContextProvider({ children }) {
     const [slots, setSlots] = useState([]);
 
     useEffect(function () {
-        // console.log("useEffectContext_Slots")
         SlotService.getAll()
             .then(({ data }) => {
                 setSlots(data)
