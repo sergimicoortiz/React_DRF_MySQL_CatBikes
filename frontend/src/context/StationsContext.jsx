@@ -7,7 +7,6 @@ export function StationContext({ children }) {
     const [stations, setStations] = useState([])
 
     useEffect(function () {
-        // console.log("context station")
         StationService.GetStations()
             .then(res => setStations(res.data))
             .catch(e => console.error(e));

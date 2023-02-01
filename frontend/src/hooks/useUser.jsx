@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 export function useUser() {
     const navigate = useNavigate();
     const { token, setToken, user, setUser, isAuth, setIsAuth, isAdmin, setIsAdmin } = useContext(UserContext)
+    const [errorsUser, setErrorsUser] = useState('');
 
     const useLogin = useCallback((data) => {
         UserService.Login({ 'user': data })
@@ -20,13 +21,14 @@ export function useUser() {
                     setIsAuth(true);
                     setIsAdmin(data.user.types === 'admin');
                     toast.success('Login successfully');
+                    setErrorsUser('');
                     navigate('/');
                 }
 
             })
             .catch((e) => {
                 console.error(e);
-                toast.error('Username or password incorrect');
+                setErrorsUser(e.response.data[0]);
             });
     }, []);
 
@@ -40,16 +42,19 @@ export function useUser() {
                     setIsAuth(true);
                     setIsAdmin(data.user.types === 'admin');
                     toast.success('Register successfully');
+                    setErrorsUser('');
                     navigate('/');
                 }
             })
             .catch((e) => {
                 console.error(e);
-                toast.error('Username or email is used');
+                setErrorsUser(e.response.data[0]);
             });
     }, []);
 
     const useLogout = useCallback(() => {
+        // UserService.Logout(JwtService.getToken())
+        sessionStorage.removeItem("time")
         JwtService.destroyToken();
         setToken(false);
         setIsAuth(false);
@@ -59,5 +64,15 @@ export function useUser() {
         navigate('/');
     }, []);
 
-    return { user, setUser, useRegister, useLogin, useLogout }
+    const refreshToken = useCallback(() => {
+        UserService.RefreshToken()
+            .then(({ data, status }) => {
+                if (status == 200) {
+                    JwtService.saveToken(data.token)
+                    sessionStorage.removeItem("time")
+                }
+            })
+    }, []);
+
+    return { user, setUser, useRegister, useLogin, useLogout, refreshToken, errorsUser, setErrorsUser }
 }

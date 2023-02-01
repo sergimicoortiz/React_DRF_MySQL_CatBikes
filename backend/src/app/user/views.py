@@ -5,10 +5,12 @@ from rest_framework.exceptions import NotFound
 from .models import User
 from .serializers import userSerializer
 from rest_framework.permissions import (
-    AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser,)
+    AllowAny, IsAuthenticated)
 
 
 class UserView(viewsets.GenericViewSet):
+    permission_classes = [AllowAny]
+
     def register(self, request):
         data = request.data['user']
 
@@ -46,6 +48,8 @@ class UserView(viewsets.GenericViewSet):
         serializer = userSerializer.login(serializer_context)
         return Response(serializer)
 
+    
+
 
 class UserAuthenticatedView(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
@@ -58,10 +62,22 @@ class UserAuthenticatedView(viewsets.GenericViewSet):
         serializer = userSerializer.getUser(context=serializer_context)
         return Response(serializer)
 
+    def refreshToken(self, request):
+        # username = request.data.get('username')
+        username = request.user
+
+        serializer_context = {
+            'username': username
+        }
+
+        serializer = userSerializer.refreshToken(serializer_context)
+        return Response(serializer)
+
     # def logout(self, request):
-    #     try:
-    #         request.user.auth_token.delete()
-    #         return Response({"status": 'success'})
+    #     print(request.data.get('token'))
+    #     # try:
+    #     request.data.get('token').delete()
+    #     return Response({"status": 'success'})
     #     except:
     #         print('ERROR LOGOUT')
     #         return Response({"status": 'error'})

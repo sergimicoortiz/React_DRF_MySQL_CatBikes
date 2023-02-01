@@ -33,7 +33,7 @@ class userSerializer(serializers.ModelSerializer):
         email_exist = len(User.objects.filter(email=email))
         if (email_exist > 0 or username_exist > 0):
             raise serializers.ValidationError(
-                'Useror Email with this username already exists.'
+                'Username or email already exists.'
             )
 
         user = User.objects.create_user(
@@ -67,12 +67,12 @@ class userSerializer(serializers.ModelSerializer):
             user = User.objects.get(username=username)
         except:
             raise serializers.ValidationError(
-                'User with this username and password was not found or the password is incorrect.'
+                'Username or password incorrects.'
             )
 
         if not user.check_password(password):
             raise serializers.ValidationError(
-                'User with this username and password was not found or the password is incorrect.'
+                'Username or password incorrects.'
             )
 
         return {
@@ -81,5 +81,20 @@ class userSerializer(serializers.ModelSerializer):
                 'email': user.email,
                 'types': user.types
             },
+            'token': user.token
+        }
+
+    def refreshToken(context):
+
+        username = context['username']
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            raise serializers.ValidationError(
+                'Username not valid.'
+            )
+
+        return {
             'token': user.token
         }
