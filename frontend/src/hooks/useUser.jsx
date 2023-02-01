@@ -53,6 +53,8 @@ export function useUser() {
     }, []);
 
     const useLogout = useCallback(() => {
+        // UserService.Logout(JwtService.getToken())
+        sessionStorage.removeItem("time")
         JwtService.destroyToken();
         setToken(false);
         setIsAuth(false);
@@ -62,5 +64,15 @@ export function useUser() {
         navigate('/');
     }, []);
 
-    return { user, setUser, useRegister, useLogin, useLogout, errorsUser, setErrorsUser }
+    const refreshToken = useCallback(() => {
+        UserService.RefreshToken()
+            .then(({ data, status }) => {
+                if (status == 200) {
+                    JwtService.saveToken(data.token)
+                    sessionStorage.removeItem("time")
+                }
+            })
+    }, []);
+
+    return { user, setUser, useRegister, useLogin, useLogout, refreshToken, errorsUser, setErrorsUser }
 }

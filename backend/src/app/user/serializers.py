@@ -83,3 +83,18 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token
         }
+
+    def refreshToken(context):
+
+        username = context['username']
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            raise serializers.ValidationError(
+                'Username not valid.'
+            )
+
+        return {
+            'token': user.token
+        }

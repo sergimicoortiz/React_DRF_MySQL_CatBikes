@@ -12,6 +12,14 @@ const UserService = {
 
     GetUser() {
         return Api().get('user');
+    },
+
+    Logout(data) {
+        return Api().post('logout', { token: data });
+    },
+
+    RefreshToken(data){
+        return Api().post('refreshToken');
     }
 }
 

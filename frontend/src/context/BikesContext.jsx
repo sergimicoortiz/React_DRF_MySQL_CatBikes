@@ -7,7 +7,6 @@ export function BikesContextProvider({ children }) {
     const [bikes, setBikes] = useState([]);
 
     useEffect(function () {
-        // console.log("context bike")
         BikeService.getAll()
             .then(({ data }) => {
                 setBikes(data)

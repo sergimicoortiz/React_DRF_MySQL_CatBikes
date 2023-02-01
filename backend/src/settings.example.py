@@ -146,4 +146,4 @@ REST_FRAMEWORK = {
 }
 
 #Jwt token expiration time in minutes
-JWT_EXP_TIME = 60
+JWT_EXP_TIME = 30
