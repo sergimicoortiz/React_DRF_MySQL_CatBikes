@@ -2,7 +2,6 @@ import axios from 'axios';
 import secrets from '../secrets';
 import JwtService from '../services/JwtService';
 
-
 const useAxios = () => {
     let api = null;
     if (JwtService.getToken()) {
@@ -22,6 +21,17 @@ const useAxios = () => {
             }
         });
     }
+
+    api.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error.response.status === 403) {
+                JwtService.destroyToken();
+                window.location.reload();
+            }
+            return Promise.reject(error);
+        }
+    );
 
     return api;
 }
