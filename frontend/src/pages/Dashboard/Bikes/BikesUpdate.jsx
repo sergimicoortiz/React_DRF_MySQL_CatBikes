@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
 import { useBikes } from "../../../hooks/useBikes";
-import { useNavigate, useParams } from "react-router-dom";
-import FormUpdate from "../../../components/Dashboard/Bikes/FormUpdate";
+import { useParams } from "react-router-dom";
+import BikesForm from "../../../components/Dashboard/Bikes/BikesForm";
 
 const BikesList = () => {
     const { slug } = useParams();
@@ -13,7 +13,7 @@ const BikesList = () => {
     }, [])
 
     return (
-        < FormUpdate oneBike={oneBike} key={oneBike.slug} updateBikes={updateBikes}></FormUpdate >
+        < BikesForm oneBike={oneBike} sendData={(data) => updateBikes(data, slug)} />
     );
 }
 

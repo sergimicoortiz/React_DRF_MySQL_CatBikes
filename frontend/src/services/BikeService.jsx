@@ -9,11 +9,11 @@ const getOne = (slug) => {
 };
 
 const createBike = (data) => {
-  return Api().post("/bikes", data);
+  return Api().post("/bikes", { 'bike': data });
 };
 
-const updateBike = (data) => {
-  return Api().put("/bikes/" + data.bike.slug, data);
+const updateBike = (data, slug) => {
+  return Api().put("/bikes/" + slug, { 'bike': data });
 };
 
 const deleteBike = (data) => {

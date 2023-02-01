@@ -51,10 +51,10 @@ const BikesList = () => {
                 }}><span>CREATE</span></button>
                 <button className="custom-btn btn-13" onClick={() => {
                     navigate('/dashboard/bikes/update/' + selectedRows[0].slug)
-                }} disabled={selectedRows == 0}><span>UPDATE</span></button>
+                }} disabled={selectedRows.length !== 1}><span>UPDATE</span></button>
                 <button className="custom-btn btn-5" onClick={() => {
                     removeSelectedBikes()
-                }}><span>DELETE</span></button>
+                }} disabled={selectedRows.length === 0}><span>DELETE</span></button>
             </div>
             <DataTable
                 columns={columns}

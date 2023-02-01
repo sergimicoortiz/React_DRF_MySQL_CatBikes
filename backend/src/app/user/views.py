@@ -5,7 +5,7 @@ from rest_framework.exceptions import NotFound
 from .models import User
 from .serializers import userSerializer
 from rest_framework.permissions import (
-    AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser,)
+    AllowAny, IsAuthenticated)
 
 
 class UserView(viewsets.GenericViewSet):

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 export function useUser() {
     const navigate = useNavigate();
     const { token, setToken, user, setUser, isAuth, setIsAuth, isAdmin, setIsAdmin } = useContext(UserContext)
+    const [errorsUser, setErrorsUser] = useState('');
 
     const useLogin = useCallback((data) => {
         UserService.Login({ 'user': data })
@@ -20,13 +21,14 @@ export function useUser() {
                     setIsAuth(true);
                     setIsAdmin(data.user.types === 'admin');
                     toast.success('Login successfully');
+                    setErrorsUser('');
                     navigate('/');
                 }
 
             })
             .catch((e) => {
                 console.error(e);
-                toast.error('Username or password incorrect');
+                setErrorsUser(e.response.data[0]);
             });
     }, []);
 
@@ -40,12 +42,13 @@ export function useUser() {
                     setIsAuth(true);
                     setIsAdmin(data.user.types === 'admin');
                     toast.success('Register successfully');
+                    setErrorsUser('');
                     navigate('/');
                 }
             })
             .catch((e) => {
                 console.error(e);
-                toast.error('Username or email is used');
+                setErrorsUser(e.response.data[0]);
             });
     }, []);
 
@@ -71,5 +74,5 @@ export function useUser() {
             })
     }, []);
 
-    return { user, setUser, useRegister, useLogin, useLogout, refreshToken }
+    return { user, setUser, useRegister, useLogin, useLogout, refreshToken, errorsUser, setErrorsUser }
 }
