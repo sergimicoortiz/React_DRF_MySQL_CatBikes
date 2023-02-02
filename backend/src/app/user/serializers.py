@@ -65,6 +65,8 @@ class userSerializer(serializers.ModelSerializer):
 
         try:
             user = User.objects.get(username=username)
+            user.countTokens = 0
+            user.save()
         except:
             raise serializers.ValidationError(
                 'Username or password incorrects.'
