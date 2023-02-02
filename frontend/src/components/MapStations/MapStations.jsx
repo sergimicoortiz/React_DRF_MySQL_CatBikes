@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import secrets from "../../secrets";
-import Map, { GeolocateControl, Marker, Popup } from "react-map-gl";
+import Map from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import './MapStation.scss';
+import StationContext from "../../context/StationsContext";
+import MarkerStation from "./MarkerStation";
 const MapStations = () => {
+    const { stations } = useContext(StationContext);
+    const StationsMarkers = stations.map(item => <MarkerStation key={item.slug} station={item} />);
     return (
         <div className="map">
             <Map
                 mapboxAccessToken={secrets.MAP_TOKEN}
+                doubleClickZoom={false}
                 initialViewState={{
                     longitude: -0.603908,
                     latitude: 38.822944,
@@ -15,7 +20,9 @@ const MapStations = () => {
                 }}
                 style={{ width: 800, height: 500 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
-            />
+            >
+                {StationsMarkers}
+            </Map>
         </div>
     )
 }
