@@ -6,8 +6,8 @@ import MapStations from '../../components/MapStations/MapStations';
 const Home = () => {
     return (
         <div>
-            <MapStations />
             <CaruselStations />
+            <MapStations />
         </div>
     )
 }

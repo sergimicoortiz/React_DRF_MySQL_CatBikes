@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import secrets from "../../secrets";
-import Map from "react-map-gl";
+import Map,{NavigationControl} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import './MapStation.scss';
 import StationContext from "../../context/StationsContext";
@@ -12,7 +12,6 @@ const MapStations = () => {
         <div className="map">
             <Map
                 mapboxAccessToken={secrets.MAP_TOKEN}
-                doubleClickZoom={false}
                 initialViewState={{
                     longitude: -0.603908,
                     latitude: 38.822944,
@@ -21,6 +20,7 @@ const MapStations = () => {
                 style={{ width: 800, height: 500 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
             >
+                <NavigationControl/>
                 {StationsMarkers}
             </Map>
         </div>
