@@ -26,6 +26,7 @@ const useAxios = () => {
         (response) => response,
         (error) => {
             if (error.response.status === 403) {
+                sessionStorage.removeItem("time")
                 JwtService.destroyToken();
                 window.location.reload();
             }

@@ -40,6 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
                              null=False, default='client')
     is_staff = models.BooleanField(default=False)
 
+    countTokens = models.IntegerField(default=0)
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
