@@ -32,8 +32,8 @@ const StationsList = () => {
 
         },
         {
-            name: 'Address',
-            selector: row => row.address,
+            name: 'Pos',
+            selector: row => `lon: ${row.longitude} lat: ${row.latitude}`,
             sortable: true,
 
         },

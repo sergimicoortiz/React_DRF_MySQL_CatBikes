@@ -7,7 +7,8 @@ from .models import Slot
 class StationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Station
-        fields = ['id', 'slug', 'name', 'status', 'image', 'address']
+        fields = ['id', 'slug', 'name', 'status',
+                  'image', 'longitude', 'latitude']
 
     def to_representation(self, instance):
         total_slots = len(Slot.objects.filter(station_id=instance.id))
@@ -19,7 +20,8 @@ class StationSerializer(serializers.ModelSerializer):
             "name": instance.name,
             "status": instance.status,
             "image": instance.image,
-            "address": instance.address,
+            "longitude": instance.longitude,
+            "latitude": instance.latitude,
             "total_slots": total_slots,
             "total_bikes": total_bikes
         }
