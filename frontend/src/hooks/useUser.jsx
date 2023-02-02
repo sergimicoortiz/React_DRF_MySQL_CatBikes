@@ -53,7 +53,7 @@ export function useUser() {
     }, []);
 
     const useLogout = useCallback(() => {
-        // UserService.Logout(JwtService.getToken())
+        UserService.Logout()
         sessionStorage.removeItem("time")
         JwtService.destroyToken();
         setToken(false);

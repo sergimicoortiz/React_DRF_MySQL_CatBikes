@@ -63,7 +63,6 @@ class UserAuthenticatedView(viewsets.GenericViewSet):
         return Response(serializer)
 
     def refreshToken(self, request):
-        # username = request.data.get('username')
         username = request.user
 
         serializer_context = {
