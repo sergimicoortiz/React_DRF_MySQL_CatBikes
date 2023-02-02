@@ -35,6 +35,7 @@ export function UserContextProvider({ children }) {
                     }
                 })
                 .catch(e => console.error(e));
+
             return () => clearInterval(interval);
         }
     }, [token]);
