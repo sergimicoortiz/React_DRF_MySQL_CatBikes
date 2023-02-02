@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'src.app.stations',
     'src.app.user',
+    'src.app.blacklist',
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,7 @@ AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'src.app.blacklist.backends.JWTAuthentication',
         'src.app.user.backends.JWTAuthentication',
     )
 }
