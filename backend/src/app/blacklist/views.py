@@ -12,7 +12,6 @@ class BlacklistAuthenticatedView(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
     def logout(self, request):
-        print("hola")
         bearer = request.headers['Authorization'].split()
 
         serializer_context = {
