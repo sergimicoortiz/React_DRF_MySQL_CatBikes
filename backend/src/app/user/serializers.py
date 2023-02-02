@@ -1,4 +1,5 @@
-from rest_framework import serializers
+from rest_framework import serializers, authentication, exceptions
+from django.core.exceptions import PermissionDenied
 from .models import User
 
 
@@ -90,19 +91,12 @@ class userSerializer(serializers.ModelSerializer):
 
         username = context['username']
 
-        try:
-            user = User.objects.get(username=username)
-            if (user.countTokens < 3):
-                user.countTokens = user.countTokens + 1
-                user.save()
-            else:
-                raise serializers.ValidationError(
-                    'Your time has reached the limit'
-                )
-        except:
-            raise serializers.ValidationError(
-                'Username not valid.'
-            )
+        user = User.objects.get(username=username)
+        if (user.countTokens < 3):
+            user.countTokens = user.countTokens + 1
+            user.save()
+        else:
+            raise exceptions.AuthenticationFailed("error")
 
         return {
             'token': user.token
