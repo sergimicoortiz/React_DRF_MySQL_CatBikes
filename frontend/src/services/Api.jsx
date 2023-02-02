@@ -25,7 +25,7 @@ const useAxios = () => {
     api.interceptors.response.use(
         (response) => response,
         (error) => {
-            if (error.response.status === 403) {
+            if (error.response.status === 403 || error.response.status === 400) {
                 JwtService.destroyToken();
                 window.location.reload();
             }

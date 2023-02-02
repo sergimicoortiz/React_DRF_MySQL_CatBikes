@@ -24,7 +24,7 @@ export function UserContextProvider({ children }) {
                 } else {
                     sessionStorage.setItem("time", Number(1))
                 }
-            }, 60000);
+            }, 1000);
 
             UserService.GetUser()
                 .then(({ data, status }) => {

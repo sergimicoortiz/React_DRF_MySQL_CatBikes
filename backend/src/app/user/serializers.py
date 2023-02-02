@@ -90,6 +90,13 @@ class userSerializer(serializers.ModelSerializer):
 
         try:
             user = User.objects.get(username=username)
+            if (user.countTokens < 3):
+                user.countTokens = user.countTokens + 1
+                user.save()
+            else:
+                raise serializers.ValidationError(
+                    'Your time has reached the limit'
+                )
         except:
             raise serializers.ValidationError(
                 'Username not valid.'
