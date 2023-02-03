@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import('./StationsList.scss');
 import('../Dashboard.scss');
 import { useStations } from "../../../hooks/useStations";
 import DataTable from 'react-data-table-component';
@@ -32,7 +31,7 @@ const StationsList = () => {
 
         },
         {
-            name: 'Pos',
+            name: 'Position',
             selector: row => `lon: ${row.longitude} lat: ${row.latitude}`,
             sortable: true,
 
