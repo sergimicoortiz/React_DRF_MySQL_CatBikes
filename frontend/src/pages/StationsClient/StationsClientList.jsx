@@ -11,7 +11,7 @@ const StationsClientList = () => {
         <div className="card" key={item.id} style={{ backgroundImage: `url(${item.image})` }}>
             <div className="content">
                 <h2 className="title">{item.name}</h2>
-                <p className="copy">Address: {item.address}</p>
+                {/* <p className="copy">Pos: {`lon: ${item.longitude} lat: ${item.latitude}`}</p> */}
                 <p className="copy">Status: {item.status}</p>
                 <span className="copy">Total Slots: {item.total_slots}</span>
                 <span className="copy">Bikes for Rent: {item.total_bikes}</span>

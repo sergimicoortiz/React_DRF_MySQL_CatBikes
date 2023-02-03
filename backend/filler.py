@@ -2,6 +2,7 @@ from faker import Faker
 from random import randint
 import django
 import os
+import numpy as np
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.settings')
 django.setup()
 from src.app.stations.serializers import BikeSerializer, StationSerializer, SlotSerializer
@@ -11,6 +12,23 @@ cats_img = ["https://cdn.pixabay.com/photo/2017/06/12/19/02/cat-2396473__480.jpg
             "https://cdn.pixabay.com/photo/2016/10/16/10/00/cat-1744750__480.jpg", "https://cdn.pixabay.com/photo/2017/02/26/14/12/cat-2100306__480.jpg", "https://cdn.pixabay.com/photo/2017/05/05/21/51/cat-2288326__480.jpg", "https://cdn.pixabay.com/photo/2017/05/26/15/25/cat-2346303__480.jpg", "https://cdn.pixabay.com/photo/2016/09/16/19/47/cat-1674990__480.jpg", "https://cdn.pixabay.com/photo/2016/10/16/10/00/cat-1744749__480.jpg", "https://cdn.pixabay.com/photo/2017/02/03/09/26/cat-2034833__480.jpg", "https://cdn.pixabay.com/photo/2016/10/20/05/50/cat-1754702__480.jpg", "https://cdn.pixabay.com/photo/2016/11/21/11/41/animal-1844835__480.jpg", "https://cdn.pixabay.com/photo/2017/03/05/18/05/cat-2119283__480.jpg", "https://cdn.pixabay.com/photo/2017/02/02/18/18/cat-2033451__480.jpg", "https://cdn.pixabay.com/photo/2016/12/13/19/12/cat-1904907__480.jpg", "https://cdn.pixabay.com/photo/2016/12/23/15/58/cat-1927512__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/02/41/cat-1898659__480.jpg", "https://cdn.pixabay.com/photo/2016/08/16/14/40/cat-1598113__480.jpg", "https://cdn.pixabay.com/photo/2016/07/13/10/34/cat-1514076__480.jpg", "https://cdn.pixabay.com/photo/2016/12/30/17/27/cat-1941089__480.jpg", "https://cdn.pixabay.com/photo/2016/05/17/17/16/cat-1398627__480.jpg", "https://cdn.pixabay.com/photo/2016/09/18/12/29/cat-1678009__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/02/51/cat-1898678__480.jpg", "https://cdn.pixabay.com/photo/2016/07/06/13/28/cat-1500498__480.jpg", "https://cdn.pixabay.com/photo/2016/10/18/13/44/cat-1750241__480.jpg", "https://cdn.pixabay.com/photo/2017/03/19/20/28/cat-2157497__480.jpg", "https://cdn.pixabay.com/photo/2017/03/14/19/15/cat-2144133__480.jpg", "https://cdn.pixabay.com/photo/2017/03/19/22/11/cat-2157750__480.jpg", "https://cdn.pixabay.com/photo/2016/10/11/04/25/cat-1730517__480.jpg", "https://cdn.pixabay.com/photo/2017/02/23/15/06/cat-2092428__480.jpg", "https://cdn.pixabay.com/photo/2017/03/29/15/59/small-cat-2185670__480.jpg", "https://cdn.pixabay.com/photo/2017/03/05/20/08/baby-cat-2119703__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/02/28/cat-1898625__480.jpg", "https://cdn.pixabay.com/photo/2016/08/13/21/33/cat-1591598__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/10/34/cat-1899127__480.jpg", "https://cdn.pixabay.com/photo/2016/12/01/13/23/cat-1875282__480.jpg", "https://cdn.pixabay.com/photo/2017/01/31/19/04/cat-2026479__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/02/45/cat-1898667__480.jpg", "https://cdn.pixabay.com/photo/2016/08/12/18/34/cat-1589369__480.jpg", "https://cdn.pixabay.com/photo/2016/12/10/13/00/cat-1897224__480.jpg", "https://cdn.pixabay.com/photo/2016/10/05/15/58/cats-1716984__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/00/41/cat-1898510__480.jpg", "https://cdn.pixabay.com/photo/2016/08/13/21/53/cat-1591636__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/00/36/cat-1898497__480.jpg", "https://cdn.pixabay.com/photo/2016/12/07/22/47/cat-1890583__480.jpg", "https://cdn.pixabay.com/photo/2017/01/21/18/15/cat-1997911__480.jpg", "https://cdn.pixabay.com/photo/2016/09/20/20/47/cat-1683387__480.jpg", "https://cdn.pixabay.com/photo/2016/09/16/12/42/cat-1673924__480.jpg", "https://cdn.pixabay.com/photo/2016/06/27/10/53/cat-1482258__480.jpg", "https://cdn.pixabay.com/photo/2017/03/05/20/16/baby-cat-2119755__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/02/55/cat-1898683__480.jpg", "https://cdn.pixabay.com/photo/2017/03/27/21/31/cat-2180331__480.jpg", "https://cdn.pixabay.com/photo/2016/09/16/17/25/cat-1674617__480.jpg", "https://cdn.pixabay.com/photo/2016/09/17/00/53/cat-1675428__480.jpg", "https://cdn.pixabay.com/photo/2016/11/07/10/03/cat-1805310__480.jpg", "https://cdn.pixabay.com/photo/2016/05/19/21/04/cat-1403948__480.jpg", "https://cdn.pixabay.com/photo/2016/05/19/21/18/cat-1403970__480.jpg", "https://cdn.pixabay.com/photo/2016/07/08/13/10/cat-1504307__480.jpg", "https://cdn.pixabay.com/photo/2016/11/07/14/36/cat-1805964__480.jpg", "https://cdn.pixabay.com/photo/2016/12/18/18/42/kittens-1916542__480.jpg", "https://cdn.pixabay.com/photo/2016/03/27/19/45/animal-1283955__480.jpg", "https://cdn.pixabay.com/photo/2016/02/12/15/21/cat-1196242__480.jpg", "https://cdn.pixabay.com/photo/2016/09/24/22/20/cat-1692702__480.jpg", "https://cdn.pixabay.com/photo/2017/01/07/13/42/nature-1960387__480.jpg", "https://cdn.pixabay.com/photo/2016/09/24/23/26/cat-1692815__480.jpg", "https://cdn.pixabay.com/photo/2016/12/11/00/39/cat-1898503__480.jpg", "https://cdn.pixabay.com/photo/2016/08/23/23/08/cat-1615778__480.jpg", "https://cdn.pixabay.com/photo/2016/10/18/16/02/natural-1750606__480.jpg", "https://cdn.pixabay.com/photo/2017/02/11/22/47/cat-2058900__480.jpg", "https://cdn.pixabay.com/photo/2016/08/23/23/29/cat-1615825__480.jpg", "https://cdn.pixabay.com/photo/2016/09/17/00/51/cat-1675427__480.jpg", "https://cdn.pixabay.com/photo/2016/04/18/17/58/cat-1337040__480.jpg", "https://cdn.pixabay.com/photo/2017/01/02/19/19/cat-1947715__480.jpg", "https://cdn.pixabay.com/photo/2016/11/12/20/29/cat-1819685__480.jpg", "https://cdn.pixabay.com/photo/2016/03/29/13/12/cat-1288218__480.jpg", "https://cdn.pixabay.com/photo/2016/08/13/21/37/cat-1591612__480.jpg", "https://cdn.pixabay.com/photo/2016/08/12/18/36/cat-1589373__480.jpg"]
 cats_img_cant = len(cats_img) - 1
 status = ['used', 'unused']
+longitude_rang = [-0.593940, -0.616429]
+latitude_rang = [38.815629, 38.826529]
+# POINT1
+# -0.616429
+# 38.822192
+
+# POINT2
+# -0.6092187763441984
+# 38.815629744641306
+
+# PONT3
+# -0.5966874953418488
+# 38.82652977013887
+
+# POINT4
+# -0.5939409134688917
+# 38.821447757349205
 
 
 def create_bikes(n):
@@ -30,7 +48,8 @@ def create_stations(n, n_slot):
             'name': fake.name(),
             'status': 'active',
             'image': cats_img[randint(0, cats_img_cant)],
-            'address': fake.address()
+            'longitude': np.random.uniform(longitude_rang[0], longitude_rang[1]),
+            'latitude': np.random.uniform(latitude_rang[0], latitude_rang[1])
         }
         serializer = StationSerializer(data=station)
         if serializer.is_valid(raise_exception=True):
