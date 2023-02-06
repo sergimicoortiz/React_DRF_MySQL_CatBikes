@@ -18,3 +18,16 @@ class RentAuthenticatedView(viewsets.GenericViewSet):
         serializer = RentSerializer.rent(context=serializer_context)
 
         return Response(RentSerializer.to_rent(serializer))
+
+    def returnBike(self, request):
+        data = request.data['returnBike']
+        username = request.user
+        serializer_context = {
+            'username': username,
+            'slot_id': data['end_slot'],
+            'bike_id': data['bike_id']
+        }
+
+        serializer = RentSerializer.returnBike(context=serializer_context)
+
+        return Response(RentSerializer.to_rent(serializer))

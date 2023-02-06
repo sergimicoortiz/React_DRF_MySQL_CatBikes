@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import serializers
 from .models import Rent
 from src.app.user.models import User
@@ -32,7 +33,7 @@ class RentSerializer(serializers.ModelSerializer):
             )
 
         slot = Slot.objects.get(pk=slot_id)
-        if slot is None:
+        if slot is None or slot.bike_id is None:
             raise serializers.ValidationError(
                 'Slot is not find'
             )
@@ -61,6 +62,54 @@ class RentSerializer(serializers.ModelSerializer):
         # BIKE UPDATE
 
         bike.status = 'used'
+        bike.save()
+
+        return rent
+
+    def returnBike(context):
+        username = context['username']
+        bike_id = context['bike_id']
+        slot_id = context['slot_id']
+
+        user = User.objects.get(username=username)
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+
+        bike = Bike.objects.get(pk=bike_id)
+        if bike is None:
+            raise serializers.ValidationError(
+                'Bike is not find'
+            )
+
+        rent = Rent.objects.get(
+            user_id=user.id, bike_id=bike_id, end_slot_id=None)
+        if rent is None:
+            raise serializers.ValidationError(
+                'Rent is not find'
+            )
+
+        slot_new = Slot.objects.get(pk=slot_id)
+        if slot_new is None or slot_new.bike_id is not None:
+            raise serializers.ValidationError(
+                'Slot is not find or is in use'
+            )
+
+        # UPDATE RENT
+        rent.end_slot_id = slot_new.id
+        rent.end_date = datetime.now()
+        rent.save()
+
+        # SLOT UPDATE
+
+        slot_new.bike_id = bike.id
+        slot_new.status = 'used'
+        slot_new.save()
+
+        # BIKE UPDATE
+
+        bike.status = 'unused'
         bike.save()
 
         return rent
