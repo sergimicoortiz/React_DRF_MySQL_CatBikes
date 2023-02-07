@@ -35,6 +35,9 @@ function App() {
   const SlotsList = React.lazy(() => import('./pages/Dashboard/Slots/SlotsList'));
   const SlotsDetails = React.lazy(() => import('./pages/Dashboard/Slots/SlotsDetails'));
 
+  //Rent Dashboard
+  const RentList = React.lazy(() => import('./pages/Dashboard/Rent/RentList'));
+
   //Station Client
   const StationsClientList = React.lazy(() => import('./pages/StationsClient/StationsClientList'));
   const StationDetails = React.lazy(() => import('./pages/StationDetails/StationDetails'));
@@ -44,7 +47,7 @@ function App() {
   const Register = React.lazy(() => import('./pages/Login/Register'));
 
 
-  
+
   return (
     <div>
       <Suspense fallback={<Loading />}>
@@ -84,6 +87,8 @@ function App() {
                       {/* Dashboard Slots */}
                       <Route path="/dashboard/slots" element={<SlotsList />} />
                       <Route path="/dashboard/slots/:id" element={<SlotsDetails />} />
+                      {/* Dashboard Rent */}
+                      <Route path="/dashboard/rent" element={<RentList />} />
                     </Route>
                     {/* Stations Client */}
                     <Route path="/stations" element={<StationsClientList />} />

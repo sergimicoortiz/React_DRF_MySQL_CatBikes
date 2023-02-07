@@ -8,7 +8,7 @@ from src.app.stations.models import Bike, Slot
 class RentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rent
-        fields = ['user_id', 'bike_id', 'start_slot_id',
+        fields = ['id', 'user_id', 'bike_id', 'start_slot_id',
                   'end_slot_id', 'start_date', 'end_date']
 
     def to_rent(instance):

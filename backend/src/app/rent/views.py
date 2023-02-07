@@ -2,6 +2,8 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from .serializers import RentSerializer
 from rest_framework.permissions import (IsAuthenticated)
+from src.app.core.permissions import IsAdmin
+from .models import Rent
 
 
 class RentAuthenticatedView(viewsets.GenericViewSet):
@@ -31,3 +33,12 @@ class RentAuthenticatedView(viewsets.GenericViewSet):
         serializer = RentSerializer.returnBike(context=serializer_context)
 
         return Response(RentSerializer.to_rent(serializer))
+
+
+class RentAdminView(viewsets.GenericViewSet):
+    permission_classes = [IsAdmin]
+
+    def getAll(self, request):
+        data = Rent.objects.all()
+        serializer = RentSerializer(data, many=True)
+        return Response(serializer.data)
