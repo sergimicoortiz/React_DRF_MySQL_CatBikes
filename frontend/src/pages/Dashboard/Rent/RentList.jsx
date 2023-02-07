@@ -4,7 +4,7 @@ import('../Dashboard.scss');
 import DataTable from 'react-data-table-component';
 
 const RentList = () => {
-    const { rents } = useRent();
+    const { rents, useDeleteRentMultiple } = useRent();
     const columns = [
         {
             name: 'Id',
@@ -54,17 +54,16 @@ const RentList = () => {
         setSelectedRows(selectedRows);
     };
 
-    const deleteStations = () => {
-        console.log(selectedRows.map(row => row.id));
-        // useDeleteStationMultiple(selectedRows.map(row => row.slug));
-        // setToggleCleared(!toggleCleared);
-        // setSelectedRows([]);
+    const deleteRents = () => {
+        useDeleteRentMultiple(selectedRows.map(row => row.id));
+        setToggleCleared(!toggleCleared);
+        setSelectedRows([]);
     }
 
     return (
         <div>
-            <h1>Stations List</h1>
-            <button className="custom-btn btn-5" onClick={() => deleteStations()} disabled={selectedRows.length === 0}><span>DELETE</span></button>
+            <h1>Rent List</h1>
+            <button className="custom-btn btn-5" onClick={() => deleteRents()} disabled={selectedRows.length === 0}><span>DELETE</span></button>
             <DataTable
                 columns={columns}
                 data={rents}

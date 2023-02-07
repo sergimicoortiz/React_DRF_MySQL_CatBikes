@@ -21,8 +21,25 @@ export function useRent() {
         }
     }, []);
 
+
+    const useDeleteRentMultiple = async (ids) => {
+        let ids_ok = [];
+        for (let i = 0; i < ids.length; i++) {
+            try {
+                await RentService.DeleteRentDashboard(ids[i]);
+                ids_ok.push(ids[i]);
+                toast.success(`Rent ${ids[i]} deleted`);
+            } catch (error) {
+                toast.error(`Rent ${slugs[i]}`);
+                console.error(error);
+            }
+        }
+        setRents(rents.filter(item => !ids_ok.includes(item.id)));
+    }
+
     return {
         rents,
         setRents,
+        useDeleteRentMultiple
     }
 }

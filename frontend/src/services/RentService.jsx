@@ -4,6 +4,10 @@ const RentService = {
 
     GetRentDashboard() {
         return Api().get('rentDashboard');
+    },
+
+    DeleteRentDashboard(id) {
+        return Api().delete('rentDashboard/' + id);
     }
 
 }

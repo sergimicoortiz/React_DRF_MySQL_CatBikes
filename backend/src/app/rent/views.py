@@ -1,9 +1,10 @@
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from .serializers import RentSerializer
 from rest_framework.permissions import (IsAuthenticated)
 from src.app.core.permissions import IsAdmin
 from .models import Rent
+from rest_framework.generics import get_object_or_404
 
 
 class RentAuthenticatedView(viewsets.GenericViewSet):
@@ -42,3 +43,8 @@ class RentAdminView(viewsets.GenericViewSet):
         data = Rent.objects.all()
         serializer = RentSerializer(data, many=True)
         return Response(serializer.data)
+
+    def delete(self, request, id):
+        rent = get_object_or_404(Rent.objects.all(), pk=id)
+        rent.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
