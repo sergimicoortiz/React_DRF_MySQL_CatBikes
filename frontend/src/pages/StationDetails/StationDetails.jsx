@@ -38,7 +38,9 @@ const StationDetails = () => {
             }
         } else {
             toast.error("You must be logged")
-            navigate("/login")
+            setTimeout(() => {
+                navigate("/login")
+            }, 1000);
         }
     }
 
