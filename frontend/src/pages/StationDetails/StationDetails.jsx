@@ -6,14 +6,37 @@ import { useSlots } from '../../hooks/useSlots';
 import goodImage from '../../img/SlotEmpty.png';
 import usedImage from '../../img/SlotUsed.png';
 import maintenanceImage from '../../img/SlotMaintenance.png';
+import { toast } from 'react-toastify'
+import { useRent } from "../../hooks/useRent";
+import { useNavigate } from "react-router-dom";
+
 
 const StationDetails = () => {
     const { slug } = useParams();
     const { oneStation, useOneStation, slotStation } = useStations();
+    const { setSlots } = useSlots();
+    const { rentBike, returnBike, getUserRent } = useRent();
+    const navigate = useNavigate();
+
 
     useEffect(function () {
         useOneStation(slug);
     }, [])
+
+    const rentId = (data) => {
+        if (localStorage.getItem("token")) {
+            if (data.status == 'used') {
+                rentBike(data);
+            } else {
+                returnBike(data);
+            }
+        } else {
+            toast.error("You must be logged")
+            setTimeout(() => {
+                navigate("/login")
+            }, 1000);
+        }
+    }
 
     let SlotCard = null;
     if (slotStation.length > 0) {
@@ -21,7 +44,11 @@ const StationDetails = () => {
             const img = item.status === 'used' ? goodImage : item.status === 'unused' ? usedImage : maintenanceImage;
             return (<div className="card" key={item.id} style={{ backgroundImage: `url(${img})` }}>
                 <div className="content">
-                    <p className="copy">Status: {item.status}</p>
+                    <p className="copy">Slot: {item.status}</p>
+                    <button className="btn" onClick={() => {
+                        rentId(item)
+                    }
+                    }>{item.status == "unused" ? (<a>Return Bike</a>) : (<a>Rent Bike</a>)}</button>
                 </div>
             </div>)
         }
