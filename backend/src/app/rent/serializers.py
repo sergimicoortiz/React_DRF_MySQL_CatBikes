@@ -44,6 +44,12 @@ class RentSerializer(serializers.ModelSerializer):
                 'Bike is not find'
             )
 
+        rent_user = Rent.objects.filter(user_id=user.id, end_slot_id=None)
+        if len(rent_user) > 0:
+            raise serializers.ValidationError(
+                'The user can only have one rent open at a time'
+            )
+
         # CREATE RENT
 
         rent = Rent.objects.create(
