@@ -113,3 +113,17 @@ class RentSerializer(serializers.ModelSerializer):
         bike.save()
 
         return rent
+
+    def delete(context):
+        rent_id = context['rent_id']
+        rent = Rent.objects.get(pk=rent_id)
+        if rent is None:
+            raise serializers.ValidationError(
+                'Rent is not find'
+            )
+        if rent.end_slot_id is None:
+            raise serializers.ValidationError(
+                'Rent is not finished'
+            )
+        rent.delete()
+        return True

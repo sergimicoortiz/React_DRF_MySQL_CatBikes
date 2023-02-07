@@ -4,7 +4,6 @@ from .serializers import RentSerializer
 from rest_framework.permissions import (IsAuthenticated)
 from src.app.core.permissions import IsAdmin
 from .models import Rent
-from rest_framework.generics import get_object_or_404
 
 
 class RentAuthenticatedView(viewsets.GenericViewSet):
@@ -45,6 +44,8 @@ class RentAdminView(viewsets.GenericViewSet):
         return Response(serializer.data)
 
     def delete(self, request, id):
-        rent = get_object_or_404(Rent.objects.all(), pk=id)
-        rent.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        context = {"rent_id": id}
+        if RentSerializer.delete(context=context):
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

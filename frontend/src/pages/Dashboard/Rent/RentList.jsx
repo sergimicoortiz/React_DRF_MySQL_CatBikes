@@ -55,7 +55,7 @@ const RentList = () => {
     };
 
     const deleteRents = () => {
-        useDeleteRentMultiple(selectedRows.map(row => row.id));
+        useDeleteRentMultiple(selectedRows.filter(item => item.end_slot_id !== null).map(row => row.id));
         setToggleCleared(!toggleCleared);
         setSelectedRows([]);
     }
@@ -63,6 +63,7 @@ const RentList = () => {
     return (
         <div>
             <h1>Rent List</h1>
+            <h2>Only finished rents can be deleted</h2>
             <button className="custom-btn btn-5" onClick={() => deleteRents()} disabled={selectedRows.length === 0}><span>DELETE</span></button>
             <DataTable
                 columns={columns}

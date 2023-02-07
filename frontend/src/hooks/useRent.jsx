@@ -21,7 +21,6 @@ export function useRent() {
         }
     }, []);
 
-
     const useDeleteRentMultiple = async (ids) => {
         let ids_ok = [];
         for (let i = 0; i < ids.length; i++) {
