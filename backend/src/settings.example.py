@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'src.app.stations',
     'src.app.user',
     'src.app.blacklist',
+    'src.app.rent',
 ]
 
 MIDDLEWARE = [

@@ -71,12 +71,3 @@ class UserAuthenticatedView(viewsets.GenericViewSet):
 
         serializer = userSerializer.refreshToken(serializer_context)
         return Response(serializer)
-
-    # def logout(self, request):
-    #     print(request.data.get('token'))
-    #     # try:
-    #     request.data.get('token').delete()
-    #     return Response({"status": 'success'})
-    #     except:
-    #         print('ERROR LOGOUT')
-    #         return Response({"status": 'error'})
