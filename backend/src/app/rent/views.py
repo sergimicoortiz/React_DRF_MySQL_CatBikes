@@ -1,11 +1,11 @@
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from .serializers import RentSerializer
 from rest_framework.permissions import (IsAuthenticated)
+from src.app.core.permissions import IsAdmin
+from .models import Rent
 from rest_framework.permissions import (
     AllowAny)
-from src.app.core.permissions import IsAdmin
-
 
 class RentAuthenticatedView(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
@@ -45,9 +45,18 @@ class RentAuthenticatedView(viewsets.GenericViewSet):
 
         return Response(RentSerializer.to_rent(serializer))
 
-#     def rentUser(self, request):
-        
+class RentAdminView(viewsets.GenericViewSet):
+    permission_classes = [IsAdmin]
 
+    def getAll(self, request):
+        data = Rent.objects.all()
+        serializer = RentSerializer(data, many=True)
+        return Response(serializer.data)
 
-# class RentViewAdmin(viewsets.GenericViewSet):
-#     permission_classes = [IsAdmin]
+    def delete(self, request, id):
+        context = {"rent_id": id}
+        if RentSerializer.delete(context=context):
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

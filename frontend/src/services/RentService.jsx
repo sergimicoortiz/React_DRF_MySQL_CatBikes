@@ -1,4 +1,12 @@
-import Api from "./Api";
+import Api from './Api';
+
+const GetRentDashboard = () => {
+        return Api().get('rentDashboard');
+};
+
+const DeleteRentDashboard = (id) => {
+        return Api().delete('rentDashboard/' + id);
+};
 
 const getOneRent = () => {
     return Api().get("getOneRent");
@@ -15,7 +23,9 @@ const returnBike = (data) => {
 const RentService = {
     getOneRent,
     rentBike,
-    returnBike
+    returnBike,
+    GetRentDashboard,
+    DeleteRentDashboard
 };
 
 export default RentService;

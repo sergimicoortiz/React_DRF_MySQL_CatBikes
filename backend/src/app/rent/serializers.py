@@ -8,7 +8,7 @@ from src.app.stations.models import Bike, Slot
 class RentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rent
-        fields = ['user_id', 'bike_id', 'start_slot_id',
+        fields = ['id', 'user_id', 'bike_id', 'start_slot_id',
                   'end_slot_id', 'start_date', 'end_date']
 
     def to_rent(instance):
@@ -55,6 +55,12 @@ class RentSerializer(serializers.ModelSerializer):
         if bike is None:
             raise serializers.ValidationError(
                 'Bike is not find'
+            )
+
+        rent_user = Rent.objects.filter(user_id=user.id, end_slot_id=None)
+        if len(rent_user) > 0:
+            raise serializers.ValidationError(
+                'The user can only have one rent open at a time'
             )
 
         # CREATE RENT
@@ -126,3 +132,17 @@ class RentSerializer(serializers.ModelSerializer):
         bike.save()
 
         return rent
+
+    def delete(context):
+        rent_id = context['rent_id']
+        rent = Rent.objects.get(pk=rent_id)
+        if rent is None:
+            raise serializers.ValidationError(
+                'Rent is not find'
+            )
+        if rent.end_slot_id is None:
+            raise serializers.ValidationError(
+                'Rent is not finished'
+            )
+        rent.delete()
+        return True
