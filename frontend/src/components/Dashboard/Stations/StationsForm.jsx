@@ -4,17 +4,19 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import './StationsForm.scss';
+import MapDashboard from "../../MapStations/MapDashboard";
 
 const StationForm = ({ SendData, station = {
-    name: '', status: '', image: '', address: '', slug: ''
+    name: '', status: '', image: '', slug: '', longitude: 0, latitude: 0
 } }) => {
 
     const validators = Yup.object().shape({
         name: Yup.string().required('Name is required').min(3).max(50),
         status: Yup.string().required('Status is required'),
         image: Yup.string().url().required('Image is required').min(3).max(100),
-        address: Yup.string().required('Address is required').min(3).max(50),
         slot_quantity: Yup.number().min(1),
+        longitude: Yup.number().required(),
+        latitude: Yup.number().required(),
     });
 
     const {
@@ -31,7 +33,8 @@ const StationForm = ({ SendData, station = {
             setValue('name', station.name);
             setValue('status', station.status);
             setValue('image', station.image);
-            setValue('address', station.address);
+            setValue('longitude', station.longitude);
+            setValue('latitude', station.latitude);
         }
     }, [station]);
 
@@ -54,6 +57,11 @@ const StationForm = ({ SendData, station = {
     };
 
     const buttonContent = station.slug !== '' ? 'Update' : 'Create';
+
+    const handleChange = (data) => {
+        setValue('longitude', data.longitude);
+        setValue('latitude', data.latitude);
+    }
 
     return (
         <div className="formStations">
@@ -80,14 +88,10 @@ const StationForm = ({ SendData, station = {
                     type="text"
                     {...register('image')} />
                 <div className="error">{errors.image?.message}</div>
-
-                <label>Address: </label>
-                <input
-                    name="address"
-                    type="text"
-                    {...register('address')} />
-                <div className="error">{errors.address?.message}</div>
                 {slot_quantity_form}
+                <MapDashboard latitude={station.latitude} longitude={station.longitude} handleChange={handleChange} />
+                <div className="error">{errors.longitude?.message}</div>
+                <div className="error">{errors.latitude?.message}</div>
                 <button type="submit">{buttonContent}</button>
             </form>
         </div>

@@ -18,7 +18,7 @@ export function UserContextProvider({ children }) {
             const interval = setInterval(() => {
                 if (sessionStorage.getItem("time")) {
                     sessionStorage.setItem("time", Number(sessionStorage.getItem("time")) + Number(1))
-                    if (sessionStorage.getItem("time") == 10) {
+                    if (sessionStorage.getItem("time") >= 10) {
                         refreshToken();
                     }
                 } else {

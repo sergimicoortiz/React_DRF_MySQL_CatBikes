@@ -22,6 +22,19 @@ class RentSerializer(serializers.ModelSerializer):
             "end_date": instance.end_date,
         })
 
+    def getOneRent(context):
+        username = context['username']
+
+        user = User.objects.get(username=username)
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+
+        rent = Rent.objects.get(user_id=user.id, end_slot_id=None)
+
+        return rent
+
     def rent(context):
         username = context['username']
         slot_id = context['slot_id']
