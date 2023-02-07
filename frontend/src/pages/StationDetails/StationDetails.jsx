@@ -15,26 +15,20 @@ const StationDetails = () => {
     const { slug } = useParams();
     const { oneStation, useOneStation, slotStation } = useStations();
     const { setSlots } = useSlots();
-    const { rentBike } = useRent();
+    const { rentBike, returnBike, getUserRent } = useRent();
     const navigate = useNavigate();
 
 
     useEffect(function () {
         useOneStation(slug);
-    }, [setSlots])
+    }, [])
 
     const rentId = (data) => {
         if (localStorage.getItem("token")) {
             if (data.status == 'used') {
                 rentBike(data);
-                toast.success("You rent a Bike, thanks you")
-                setTimeout(() => {
-                    navigate("/home")
-                    window.location.reload()
-                }, 1000);
-
             } else {
-                console.log("else");
+                returnBike(data);
             }
         } else {
             toast.error("You must be logged")

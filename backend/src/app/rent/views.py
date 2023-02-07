@@ -10,6 +10,16 @@ from src.app.core.permissions import IsAdmin
 class RentAuthenticatedView(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
+    def getOneRent(self, request):
+        username = request.user
+        serializer_context = {
+            'username': username,
+        }
+
+        serializer = RentSerializer.getOneRent(context=serializer_context)
+
+        return Response(RentSerializer.to_rent(serializer))
+
     def rent(self, request):
         data = request.data['rentBike']
         username = request.user

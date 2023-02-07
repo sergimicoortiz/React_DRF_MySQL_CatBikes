@@ -1,27 +1,59 @@
 import { useState } from "react";
 import RentService from "../services/RentService";
 import { useSlots } from "./useSlots";
-import { useBikes } from "./useBikes";
+import { toast } from 'react-toastify'
+import { useNavigate } from "react-router-dom";
+
+
 
 export function useRent() {
     const [rent, setRent] = useState();
     const { slots, setSlots } = useSlots();
+    const [oneRent, setOneRent] = useState();
+    const navigate = useNavigate();
+
 
     const rentBike = (data) => {
         RentService.rentBike(data)
             .then((dataThen) => {
                 if (dataThen.status == 200) {
-                    let get_Old_Slots = [...slots];
-                    const remove_old = get_Old_Slots.findIndex(item => item.id === Number(data.id));
-                    let save_old_slot = get_Old_Slots[remove_old];
-                    save_old_slot.status = 'unused';
-                    if (remove_old !== -1) {
-                        get_Old_Slots[remove_old] = save_old_slot;
-                        setSlots(get_Old_Slots);
-                    }
+                    toast.success("You rent a Bike, thanks you")
+                    setTimeout(() => {
+                        navigate("/home")
+                        window.location.reload()
+                    }, 1000);
                 }
             })
+            .catch(() => {
+                toast.warning("You can't rent more than 1 bike")
+            });
     }
 
-    return { rent, setRent, rentBike }
+    const getUserRent = () => {
+
+    }
+
+    const returnBike = (data) => {
+        RentService.getOneRent()
+            .then((dataThen) => {
+                if (dataThen.status == 200) {
+                    data.bike_id = dataThen.data.bike
+                    RentService.returnBike(data)
+                        .then((dataReturn) => {
+                            if (dataReturn.status == 200) {
+                                toast.success("You return a Bike, thanks you")
+                                setTimeout(() => {
+                                    navigate("/home")
+                                    window.location.reload()
+                                }, 1000);
+                            }
+                        })
+                }
+            })
+            .catch(() => {
+                toast.warning("You don't have any bike")
+            });
+    }
+
+    return { rent, setRent, rentBike, returnBike, getUserRent }
 }   
