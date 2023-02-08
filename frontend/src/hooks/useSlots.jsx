@@ -27,8 +27,10 @@ export function useSlots() {
         SlotService.updateStatus(id, status)
             .then(({ data, status }) => {
                 if (status === 200) {
-                    const old_slots = slots.filter(item => item.id !== data.id);
-                    setSlots([...old_slots, data]);
+                    const old_slots = [...slots]
+                    const index = old_slots.findIndex(item => item.id === data.id);
+                    old_slots[index] = data;
+                    setSlots(old_slots);
                     navigate('/dashboard/slots');
                 }
             })
