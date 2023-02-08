@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Station
 from .models import Bike
 from .models import Slot
+from random import randint
 
 
 class StationSerializer(serializers.ModelSerializer):
@@ -70,6 +71,29 @@ class SlotSerializer(serializers.ModelSerializer):
             bike_id=None,
             status="unused"
         )
+        slot.save()
+        return slot
+
+    def create_slot_filler(context):
+        station_id = context['station_id']
+        status = context['status']
+        bikes = Bike.objects.filter(status='used')
+
+        if (status == 'used' and len(bikes) > 0):
+            bike = Bike.objects.get(pk=bikes[randint(0, len(bikes)-1)].id)
+            slot = Slot.objects.create(
+                station_id=station_id,
+                bike_id=bike.id,
+                status="used"
+            )
+            bike.status = 'unused'
+            bike.save()
+        else:
+            slot = Slot.objects.create(
+                station_id=station_id,
+                bike_id=None,
+                status="unused"
+            )
         slot.save()
         return slot
 

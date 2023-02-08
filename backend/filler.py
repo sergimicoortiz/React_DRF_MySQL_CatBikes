@@ -14,27 +14,12 @@ cats_img_cant = len(cats_img) - 1
 status = ['used', 'unused']
 longitude_rang = [-0.593940, -0.616429]
 latitude_rang = [38.815629, 38.826529]
-# POINT1
-# -0.616429
-# 38.822192
-
-# POINT2
-# -0.6092187763441984
-# 38.815629744641306
-
-# PONT3
-# -0.5966874953418488
-# 38.82652977013887
-
-# POINT4
-# -0.5939409134688917
-# 38.821447757349205
 
 
 def create_bikes(n):
     for i in range(n):
         bike = {
-            'status': status[randint(0, len(status)-1)],
+            'status': 'used',
             'name': fake.name()
         }
         serializer = BikeSerializer(data=bike)
@@ -54,9 +39,10 @@ def create_stations(n, n_slot):
         serializer = StationSerializer(data=station)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        slot_context = {'station_id': serializer.data['id']}
         for j in range(n_slot):
-            SlotSerializer.create(context=slot_context)
+            slot_context = {
+                'station_id': serializer.data['id'], 'status': status[randint(0, len(status)-1)]}
+            SlotSerializer.create_slot_filler(context=slot_context)
 
 
 if __name__ == '__main__':
