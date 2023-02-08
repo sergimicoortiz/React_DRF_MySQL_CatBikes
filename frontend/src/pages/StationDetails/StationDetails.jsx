@@ -27,8 +27,11 @@ const StationDetails = () => {
         if (localStorage.getItem("token")) {
             if (data.status == 'used') {
                 rentBike(data);
-            } else {
+            } else if(data.status == 'unused') {
                 returnBike(data);
+            } 
+            else{
+                toast.error("This slot is in manteinance, take another one")
             }
         } else {
             toast.error("You must be logged")
@@ -48,7 +51,7 @@ const StationDetails = () => {
                     <button className="btn" onClick={() => {
                         rentId(item)
                     }
-                    }>{item.status == "unused" ? (<a>Return Bike</a>) : (<a>Rent Bike</a>)}</button>
+                    }>{item.status == "unused" ? (<a>Return Bike</a>) : item.status == "used" ? (<a>Rent Bike</a>) : ("Manteinance")}</button>
                 </div>
             </div>)
         }

@@ -114,6 +114,11 @@ class RentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Slot is not find or is in use'
             )
+        
+        if slot_new.status == "manteinance":
+            raise serializers.ValidationError(
+                'Slot in manteinance'
+            )
 
         # UPDATE RENT
         rent.end_slot_id = slot_new.id
