@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'src.app.user',
     'src.app.blacklist',
     'src.app.rent',
+    'src.app.incidents',
 ]
 
 MIDDLEWARE = [
