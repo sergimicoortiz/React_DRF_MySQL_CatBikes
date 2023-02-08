@@ -7,7 +7,7 @@ class Incident(models.Model):
 
     title = models.CharField(max_length=30)
     slug = models.SlugField(max_length=100, unique=True, editable=False)
-    status = models.CharField(max_length=100, default='created')
+    status = models.CharField(max_length=100, default='to_do')
     body = models.CharField(max_length=300)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_incident")

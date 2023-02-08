@@ -59,3 +59,25 @@ class IncidentSerializer(serializers.ModelSerializer):
 
         incident.save()
         return incident
+
+    def updateStatus(slug):
+        
+        incident = Incident.objects.get(slug=slug)
+        if incident is None:
+            raise serializers.ValidationError(
+                'Slot is not find'
+            )
+
+        if (incident.status == 'to_do'):
+            incident.status = 'in_progress'
+        elif (incident.status == 'in_progress'):
+            incident.status = 'in_revision'
+        elif (incident.status == 'in_revision'):
+            incident.status = 'resolved'
+        else:
+            raise serializers.ValidationError(
+                'The incident is closed'
+            )
+
+        incident.save()
+        return incident
