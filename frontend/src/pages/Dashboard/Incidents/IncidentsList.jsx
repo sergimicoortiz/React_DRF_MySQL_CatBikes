@@ -80,6 +80,28 @@ const IncidentsList = () => {
         setSelectedRows([])
     };
 
+    const conditionalRowStyles = [
+        {
+            when: row => row.status == "in_progress",
+            style: {
+                backgroundColor: 'yellow',
+            },
+        },
+        {
+            when: row => row.status == "in_revision",
+            style: {
+                backgroundColor: 'orange',
+            },
+        },
+        {
+            when: row => row.status == "resolved",
+            style: {
+                backgroundColor: 'green',
+            },
+        },
+    ];
+
+
     return (
         <div>
             <div>
@@ -99,6 +121,8 @@ const IncidentsList = () => {
                     selectableRows
                     onSelectedRowsChange={handleChange}
                     clearSelectedRows={toggleCleared}
+                    conditionalRowStyles={conditionalRowStyles}
+
                 />
             </div>
         </div>
