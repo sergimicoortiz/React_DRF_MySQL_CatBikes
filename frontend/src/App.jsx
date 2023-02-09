@@ -50,7 +50,8 @@ function App() {
   const Login = React.lazy(() => import('./pages/Login/Login'));
   const Register = React.lazy(() => import('./pages/Login/Register'));
 
-
+  //Profile
+  const Profile = React.lazy(() => import('./pages/Profile/Profile'));
 
   return (
     <div>
@@ -105,8 +106,9 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                       </Route>
-                      {/* Rent bikes */}
+                      {/* Profile */}
                       <Route element={<AuthGuard />}>
+                        <Route path="/profile" element={<Profile />} />
                       </Route>
                     </Routes>
                     <Footer />

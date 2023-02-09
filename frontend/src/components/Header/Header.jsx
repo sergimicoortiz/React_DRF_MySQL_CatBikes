@@ -17,6 +17,7 @@ const Header = () => {
         dashboard: () => navigate('/dashboard'),
         stations: () => navigate('/stations'),
         login: () => navigate('/login'),
+        profile: () => navigate('/profile'),
     }
 
     useEffect(() => {
@@ -25,7 +26,10 @@ const Header = () => {
     }, [location]);
 
     const UserOrButtons = isAuth ?
-        (<li><a onClick={() => useLogout()}>Logout</a><a>{user.username}</a></li>)
+        (<>
+            <li><a onClick={() => useLogout()}>Logout</a></li>
+            <li className={path === 'profile' ? 'active' : ''} ><a onClick={() => redirects.profile()}>{user.username}</a></li>
+        </>)
         : <li className={path === 'login' ? 'active' : path === 'register' ? 'active' : ''}><a onClick={() => redirects.login()}>Login</a></li>
 
     const dashboardButton = isAdmin ?
