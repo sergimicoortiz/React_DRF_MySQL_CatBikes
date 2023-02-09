@@ -33,12 +33,8 @@ export function useIncidents() {
                     if (dataThen.status === 200) {
                         let get_Old_Incidents = [...incidents];
                         const remove_old = get_Old_Incidents.findIndex(item => item.slug === data[0].slug);
-                        console.log(dataThen.data.user)
                         if (remove_old !== -1) {
-                            console.log(get_Old_Incidents[remove_old])
                             get_Old_Incidents[remove_old] = dataThen.data;
-                            get_Old_Incidents[remove_old].user = 2;
-                            console.log(get_Old_Incidents[remove_old])
                             setIncidents(get_Old_Incidents);
                         }
                     }
