@@ -16,8 +16,8 @@ class IncidentSerializer(serializers.ModelSerializer):
             "title": instance.title,
             "status": instance.status,
             "body": instance.body,
-            "user": instance.user_id,
-            "slot": instance.slot_id,
+            "user_id": instance.user_id,
+            "slot_id": instance.slot_id,
             "created_at": instance.created_at,
             "modified_at": instance.modified_at,
         })
