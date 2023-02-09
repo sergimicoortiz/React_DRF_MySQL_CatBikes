@@ -4,7 +4,7 @@ import('../Dashboard.scss');
 import DataTable from 'react-data-table-component';
 
 const IncidentsList = () => {
-    const { incidents, setIncidents } = useIncidents();
+    const { incidents, deleteIncidents } = useIncidents();
     const columns = [
         {
             name: 'Slug',
@@ -60,16 +60,31 @@ const IncidentsList = () => {
         setSelectedRows(selectedRows);
     };
 
+    const removeSelectedIncidents = () => {
+        if (selectedRows.length > 0) {
+            deleteIncidents(selectedRows)
+        }
+        setToggleCleared(!toggleCleared);
+        setSelectedRows([])
+    };
+
     return (
         <div>
-            <DataTable
-                columns={columns}
-                data={incidents}
-                pagination
-                selectableRows
-                onSelectedRowsChange={handleChange}
-                clearSelectedRows={toggleCleared}
-            />
+            <div>
+                <button className="custom-btn btn-5" onClick={() => {
+                    removeSelectedIncidents()
+                }} disabled={selectedRows.length === 0}><span>DELETE</span></button>
+            </div>
+            <div>
+                <DataTable
+                    columns={columns}
+                    data={incidents}
+                    pagination
+                    selectableRows
+                    onSelectedRowsChange={handleChange}
+                    clearSelectedRows={toggleCleared}
+                />
+            </div>
         </div>
     )
 }
