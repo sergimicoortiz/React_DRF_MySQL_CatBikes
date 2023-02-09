@@ -35,7 +35,7 @@ class IncidentSerializer(serializers.ModelSerializer):
             )
 
         slot = Slot.objects.get(pk=slot_id)
-        if slot is None or slot.bike_id is None:
+        if slot is None:
             raise serializers.ValidationError(
                 'Slot is not find'
             )
