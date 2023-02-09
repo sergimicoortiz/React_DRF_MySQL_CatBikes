@@ -13,6 +13,7 @@ services:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
+      - ./backend/sql/dump.sql:/docker-entrypoint-initdb.d/datadump.sql 
   phpmyadmin_CRUD:
     image: phpmyadmin/phpmyadmin:latest
     container_name: pma
