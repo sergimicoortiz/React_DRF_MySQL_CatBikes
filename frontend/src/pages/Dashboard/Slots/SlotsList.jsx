@@ -38,6 +38,27 @@ const SlotsList = () => {
         },
     ];
 
+    const conditionalRowStyles = [
+        {
+            when: row => row.status == "used",
+            style: {
+                backgroundColor: '#03f65e',
+            },
+        },
+        {
+            when: row => row.status == "unused",
+            style: {
+                backgroundColor: '#497f7b',
+            },
+        },
+        {
+            when: row => row.status == "manteinance",
+            style: {
+                backgroundColor: '#7b7944',
+            },
+        },
+    ];
+
     const handleChange = ({ selectedRows }) => {
         setSelectedRows(selectedRows);
     };
@@ -54,6 +75,7 @@ const SlotsList = () => {
                 selectableRows
                 onSelectedRowsChange={handleChange}
                 clearSelectedRows={toggledClearRows}
+                conditionalRowStyles={conditionalRowStyles}
 
             />
         </div>
