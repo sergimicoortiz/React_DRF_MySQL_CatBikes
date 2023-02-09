@@ -11,8 +11,10 @@ function AdminGuard() {
     const location = useLocation();
 
     if (location['pathname'].split('/')[1]) {
-        const path_tmp = location['pathname'].split('/')[2];
-        sessionStorage.setItem("path", path_tmp)
+        if (location['pathname'].split('/')[2]) {
+            const path_tmp = location['pathname'].split('/')[2];
+            sessionStorage.setItem("path", path_tmp)
+        }
     }
 
     if (!isAdmin) {
@@ -21,7 +23,11 @@ function AdminGuard() {
                 if (status == 200) {
                     if (data.user.types == "admin") {
                         setTimeout(() => {
-                            navigate("/dashboard/" + sessionStorage.getItem("path"))
+                            if (sessionStorage.getItem("path") == null) {
+                                navigate("/dashboard")
+                            }else{
+                                navigate("/dashboard/" + sessionStorage.getItem("path"))
+                            }
                         }, 500);
                     }
                 }
