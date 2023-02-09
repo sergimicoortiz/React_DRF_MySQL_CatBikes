@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import '../StationsClient/StationsClientList.scss';
 import { useParams } from "react-router-dom";
 import { useStations } from "../../hooks/useStations";
@@ -9,6 +9,7 @@ import maintenanceImage from '../../img/SlotMaintenance.png';
 import { toast } from 'react-toastify'
 import { useRent } from "../../hooks/useRent";
 import { useNavigate } from "react-router-dom";
+import IncidentModal from "../../components/Incidents/IncidentModal";
 
 
 const StationDetails = () => {
@@ -18,19 +19,27 @@ const StationDetails = () => {
     const { rentBike, returnBike, getUserRent } = useRent();
     const navigate = useNavigate();
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalSlot, setModalSlot] = useState(null);
+
 
     useEffect(function () {
         useOneStation(slug);
     }, [])
 
+    const clickModal = slot_id => {
+        setModalOpen(true);
+        setModalSlot(slot_id);
+    }
+
     const rentId = (data) => {
         if (localStorage.getItem("token")) {
             if (data.status == 'used') {
                 rentBike(data);
-            } else if(data.status == 'unused') {
+            } else if (data.status == 'unused') {
                 returnBike(data);
-            } 
-            else{
+            }
+            else {
                 toast.error("This slot is in manteinance, take another one")
             }
         } else {
@@ -52,6 +61,7 @@ const StationDetails = () => {
                         rentId(item)
                     }
                     }>{item.status == "unused" ? (<a>Return Bike</a>) : item.status == "used" ? (<a>Rent Bike</a>) : ("Manteinance")}</button>
+                    <button className="btn" onClick={() => clickModal(item.id)}>Open incidence</button>
                 </div>
             </div>)
         }
@@ -62,6 +72,7 @@ const StationDetails = () => {
 
     return (
         <div className="stationsClientCard">
+            <IncidentModal modalOpen={modalOpen} setModalOpen={setModalOpen} slot_id={modalSlot} />
             <main className="page-content">
                 {SlotCard}
             </main>

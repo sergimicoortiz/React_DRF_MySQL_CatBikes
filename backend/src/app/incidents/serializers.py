@@ -35,7 +35,7 @@ class IncidentSerializer(serializers.ModelSerializer):
             )
 
         slot = Slot.objects.get(pk=slot_id)
-        if slot is None or slot.bike_id is None:
+        if slot is None:
             raise serializers.ValidationError(
                 'Slot is not find'
             )
@@ -61,7 +61,7 @@ class IncidentSerializer(serializers.ModelSerializer):
         return incident
 
     def updateStatus(slug):
-        
+
         incident = Incident.objects.get(slug=slug)
         if incident is None:
             raise serializers.ValidationError(
@@ -81,3 +81,12 @@ class IncidentSerializer(serializers.ModelSerializer):
 
         incident.save()
         return incident
+
+    def getIncidentUser(username):
+        user = User.objects.get(username=username)
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        incidents = Incident.objects.filter(user_id=user.id)
+        return incidents

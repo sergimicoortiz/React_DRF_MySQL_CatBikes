@@ -47,3 +47,10 @@ class IncidentView(viewsets.GenericViewSet):
         incident = get_object_or_404(Incident.objects.all(), slug=slug)
         incident.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class IncidentAuthView(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response(IncidentSerializer(IncidentSerializer.getIncidentUser(request.user), many=True).data)
