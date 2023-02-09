@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useIncidents } from "../../../hooks/useIncidents";
 import('../Dashboard.scss');
 import DataTable from 'react-data-table-component';
+import { toast } from 'react-toastify';
+import Login from "../../Login/Login";
 
 const IncidentsList = () => {
-    const { incidents, deleteIncidents } = useIncidents();
+    const { incidents, deleteIncidents, updateIncident } = useIncidents();
     const columns = [
         {
             name: 'Slug',
@@ -60,6 +62,16 @@ const IncidentsList = () => {
         setSelectedRows(selectedRows);
     };
 
+    const updateSelectedIncidents = () => {
+        if (selectedRows.length == 1) {
+            updateIncident(selectedRows)
+        } else {
+            toast.error("Please select only 1")
+        }
+        setToggleCleared(!toggleCleared);
+        setSelectedRows([])
+    }
+
     const removeSelectedIncidents = () => {
         if (selectedRows.length > 0) {
             deleteIncidents(selectedRows)
@@ -71,6 +83,10 @@ const IncidentsList = () => {
     return (
         <div>
             <div>
+
+                <button className="custom-btn btn-13" onClick={() => {
+                    updateSelectedIncidents()
+                }} disabled={selectedRows.length === 0}><span>Update</span></button>
                 <button className="custom-btn btn-5" onClick={() => {
                     removeSelectedIncidents()
                 }} disabled={selectedRows.length === 0}><span>DELETE</span></button>

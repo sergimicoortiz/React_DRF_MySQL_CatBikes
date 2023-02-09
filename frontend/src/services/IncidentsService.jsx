@@ -4,6 +4,10 @@ const getAll = () => {
   return Api().get("/incidents");
 };
 
+const updateIncident = (data) => {
+  return Api().put("/incidents/" + data[0].slug)
+}
+
 const deleteIncidents = (data) => {
   return Api().delete("/incidents/" + data.slug)
 }
@@ -11,6 +15,7 @@ const deleteIncidents = (data) => {
 
 const IncidentsService = {
   getAll,
+  updateIncident,
   deleteIncidents,
 };
 
