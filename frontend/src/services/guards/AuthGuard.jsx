@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { Navigate, Outlet } from "react-router-dom"
+import React, { useContext } from 'react';
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import UserContext from '../../context/UserContext';
+import UserService from '../UserService';
 
-import UserContext from '../../context/UserContext'
-
-if(sessionStorage.getItem("path")){
+if (sessionStorage.getItem("path")) {
     sessionStorage.removeItem("path")
 }
 
@@ -13,6 +13,19 @@ export function NoAuthGuard() {
 }
 
 export function AuthGuard() {
+    const navigate = useNavigate();
     const { isAuth } = useContext(UserContext);
+
+    if (!isAuth) {
+        UserService.GetUser()
+            .then(({ status }) => {
+                if (status == 200) {
+                    setTimeout(() => {
+                        navigate(sessionStorage.getItem('/profile'));
+                    }, 800);
+                }
+            })
+    }
+
     return isAuth ? <Outlet /> : <Navigate to="/login" />
 }
