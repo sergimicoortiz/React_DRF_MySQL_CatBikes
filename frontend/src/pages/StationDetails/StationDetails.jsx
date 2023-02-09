@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import '../StationsClient/StationsClientList.scss';
 import { useParams } from "react-router-dom";
 import { useStations } from "../../hooks/useStations";
-import { useSlots } from '../../hooks/useSlots';
 import goodImage from '../../img/SlotEmpty.png';
 import usedImage from '../../img/SlotUsed.png';
 import maintenanceImage from '../../img/SlotMaintenance.png';
@@ -10,13 +9,13 @@ import { toast } from 'react-toastify'
 import { useRent } from "../../hooks/useRent";
 import { useNavigate } from "react-router-dom";
 import IncidentModal from "../../components/Incidents/IncidentModal";
+import JwtService from "../../services/JwtService";
 
 
 const StationDetails = () => {
     const { slug } = useParams();
-    const { oneStation, useOneStation, slotStation } = useStations();
-    const { setSlots } = useSlots();
-    const { rentBike, returnBike, getUserRent } = useRent();
+    const { useOneStation, slotStation } = useStations();
+    const { rentBike, returnBike } = useRent();
     const navigate = useNavigate();
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -33,7 +32,7 @@ const StationDetails = () => {
     }
 
     const rentId = (data) => {
-        if (localStorage.getItem("token")) {
+        if (JwtService.getToken()) {
             if (data.status == 'used') {
                 rentBike(data);
             } else if (data.status == 'unused') {
@@ -51,6 +50,10 @@ const StationDetails = () => {
     }
 
     let SlotCard = null;
+
+    const incidence_btn = id => JwtService.getToken() ?
+        <button className="btn" onClick={() => clickModal(id)}>Open incidence</button>
+        : ''
     if (slotStation.length > 0) {
         SlotCard = slotStation.map(item => {
             const img = item.status === 'used' ? goodImage : item.status === 'unused' ? usedImage : maintenanceImage;
@@ -61,7 +64,7 @@ const StationDetails = () => {
                         rentId(item)
                     }
                     }>{item.status == "unused" ? (<a>Return Bike</a>) : item.status == "used" ? (<a>Rent Bike</a>) : ("Manteinance")}</button>
-                    <button className="btn" onClick={() => clickModal(item.id)}>Open incidence</button>
+                    {incidence_btn(item.id)}
                 </div>
             </div>)
         }
