@@ -60,6 +60,15 @@ const RentList = () => {
         setSelectedRows([]);
     }
 
+    const conditionalRowStyles = [
+        {
+            when: row => row.end_slot_id !== null,
+            style: {
+                backgroundColor: 'green',
+            },
+        }
+    ];
+
     return (
         <div>
             <h1>Rent List</h1>
@@ -71,6 +80,7 @@ const RentList = () => {
                 pagination
                 selectableRows
                 onSelectedRowsChange={handleChange}
+                conditionalRowStyles={conditionalRowStyles}
                 clearSelectedRows={toggleCleared}
             />
         </div>

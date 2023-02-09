@@ -38,6 +38,21 @@ const StationsList = () => {
         },
     ];
 
+    const conditionalRowStyles = [
+        {
+            when: row => row.status == "inactive",
+            style: {
+                backgroundColor: 'red',
+            },
+        },
+        {
+            when: row => row.status == "manteinance",
+            style: {
+                backgroundColor: 'yellow',
+            },
+        },
+    ];
+
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
 
@@ -69,6 +84,7 @@ const StationsList = () => {
                 pagination
                 selectableRows
                 onSelectedRowsChange={handleChange}
+                conditionalRowStyles={conditionalRowStyles}
                 clearSelectedRows={toggleCleared}
             />
         </div>
