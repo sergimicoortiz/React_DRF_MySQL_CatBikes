@@ -46,8 +46,6 @@ function App() {
   const Login = React.lazy(() => import('./pages/Login/Login'));
   const Register = React.lazy(() => import('./pages/Login/Register'));
 
-
-
   return (
     <div>
       <Suspense fallback={<Loading />}>
