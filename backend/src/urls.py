@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/', include('src.app.user.urls')),
     path('api/', include('src.app.blacklist.urls')),
     path('api/', include('src.app.rent.urls')),
+    path('api/', include('src.app.incidents.urls')),
 ]

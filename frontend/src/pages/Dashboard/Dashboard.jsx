@@ -10,6 +10,7 @@ const Dashboard = () => {
         bikes: () => navigate('/dashboard/bikes'),
         slots: () => navigate('/dashboard/slots'),
         rent: () => navigate('/dashboard/rent'),
+        incidents: () => navigate('/dashboard/incidents'),
     }
     return (
         <div className="frame">
@@ -17,6 +18,7 @@ const Dashboard = () => {
             <button className="custom-btn btn-3" onClick={() => redirects.bikes()}><span>List Bikes</span></button>
             <button className="custom-btn btn-3" onClick={() => redirects.slots()}><span>List Slots</span></button>
             <button className="custom-btn btn-3" onClick={() => redirects.rent()}><span>List Rents</span></button>
+            <button className="custom-btn btn-3" onClick={() => redirects.incidents()}><span>List Incidents</span></button>
         </div>
     )
 }
