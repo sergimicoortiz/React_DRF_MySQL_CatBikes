@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useIncidents } from "../../../hooks/useIncidents";
 import('../Dashboard.scss');
 import DataTable from 'react-data-table-component';
 import { toast } from 'react-toastify';
-import Login from "../../Login/Login";
 
 const IncidentsList = () => {
     const { incidents, deleteIncidents, updateIncident } = useIncidents();
-    const [filter, setFilter] = useState([...incidents]);
+    const [filter, setFilter] = useState(null);
+    const [filterData, setFilterData] = useState([]);
+
+    useEffect(() => {
+        if (filter) {
+            setFilterData(incidents.filter(item => item.status === filter));
+        } else {
+            setFilterData([...incidents]);
+        }
+    }, [filter, incidents]);
+
     const columns = [
         {
             name: 'Slug',
@@ -102,11 +111,6 @@ const IncidentsList = () => {
         },
     ];
 
-    const filterControl = (data) => {
-            setFilter(incidents.filter(item => item.status == data))
-    }
-
-
     return (
         <div>
             <div>
@@ -119,23 +123,23 @@ const IncidentsList = () => {
                 }} disabled={selectedRows.length === 0}><span>DELETE</span></button>
                 <div style={{ display: "inline", paddingLeft: "10%" }}>
                     <button className="custom-btn btn-3" onClick={() => {
-                        filterControl("to_do")
+                        setFilter("to_do")
                     }}><span>To Do</span></button>
                     <button className="custom-btn btn-3" onClick={() => {
-                        filterControl("in_progress")
+                        setFilter("in_progress")
                     }}><span>In Progess</span></button>
                     <button className="custom-btn btn-3" onClick={() => {
-                        filterControl("in_revision")
+                        setFilter("in_revision")
                     }}><span>In Revision</span></button>
                     <button className="custom-btn btn-3" onClick={() => {
-                        filterControl("resolved")
+                        setFilter("resolved")
                     }}><span>Resolveds</span></button>
                 </div>
             </div>
             <div>
                 <DataTable
                     columns={columns}
-                    data={filter}
+                    data={filterData}
                     pagination
                     selectableRows
                     onSelectedRowsChange={handleChange}
