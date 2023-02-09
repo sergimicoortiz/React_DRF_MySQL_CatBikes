@@ -7,6 +7,7 @@ import Login from "../../Login/Login";
 
 const IncidentsList = () => {
     const { incidents, deleteIncidents, updateIncident } = useIncidents();
+    const [filter, setFilter] = useState([...incidents]);
     const columns = [
         {
             name: 'Slug',
@@ -101,6 +102,10 @@ const IncidentsList = () => {
         },
     ];
 
+    const filterControl = (data) => {
+            setFilter(incidents.filter(item => item.status == data))
+    }
+
 
     return (
         <div>
@@ -112,11 +117,25 @@ const IncidentsList = () => {
                 <button className="custom-btn btn-5" onClick={() => {
                     removeSelectedIncidents()
                 }} disabled={selectedRows.length === 0}><span>DELETE</span></button>
+                <div style={{ display: "inline", paddingLeft: "10%" }}>
+                    <button className="custom-btn btn-3" onClick={() => {
+                        filterControl("to_do")
+                    }}><span>To Do</span></button>
+                    <button className="custom-btn btn-3" onClick={() => {
+                        filterControl("in_progress")
+                    }}><span>In Progess</span></button>
+                    <button className="custom-btn btn-3" onClick={() => {
+                        filterControl("in_revision")
+                    }}><span>In Revision</span></button>
+                    <button className="custom-btn btn-3" onClick={() => {
+                        filterControl("resolved")
+                    }}><span>Resolveds</span></button>
+                </div>
             </div>
             <div>
                 <DataTable
                     columns={columns}
-                    data={incidents}
+                    data={filter}
                     pagination
                     selectableRows
                     onSelectedRowsChange={handleChange}
