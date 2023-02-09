@@ -1,18 +1,18 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
-import IncidentService from "../services/IncidentService";
+import IncidentsService from "../services/IncidentsService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import UserContext from "../context/UserContext";
 
 
-export function useIncident() {
+export function useIncidents() {
     const navigate = useNavigate();
     const [userIncidents, setUserIncidents] = useState([]);
     const { isAuth } = useContext(UserContext);
 
     useEffect(() => {
         if (isAuth) {
-            IncidentService.GetIncidentsUser()
+            IncidentsService.GetIncidentsUser()
                 .then(({ data, status }) => {
                     if (status === 200) {
                         setUserIncidents(data);
@@ -24,7 +24,7 @@ export function useIncident() {
 
     const useCreateIncident = useCallback((data) => {
         if (isAuth) {
-            IncidentService.CreateIncident(data)
+            IncidentsService.CreateIncident(data)
                 .then(({ data, status }) => {
                     if (status === 200) {
                         setUserIncidents([...userIncidents, data]);

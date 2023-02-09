@@ -8,9 +8,9 @@ const GetIncidentsUser = () => {
     return Api().get('incidentsUser');
 }
 
-const IncidentService = {
+const IncidentsService = {
     CreateIncident,
     GetIncidentsUser,
 };
 
-export default IncidentService;
+export default IncidentsService;

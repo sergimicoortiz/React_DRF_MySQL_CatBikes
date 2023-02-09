@@ -3,13 +3,13 @@ import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useIncident } from "../../hooks/useIncident";
+import { useIncidents } from "../../hooks/useIncidents";
 import './IncidentModal.scss';
 Modal.setAppElement('#root');
 
 const IncidentModal = ({ modalOpen, setModalOpen, slot_id }) => {
 
-    const { useCreateIncident } = useIncident();
+    const { useCreateIncident } = useIncidents();
 
     const validators = Yup.object().shape({
         title: Yup.string().required('Title is required').min(3).max(50),
