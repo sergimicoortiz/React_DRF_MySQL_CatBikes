@@ -117,5 +117,19 @@ class NotificationSerializer(serializers.ModelSerializer):
         notification = Notification.objects.filter(user_id=user.id)
         return notification
 
-    # def seeNotification(id):
-    #     notification = Notification.objects.get(pk=id)
+    def seeNotification(context):
+        notification_id = context['id']
+        username = context['username']
+        user = User.objects.get(username=username)
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        notification = Notification.objects.get(pk=notification_id, user_id=user.id, seen=False)
+        if notification is None:
+            raise serializers.ValidationError(
+                'notification is not find'
+            )
+        notification.seen = True
+        notification.save()
+        return notification
