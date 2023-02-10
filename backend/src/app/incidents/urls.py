@@ -9,4 +9,5 @@ urlpatterns = [
     path('incidents/<str:slug>', IncidentView.as_view({"delete": "delete"})),
     path('incidents', IncidentView.as_view({"post": "post"})),
     path('notifications', NotificationsAuthView.as_view({"get": "get"})),
+    path('notifications/<int:id>', NotificationsAuthView.as_view({"put": "seenNotification"})),
 ]

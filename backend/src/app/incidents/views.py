@@ -61,3 +61,12 @@ class NotificationsAuthView(viewsets.GenericViewSet):
 
     def get(self, request):
         return Response(NotificationSerializer(NotificationSerializer.getNotificationUser(request.user), many=True).data)
+
+    def seenNotification(self, request, id):
+        serializer_context = {
+            'username': request.user,
+            'id': id
+        }
+        serializer = NotificationSerializer.seeNotification(
+            context=serializer_context)
+        return Response(NotificationSerializer.to_notification(serializer))
