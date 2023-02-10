@@ -1,13 +1,13 @@
 import React from "react";
 import './Notification.scss'
 
-const Notification = ({ notification }) => {
+const Notification = ({ notification, seeNotification }) => {
 
     return (
         <div className="notification">
             <br />
             <div id="container">
-                <div id="success-box">
+                <div id="success-box" onClick={() => seeNotification(notification.id)}>
                     <div className="dot"></div>
                     <div className="dot two"></div>
                     <div className="face">

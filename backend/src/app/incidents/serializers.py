@@ -114,7 +114,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'User is not find'
             )
-        notification = Notification.objects.filter(user_id=user.id)
+        notification = Notification.objects.filter(user_id=user.id, seen=False)
         return notification
 
     def seeNotification(context):
