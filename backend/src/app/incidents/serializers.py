@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Incident
+from .models import Incident, Notification
 from src.app.user.models import User
 from src.app.stations.models import Slot
 
@@ -90,3 +90,32 @@ class IncidentSerializer(serializers.ModelSerializer):
             )
         incidents = Incident.objects.filter(user_id=user.id)
         return incidents
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['id', 'body', 'seen',
+                  'created_at', 'modified_at']
+
+    def to_notification(instance):
+        return ({
+            "id": instance.id,
+            "body": instance.body,
+            "seen": instance.seen,
+            "created_at": instance.created_at,
+            "modified_at": instance.modified_at,
+
+        })
+
+    def getNotificationUser(username):
+        user = User.objects.get(username=username)
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        notification = Notification.objects.filter(user_id=user.id)
+        return notification
+
+    # def seeNotification(id):
+    #     notification = Notification.objects.get(pk=id)

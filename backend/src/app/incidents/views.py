@@ -4,7 +4,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import (IsAuthenticated)
 from src.app.core.permissions import IsAdmin
 from .models import Incident
-from .serializers import IncidentSerializer
+from .serializers import IncidentSerializer, NotificationSerializer
 from rest_framework.permissions import (
     AllowAny)
 
@@ -54,3 +54,10 @@ class IncidentAuthView(viewsets.GenericViewSet):
 
     def get(self, request):
         return Response(IncidentSerializer(IncidentSerializer.getIncidentUser(request.user), many=True).data)
+
+
+class NotificationsAuthView(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response(NotificationSerializer(NotificationSerializer.getNotificationUser(request.user), many=True).data)
