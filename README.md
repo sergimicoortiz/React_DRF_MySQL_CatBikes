@@ -61,7 +61,7 @@ Tener instalado las siguientes herramientas:
   pipenv run python ./manage.py runserver 0.0.0.0:8000
   ```
   
-  Antes de realizar el runserver deberemos de acceder a la base de datos de mysql y crear el trigger cd las notificaciónes, simplemente deberemos de copyar y pegar el contenido de backend/sql/ClientNotificationTrigger.sql 
+  Antes de realizar el runserver deberemos de acceder a la base de datos de mysql y crear el trigger de las notificaciónes, simplemente deberemos de copiar y pegar el contenido de backend/sql/ClientNotificationTrigger.sql 
 
   #### Frontend
   ```
@@ -95,8 +95,7 @@ Lista de tecnologías utilizadas en este proyecto:
 `Frontend` 🏛️
 
 - [React](https://es.reactjs.org/) v18.2.0
-  - JavaSpript
-  - Estructurado en Modules
+  - Estructurado en componentes
   - Routes
   - Models
   - Components
@@ -106,6 +105,7 @@ Lista de tecnologías utilizadas en este proyecto:
   - Guards
   - Service with axios 
   - Authentication JWT enviado por Headers
+  - Refresh Token
   - Hooks y context
   - Librerias:
     - react-toastify
